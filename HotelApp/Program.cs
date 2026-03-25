@@ -1,5 +1,4 @@
-﻿using HotelApp.App;
-using HotelApp.Data;
+﻿using HotelApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection.Metadata;
@@ -12,20 +11,11 @@ namespace HotelApp
         {
 
             // add-migration "Initial migration"
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", true, true);
-            var config = builder.Build();
+            
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = config.GetConnectionString("DefaultConnection");
-            options.UseSqlServer(connectionString);
+            App.RunProgram();
 
-            //using (var dbContext = new ApplicationDbContext(options.Options))
-            //{
-            //    dbContext.Database.Migrate();
-            //}
-
-            RunApp.RunProgram();
+            //Copy if newer i .json
 
             //Rooms costumers bookings Payment
 

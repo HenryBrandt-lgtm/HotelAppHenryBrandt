@@ -25,7 +25,7 @@ namespace HotelApp.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.;Database=Test123;Trusted_Connection=True;TrustServerCertificate=true;");
+                optionsBuilder.UseSqlServer(@"Server=.;Database=HenrysHotel;Trusted_Connection=True;TrustServerCertificate=true;");
             }
         }
     }
