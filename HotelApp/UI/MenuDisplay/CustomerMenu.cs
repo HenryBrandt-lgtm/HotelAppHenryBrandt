@@ -28,7 +28,7 @@ namespace HotelApp.UI.MenuDisplay
                     customerCrud.Delete,
                     () =>
                     {
-                        var terminating = new Text("Terminating...", new Style(Color.Red))
+                        var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
                         {
                             Justification = Justify.Center
                         };

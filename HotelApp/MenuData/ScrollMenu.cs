@@ -19,7 +19,7 @@ namespace HotelApp.MenuData
 
                 for (int i = 0; i < options.Count; i++)
                 {
-                    string indicator = "";
+                    string indicator = "  ";
                     if (i == select)
                         indicator = "> ";
                     var line = new Text(indicator + options[i], i == select ? new Style(Color.Green) : null)

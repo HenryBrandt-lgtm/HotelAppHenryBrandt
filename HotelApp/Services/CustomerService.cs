@@ -26,9 +26,9 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine();
             AnsiConsole.Write(pressAnyKeyMessage);
 
-            //Console.CursorVisible = false;
-            //Console.ReadKey(true);
-            //Console.CursorVisible = true;
+            Console.CursorVisible = false;
+            Console.ReadKey(true);
+            Console.CursorVisible = true;
         }
         public void Delete ()
         {
@@ -49,10 +49,10 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine(); 
             AnsiConsole.Write(pressAnyKeyMessage);
 
-            //Console.CursorVisible = false;
-            //Console.ReadKey(true);
-            //Console.CursorVisible = true;
-            //Console.Clear();
+            Console.CursorVisible = false;
+            Console.ReadKey(true);
+            Console.CursorVisible = true;
+            Console.Clear();
         }
 
         public void Create()
@@ -80,6 +80,11 @@ namespace HotelApp.Services
             var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
             AnsiConsole.WriteLine();
             AnsiConsole.Write(pressAnyKeyMessage);
+
+            Console.CursorVisible = false;
+            Console.ReadKey(true);
+            Console.CursorVisible = true;
+            Console.Clear();
 
         }
     }

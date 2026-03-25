@@ -18,8 +18,8 @@
             return new List<string>
             {
                 "View Bookings",
-                "Remove Bookings",
-                "Update Booking",
+                "Update Bookings",
+                "Remove Booking",
                 "Go back to Main Menu"
 
             };

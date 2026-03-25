@@ -21,13 +21,12 @@ namespace HotelApp.UI.MenuDisplay
 
                 var actions = new List<Action>
                 {
-                    bookingCrud.Create,
                     bookingCrud.Read,
                     bookingCrud.Update,
                     bookingCrud.Delete,
                     () =>
                     {
-                        var terminating = new Text("Terminating...", new Style(Color.Red))
+                        var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
                         {
                             Justification = Justify.Center
                         };

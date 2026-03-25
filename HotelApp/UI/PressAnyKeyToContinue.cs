@@ -8,11 +8,6 @@ namespace HotelApp.UI
         {
             var finalColor = color ?? Color.Green;
 
-
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
-
             return new Text(message, new Style(finalColor))
             {
                 Justification = Justify.Center
