@@ -2,7 +2,7 @@
 using Spectre.Console;
 using System;
 
-namespace HotelApp.Models.MenuModels
+namespace HotelApp.MenuData
 {
     public class ScrollMenu
     {

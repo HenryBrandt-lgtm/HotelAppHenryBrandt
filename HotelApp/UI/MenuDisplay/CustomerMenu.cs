@@ -1,4 +1,4 @@
-﻿using HotelApp.Models.MenuModels;
+﻿using HotelApp.MenuData;
 using HotelApp.Services;
 using kassasystem;
 using Spectre.Console;

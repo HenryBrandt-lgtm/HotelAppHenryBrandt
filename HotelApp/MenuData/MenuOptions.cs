@@ -1,4 +1,4 @@
-﻿namespace HotelApp.Models.MenuModels
+﻿namespace HotelApp.MenuData
 {
     public class MenuOptions
     {        

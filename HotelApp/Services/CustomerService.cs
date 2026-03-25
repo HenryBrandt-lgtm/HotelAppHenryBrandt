@@ -1,5 +1,5 @@
-﻿using HotelApp.Models;
-using HotelApp.Models.MenuModels;
+﻿using HotelApp.MenuData;
+using HotelApp.Models;
 using HotelApp.UI;
 using Spectre.Console;
 
