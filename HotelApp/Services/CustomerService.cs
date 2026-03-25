@@ -14,7 +14,7 @@ namespace HotelApp.Services
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                foreach (var guest in dbContext.Customer)
+                foreach (var guest in dbContext.Customer.Where(c => c.IsActive == true))
                 {
                     Console.WriteLine($"Namn: {guest.FullName}");
                     Console.WriteLine($"Ålder: {guest.Age}");
@@ -26,9 +26,9 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine();
             AnsiConsole.Write(pressAnyKeyMessage);
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
+            //Console.CursorVisible = false;
+            //Console.ReadKey(true);
+            //Console.CursorVisible = true;
         }
         public void Delete ()
         {
@@ -49,10 +49,10 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine(); 
             AnsiConsole.Write(pressAnyKeyMessage);
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
-            Console.Clear();
+            //Console.CursorVisible = false;
+            //Console.ReadKey(true);
+            //Console.CursorVisible = true;
+            //Console.Clear();
         }
 
         public void Create()
@@ -63,6 +63,24 @@ namespace HotelApp.Services
         public void Update()
         {
             throw new NotImplementedException();
+        }
+
+        public void ReadDeletedCustomers()
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                foreach (var guest in dbContext.Customer.Where(c => c.IsActive == false))
+                {
+                    Console.WriteLine($"Namn: {guest.FullName}");
+                    Console.WriteLine($"Ålder: {guest.Age}");
+                    Console.WriteLine("====================");
+                }
+            }
+
+            var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
+            AnsiConsole.WriteLine();
+            AnsiConsole.Write(pressAnyKeyMessage);
+
         }
     }
 }

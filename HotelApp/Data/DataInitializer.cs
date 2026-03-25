@@ -14,46 +14,50 @@ namespace HotelApp.Data
         }
         private void SeedCustomers(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Customer.Any(c => c.FullName == "Henry Brandt"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Henry" && c.LastName == "Brandt"))
             {
                 dbContext.Customer.Add(new Customer
                 {
                     FirstName = "Henry",
                     LastName = "Brandt",
-                    Birthday = new DateTime(1993, 06, 07)
+                    Birthday = new DateOnly(1993, 06, 07),
+                    IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FullName == "Hanna Verlage"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Hanna Verlage" && c.LastName == "Verlage"))
             {
                 dbContext.Customer.Add(new Customer
                 {
                     FirstName = "Hanna",
                     LastName = "Verlage",
-                    Birthday = new DateTime(1997, 03, 15)
+                    Birthday = new DateOnly(1997, 03, 15),
+                    IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FullName == "Alex Araujo"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Alex Araujo" && c.LastName == "Araujo"))
             {
                 dbContext.Customer.Add(new Customer
                 {
                     FirstName = "Alex",
                     LastName = "Araujo",
-                    Birthday = new DateTime(1993, 03, 20)
+                    Birthday = new DateOnly(1993, 03, 20),
+                    IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FullName == "Mirza Hujic"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Mirza Hujic" && c.LastName == "Hujic"))
             {
                 dbContext.Customer.Add(new Customer
                 {
                     FirstName = "Mirza",
                     LastName = "Hujic",
-                    Birthday = new DateTime(1992, 02, 26)
+                    Birthday = new DateOnly(1992, 02, 26),
+                    IsActive = true
                 });
             }
         }
         private void SeedRooms(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Room.Any(c => c.RoomName == "Luxury OneBed"))
+            if (!dbContext.Room.Any(r => r.RoomName == "Luxury OneBed"))
             {
                 dbContext.Room.Add(new Room
                 {
@@ -62,7 +66,7 @@ namespace HotelApp.Data
                     Price = 200,
                 });
             }
-            if (!dbContext.Room.Any(c => c.RoomName == "Regular OneBed"))
+            if (!dbContext.Room.Any(r => r.RoomName == "Regular OneBed"))
             {
                 dbContext.Room.Add(new Room
                 {
@@ -71,7 +75,7 @@ namespace HotelApp.Data
                     Price = 150,
                 });
             }
-            if (!dbContext.Room.Any(c => c.RoomName == "Buffert OneBed"))
+            if (!dbContext.Room.Any(r => r.RoomName == "Buffert OneBed"))
             {
                 dbContext.Room.Add(new Room
                 {
@@ -80,7 +84,7 @@ namespace HotelApp.Data
                     Price = 140,
                 });
             }
-            if (!dbContext.Room.Any(c => c.RoomName == "Luxury TwoBeds"))
+            if (!dbContext.Room.Any(r => r.RoomName == "Luxury TwoBeds"))
             {
                 dbContext.Room.Add(new Room
                 {

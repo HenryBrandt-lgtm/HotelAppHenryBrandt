@@ -13,7 +13,7 @@ namespace HotelApp.Models
 
         public string LastName { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateOnly Birthday { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -27,18 +27,13 @@ namespace HotelApp.Models
 
         public int Age ()
         {  
-            var today = DateTime.Today;
+            var today = DateOnly.FromDateTime(DateTime.Today);
             int age = today.Year - Birthday.Year;
-            if (Birthday.Date > today.AddYears(-age))
+            if (Birthday > today.AddYears(-age))
             {
                 age--;
             }
             return age; 
-        }
-
-        public void ShowCustomerData()
-        {
-            Console.WriteLine($"{CustomerId}. Name: {FirstName} {LastName} Age: {Age()}");
         }
     }
 }

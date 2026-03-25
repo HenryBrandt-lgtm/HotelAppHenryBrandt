@@ -6,12 +6,18 @@ namespace HotelApp.UI
     {
         public static Text GetPressAnyKeyText(string message = "press any key to Continue", Color? color = null)
         {
-            var finalColor = color ?? Color.Green; 
+            var finalColor = color ?? Color.Green;
+
+
+            Console.CursorVisible = false;
+            Console.ReadKey(true);
+            Console.CursorVisible = true;
 
             return new Text(message, new Style(finalColor))
             {
                 Justification = Justify.Center
             };
+
         }
     }
 }

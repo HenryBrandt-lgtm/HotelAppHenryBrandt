@@ -14,6 +14,8 @@ namespace HotelApp.Data
 
         public DbSet<Invoice> Invoice { get; set; }
 
+        public DbSet <Booking> Booking { get; set; } 
+
         public ApplicationDbContext()
         { }
 
