@@ -1,31 +1,29 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
-using kassasystem;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace HotelApp.UI.MenuDisplay
 {
-    public class CustomerMenu
+    internal class RoomMenu
     {
-        public static void ShowCustomerMenu()
+        public static void ShowRoomMenu()
         {
-            ICrud customerCrud = new CustomerService();
+            ICrud roomCrud = new RoomService();
             bool exitMenu = false;
             while (!exitMenu)
-            {        
-                var option = ScrollMenu.ScrollingMenu(MenuOptions.CustomerMenu());
+            {
+                var option = ScrollMenu.ScrollingMenu(MenuOptions.RoomMenu());
                 Console.CursorVisible = true;
 
                 var actions = new List<Action>
                 {
-                    customerCrud.Create,
-                    customerCrud.Read,
-                    customerCrud.Update,
-                    customerCrud.Delete,
+                    roomCrud.Create,
+                    roomCrud.Read,
+                    roomCrud.Update,
+                    roomCrud.Delete,
                     () =>
                     {
                         var terminating = new Text("Terminating...", new Style(Color.Red))

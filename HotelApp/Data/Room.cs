@@ -3,6 +3,8 @@
     public class Room
     {
         public int RoomId { get; set; }
+
+        public string RoomName { get; set; }
         public int Area { get; set; }
         public decimal Price { get; set; }
         public List<Booking> Bookings { get; set; } = 
@@ -12,7 +14,9 @@
         {
             get
             {
-                if (Area >= 15)
+                if (Area >= 20)
+                    return 4;
+                else if (Area >= 15)
                     return 2;
                 else return 1;
             }
@@ -49,11 +53,6 @@
                     return "single room";
             }
         }
-        public Room(int roomid, int area, decimal price)
-        {
-            RoomId = roomid;
-            Area = area;
-            Price = price;
-        }
+
     }
 }

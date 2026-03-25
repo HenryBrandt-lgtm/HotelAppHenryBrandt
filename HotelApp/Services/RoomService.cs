@@ -5,20 +5,26 @@ using HotelApp.Models;
 
 namespace HotelApp.Services
 {
-    public class RoomService
+    public class RoomService : ICrud
     {
-        public List<Room> _Rooms = [];
-
-        public void SeedRooms()
+        public void Create()
         {
-            _Rooms.Add(new Room(1, 12, 200));
-            _Rooms.Add(new Room(2, 10, 150));
-            _Rooms.Add(new Room(3, 9, 140));
-            _Rooms.Add(new Room(4, 20, 250));
+            throw new NotImplementedException();
         }
-        public List<Room> GetRooms()
+
+        public void Delete()
         {
-            return _Rooms;
+            throw new NotImplementedException();
+        }
+
+        public void Read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

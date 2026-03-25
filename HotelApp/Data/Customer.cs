@@ -36,14 +36,6 @@ namespace HotelApp.Models
             return age; 
         }
 
-        public Customer(int id, string firstName, string lastName, DateTime birthday, bool isActive)
-        {
-            CustomerId = id;
-            FirstName = firstName;
-            LastName = lastName;
-            Birthday = birthday;
-            IsActive = isActive;
-        }
         public void ShowCustomerData()
         {
             Console.WriteLine($"{CustomerId}. Name: {FirstName} {LastName} Age: {Age()}");

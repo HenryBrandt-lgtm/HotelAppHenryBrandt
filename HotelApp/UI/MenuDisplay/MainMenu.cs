@@ -8,9 +8,8 @@ namespace kassasystem
 {
     public class MainMenu
     {
-        public static void ShowMainMenu(CustomerService customerService)
+        public static void ShowMainMenu()
         {
-
             bool exitMenu = false;
             while (!exitMenu)
             {
@@ -29,7 +28,7 @@ namespace kassasystem
                         break;
                     case 2:
                         Console.Clear();
-                        CustomerMenu.ShowCustomerMenu(customerService);
+                        CustomerMenu.ShowCustomerMenu();
                         break;
                     case 3:
                         //CRUD Rooms

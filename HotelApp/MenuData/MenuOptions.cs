@@ -1,7 +1,7 @@
 ﻿namespace HotelApp.MenuData
 {
     public class MenuOptions
-    {        
+    {
         public static List<string> MainMenu()
         {
             return new List<string>
@@ -28,10 +28,21 @@
         {
             return new List<string>
             {
-                "View Customers",
-                "Add new Customer",
-                "Remove Customer",
+                "Create Customers",
+                "Read Customers",
                 "Update Customer",
+                "Delete Customer",
+                "Go back to Main Menu"
+            };
+        }
+        public static List<string> RoomMenu()
+        {
+            return new List<string>
+            {
+                "Create Room",
+                "Read Rooms",
+                "Update Room",
+                "Delete Room",
                 "Go back to Main Menu"
             };
         }
