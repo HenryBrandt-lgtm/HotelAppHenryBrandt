@@ -9,7 +9,7 @@ namespace HotelApp.Services
     public class CustomerService : ICrud
     {
         public List<Customer> _Customers = new List<Customer>();
-                
+
         public void Read()
         {
             using (var dbContext = new ApplicationDbContext())
@@ -17,12 +17,12 @@ namespace HotelApp.Services
                 foreach (var guest in dbContext.Customer.Where(c => c.IsActive == true))
                 {
                     Console.WriteLine($"Namn: {guest.FullName}");
-                    Console.WriteLine($"Ålder: {guest.Age}");
+                    Console.WriteLine($"Ålder: {guest.Age()}");
                     Console.WriteLine("====================");
                 }
             }
 
-                var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
+            var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
             AnsiConsole.WriteLine();
             AnsiConsole.Write(pressAnyKeyMessage);
 
@@ -30,9 +30,9 @@ namespace HotelApp.Services
             Console.ReadKey(true);
             Console.CursorVisible = true;
         }
-        public void Delete ()
+        public void Delete()
         {
-            
+
             var activeCustomer = _Customers.Where(c => c.IsActive == true).ToList();
             var nameOptions = activeCustomer.Select(c => $"{c.FirstName} {c.LastName}").ToList();
             int index = ScrollMenu.ScrollingMenu(nameOptions);
@@ -46,7 +46,7 @@ namespace HotelApp.Services
             };
             AnsiConsole.Write(removedCustomer);
             var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
-            AnsiConsole.WriteLine(); 
+            AnsiConsole.WriteLine();
             AnsiConsole.Write(pressAnyKeyMessage);
 
             Console.CursorVisible = false;

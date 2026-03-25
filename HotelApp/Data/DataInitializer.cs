@@ -24,7 +24,7 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Hanna Verlage" && c.LastName == "Verlage"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Hanna" && c.LastName == "Verlage"))
             {
                 dbContext.Customer.Add(new Customer
                 {
@@ -34,7 +34,7 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Alex Araujo" && c.LastName == "Araujo"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Alex" && c.LastName == "Araujo"))
             {
                 dbContext.Customer.Add(new Customer
                 {
@@ -44,7 +44,7 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Mirza Hujic" && c.LastName == "Hujic"))
+            if (!dbContext.Customer.Any(c => c.FirstName == "Mirza" && c.LastName == "Hujic"))
             {
                 dbContext.Customer.Add(new Customer
                 {
