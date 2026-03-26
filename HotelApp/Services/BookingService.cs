@@ -194,11 +194,8 @@ namespace HotelApp.Services
 
             using (var dbContext = new ApplicationDbContext())
             {
-                var activeBookings = dbContext.Booking
-                    .Where(b => b.IsActive)
-                    .Include(b => b.Customer)
-                    .Include(b => b.Room)
-                    .ToList();
+                var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).ToList()
+                    .Where(b => b.IsActive).ToList();
 
                 if (!activeBookings.Any())
                 {
@@ -255,7 +252,7 @@ namespace HotelApp.Services
             Console.CursorVisible = true;
             using (var dbContext = new ApplicationDbContext())
             {
-                var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).Where(f => f.IsActive).ToList();
+                var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
                 if (!activeBookings.Any())
                 {
                     AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");
