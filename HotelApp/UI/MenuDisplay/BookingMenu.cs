@@ -15,7 +15,7 @@ namespace HotelApp.UI.MenuDisplay
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.CustomerMenu(bookingCrud,
+                var menuItems = MenuOptions.BookingMenu(bookingCrud,
                      () =>
                      {
                          var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))

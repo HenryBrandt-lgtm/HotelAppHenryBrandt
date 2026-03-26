@@ -54,6 +54,17 @@
                     return "Enkel rum";
             }
         }
+        public bool IsAvailable(DateOnly start, DateOnly end, int? excludeBookingId = null)
+        {
+            return !Bookings
+                .Where(b => excludeBookingId == null || b.BookingId != excludeBookingId)
+                .Any(b => b.IsActive && start <= b.EndDate && end >= b.StartDate);
+        }
+        public decimal GetTotalPrice(DateOnly start, DateOnly end)
+        {
+            int nights = (end.DayNumber - start.DayNumber) + 1;
+            return nights * Price;
+        }
 
     }
 }

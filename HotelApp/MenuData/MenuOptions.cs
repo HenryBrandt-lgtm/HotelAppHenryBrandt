@@ -23,8 +23,6 @@ namespace HotelApp.MenuData
                 new("Se alla bokningar", bookingCrud.Read),
                 new("Uppdatera bokning", bookingCrud.Update),
                 new("Ta bort bokning", bookingCrud.Delete),
-                new("Se inaktiva bokningar", bookingCrud.ReadDeleted),
-                new("Återaktivera bokning",bookingCrud.Reactivate),
                 new("Go back to Main Menu", exitAction)
                
             };

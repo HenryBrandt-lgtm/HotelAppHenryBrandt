@@ -14,7 +14,39 @@ namespace HotelApp.Services
     {
         public void Create()
         {
-            throw new NotImplementedException();
+            using (var dbContext = new ApplicationDbContext())
+            {
+                Console.WriteLine("Skapa ett nytt rum");
+
+                var roomNameInput = VarValidater.GetRequiredString("Ange rummets namn: ");
+
+                var roomSizeInput = VarValidater.GetRequiredInt("Ange rummets storlek i kvm: ");
+
+                var roomPrizeInput = VarValidater.GetRequiredDecimal("Ange rummets pris: ");
+
+
+                //foreach (var county in dbContext.County)
+                //{
+                //    Console.WriteLine($"{county.Id} - {county.Name}");
+                //}
+                //Console.WriteLine("Ange Id på County");
+                //var countyId = Convert.ToInt32(Console.ReadLine());
+                //var countyInput = dbContext.County.First(c => c.Id == countyId);
+
+                if (dbContext.Room.Any(r => r.RoomName == roomNameInput))
+                    Console.WriteLine("Rummet finns redan inlagt. Dubbelkika bland raderade rum om det har blivit inavktiverat");
+                else
+                {
+                    dbContext.Room.Add(new Room
+                    {
+                        RoomName = roomNameInput,
+                        Area = roomSizeInput,
+                        Price = roomPrizeInput,
+                        IsActive = true
+                    });
+                    dbContext.SaveChanges();
+                }
+            }
         }
 
         public void Delete()
@@ -36,6 +68,11 @@ namespace HotelApp.Services
                 Console.CursorVisible = true;
 
                 var activeRooms = dbContext.Room.Where(c => c.IsActive).ToList();
+                if (!activeRooms.Any())
+                {
+                    AnsiConsole.MarkupLine("[red]Inga rum att radera.[/]");
+                    return;
+                }
 
                 var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName} ").ToList();
 
@@ -46,7 +83,7 @@ namespace HotelApp.Services
                 dbContext.SaveChanges();
 
 
-                var removedRoom = new Text($"{roomToRemove.RoomName} has been removed.", new Style(Color.Red))
+                var removedRoom = new Text($"{roomToRemove.RoomName} har tagits bort.", new Style(Color.Red))
                 {
                     Justification = Justify.Center
                 };
@@ -63,7 +100,46 @@ namespace HotelApp.Services
 
         public void Reactivate()
         {
-            throw new NotImplementedException();
+            using (var dbContext = new ApplicationDbContext())
+            {
+                Console.Clear();
+                var selectMessage = new Text($"Välj från listan med inaktiva rum vilket du vill aktivera.", new Style(Color.Cyan))
+                {
+                    Justification = Justify.Center
+                };
+                AnsiConsole.Write(selectMessage);
+                var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
+                AnsiConsole.WriteLine();
+                AnsiConsole.Write(pressAnyKeyMessage);
+
+                Console.CursorVisible = false;
+                Console.ReadKey(true);
+                Console.CursorVisible = true;
+
+                var activeRooms = dbContext.Room.Where(c => !c.IsActive).ToList();
+
+                var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
+
+                int index = ScrollMenu.ScrollingMenu(roomOptions);
+
+                var returningRoom = activeRooms[index];
+                returningRoom.IsActive = true;
+                dbContext.SaveChanges();
+
+
+                var reactivatedCustomer = new Text($"{returningRoom.RoomName} har återaktiverats.", new Style(Color.Green))
+                {
+                    Justification = Justify.Center
+                };
+                AnsiConsole.Write(reactivatedCustomer);
+                AnsiConsole.WriteLine();
+                AnsiConsole.Write(pressAnyKeyMessage);
+
+                Console.CursorVisible = false;
+                Console.ReadKey(true);
+                Console.CursorVisible = true;
+                Console.Clear();
+            }
         }
 
         public void Read()
@@ -178,7 +254,7 @@ namespace HotelApp.Services
                         break;
 
                     case 1:
-                        roomToUpgrade.Area = VarValidater.GetRequierdInt("Ny storlek: ");
+                        roomToUpgrade.Area = VarValidater.GetRequiredInt("Ny storleki kvm: ");
                         break;
 
                     case 2:

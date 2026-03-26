@@ -7,7 +7,7 @@ namespace HotelApp.Controllers
 {
     public class VarValidater
     {
-        public static int GetRequierdInt (string message)
+        public static int GetRequiredInt (string message)
         {
             int value;
             string input;
@@ -90,7 +90,7 @@ namespace HotelApp.Controllers
                     Console.WriteLine("Får inte vara tomt. Försök igen.");
                     continue;
                 }
-                Console.Write("Skriv in nytt person.nr (yyyy-MM-dd): ");
+                Console.Write(message);
                 if (DateOnly.TryParseExact(Console.ReadLine(),
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
                 {
@@ -102,6 +102,38 @@ namespace HotelApp.Controllers
                     else
                         return birthday;
                     
+                }
+                else
+                    Console.WriteLine("Ogiltigt format, vänligen försök igen: yyyy-MM-dd");
+
+            }
+        }
+        public static DateOnly GetValidBookingDate(string message)
+        {
+            int maxDate = 10;
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var lateDate = today.AddYears(+maxDate);
+
+            DateOnly birthday = default;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    continue;
+                }
+                Console.Write(message);
+                if (DateOnly.TryParseExact(Console.ReadLine(),
+                    "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
+                {
+                    if (birthday < today)
+                        Console.WriteLine("Du kan inte boka ett datum bakåt i tiden");
+
+                    else if (birthday > lateDate)
+                        Console.WriteLine("Vi tar inte boknignar så långt in i framtiden");
+                    else
+                        return birthday;
+
                 }
                 else
                     Console.WriteLine("Ogiltigt format, vänligen försök igen: yyyy-MM-dd");

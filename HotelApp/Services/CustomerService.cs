@@ -12,8 +12,6 @@ namespace HotelApp.Services
 {
     public class CustomerService : ICrud
     {
-        public List<Customer> _Customers = new List<Customer>();
-
         public void Read()
         {
             Console.Clear();
@@ -74,6 +72,11 @@ namespace HotelApp.Services
                 Console.CursorVisible = true;
 
                 var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
+                if (!activeCustomers.Any())
+                {
+                    AnsiConsole.MarkupLine("[red]Inga gäster att radera.[/]");
+                    return;
+                }
 
                 var nameOptions = activeCustomers.Select(c => $"{c.FullName} {c.Age()} år").ToList();
 
@@ -84,7 +87,7 @@ namespace HotelApp.Services
                 dbContext.SaveChanges();
 
 
-                var removedCustomer = new Text($"{customerToRemove.FullName} has been removed.", new Style(Color.Red))
+                var removedCustomer = new Text($"{customerToRemove.FullName} har tagits bort.", new Style(Color.Red))
                 {
                     Justification = Justify.Center
                 };

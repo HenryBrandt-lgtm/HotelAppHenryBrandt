@@ -4,18 +4,40 @@
     {
         public int BookingId { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
 
-        public DateTime EndDate { get; set; }
-
-        public int CostumerId { get; set; }
-
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public bool IsActive { get; set; }
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+
+        public bool IsActive
+        {
+            get
+            {
+                var today = DateOnly.FromDateTime(DateTime.Today);
+                return today <= EndDate;
+            }
+        }
+
+        public int DurationDays => (EndDate.DayNumber - StartDate.DayNumber) + 1;
+
+        public decimal TotalCost => Room != null ? DurationDays * Room.Price : 0m;
+
         public bool IsBooked()
         {
-            return DateTime.Now >= StartDate && DateTime.Now <= EndDate;
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            return today >= StartDate && today <= EndDate;
+        }
+        public bool IsFuture
+        {
+            get
+            {
+                var today = DateOnly.FromDateTime(DateTime.Today);
+                return today < StartDate;
+            }
         }
     }
 }
