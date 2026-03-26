@@ -34,6 +34,7 @@
                 else return 0;
             }
         }
+        public int TotalBeds => Beds + ExtraBeds;
 
         public bool IsBooked
         {

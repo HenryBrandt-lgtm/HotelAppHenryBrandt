@@ -31,13 +31,17 @@ namespace HotelApp.Services
                     AnsiConsole.MarkupLine("[red]Slutdatum kan inte vara före startdatum.[/]");
                     return;
                 }
+                var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
 
                 // 2️⃣ Filtrera fram lediga rum under perioden
-                var availableRooms = dbContext.Room.Include(r => r.Bookings).Where(r => r.IsActive).ToList().Where(r => r.IsAvailable(startDate, endDate)).ToList();
+                var availableRooms = dbContext.Room.Where(r => r.IsActive).Include(r => r.Bookings).ToList()
+                    .Where(r => r.IsAvailable(startDate, endDate)).Where(r => r.TotalBeds >= numberOfGuests)
+                    .ToList();
+
 
                 if (!availableRooms.Any())
                 {
-                    AnsiConsole.MarkupLine("[red]Inga rum lediga under de valda datumen.[/]");
+                    AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga under de valda datumen.[/]");
                     return;
                 }
 
@@ -47,14 +51,15 @@ namespace HotelApp.Services
                     var totalCost = r.GetTotalPrice(startDate, endDate);
 
                     return new Panel($"[yellow]Rum:[/] {r.RoomName}  [blue]Typ:[/] {r.RoomType}  " +
-                        $"[yellow]Pris/natt:[/] {r.Price:C} [blue]TotalPris:[/] {totalCost}")
+                        $"[yellow]Pris/natt:[/] {r.Price:C} [blue]TotalPris:[/] {totalCost} " +
+                        $"[yellow]Antal sängar:[/] {r.Beds} [blue]Antal extrasängar:[/] {r.ExtraBeds}")
                         .Border(BoxBorder.Rounded)
                         .Padding(1, 1)
                         .Header($"{r.RoomId}: {r.RoomName}")
                         .Expand();
                 }).ToList();
 
-                AnsiConsole.MarkupLine("[bold]Välj rum:[/]");
+                AnsiConsole.MarkupLine("[bold]Lediga rum:[/]");
                 AnsiConsole.Write(new Columns(roomPanels));
 
                 int selectedRoomId = VarValidater.GetRequiredInt("Ange rummets ID i listan: ");
