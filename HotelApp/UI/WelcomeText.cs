@@ -14,7 +14,7 @@ namespace HotelApp.UI
 
             var header = HeaderDisplay.GetHeader();
 
-            var pressAnyKeyMessage = PressAnyKeyToContinue.GetPressAnyKeyText();
+            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
             
 
             AnsiConsole.Write(welcomeTo);

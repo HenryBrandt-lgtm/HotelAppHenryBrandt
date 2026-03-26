@@ -16,7 +16,17 @@ namespace HotelApp.Services
             throw new NotImplementedException();
         }
 
+        public void Reactivate()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Read()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadDeleted()
         {
             throw new NotImplementedException();
         }

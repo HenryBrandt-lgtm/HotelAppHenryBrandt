@@ -11,6 +11,10 @@ namespace HotelApp.Services
         void Read();
         void Update();
         void Delete();
+
+        void ReadDeleted();
+
+        void Reactivate();
     }
 
 }

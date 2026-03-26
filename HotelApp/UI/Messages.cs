@@ -2,7 +2,7 @@
 
 namespace HotelApp.UI
 {
-    internal class PressAnyKeyToContinue
+    internal class Messages
     {
         public static Text GetPressAnyKeyText(string message = "press any key to Continue", Color? color = null)
         {

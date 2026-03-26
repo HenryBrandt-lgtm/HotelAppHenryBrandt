@@ -15,29 +15,25 @@ namespace HotelApp.UI.MenuDisplay
             bool exitMenu = false;
             while (!exitMenu)
             {
+                var menuItems = MenuOptions.CustomerMenu(bookingCrud,
+                     () =>
+                     {
+                         var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
+                         {
+                             Justification = Justify.Center
+                         };
 
-                var option = ScrollMenu.ScrollingMenu(MenuOptions.BookingMenu());
+                         AnsiConsole.Write(terminating);
+                         Thread.Sleep(1000);
+                         exitMenu = true;
+                     });
+                var items = menuItems.Select(m => m.Title).ToList();
+
+                var option = ScrollMenu.ScrollingMenu(items);
+
                 Console.CursorVisible = true;
 
-                var actions = new List<Action>
-                {
-                    bookingCrud.Read,
-                    bookingCrud.Update,
-                    bookingCrud.Delete,
-                    () =>
-                    {
-                        var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
-                        {
-                            Justification = Justify.Center
-                        };
-
-                        AnsiConsole.Write(terminating);
-                        Thread.Sleep(1000);
-                        exitMenu = true;
-                    }
-                };
-
-                actions[option].Invoke();
+                menuItems[option].Action.Invoke();
             }
         } 
     }

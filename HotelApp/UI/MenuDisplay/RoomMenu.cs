@@ -15,15 +15,7 @@ namespace HotelApp.UI.MenuDisplay
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var option = ScrollMenu.ScrollingMenu(MenuOptions.RoomMenu());
-                Console.CursorVisible = true;
-
-                var actions = new List<Action>
-                {
-                    roomCrud.Create,
-                    roomCrud.Read,
-                    roomCrud.Update,
-                    roomCrud.Delete,
+                var menuItems = MenuOptions.RoomMenu(roomCrud,
                     () =>
                     {
                         var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
@@ -34,10 +26,15 @@ namespace HotelApp.UI.MenuDisplay
                         AnsiConsole.Write(terminating);
                         Thread.Sleep(1000);
                         exitMenu = true;
-                    }
-                };
+                    });
 
-                actions[option].Invoke();
+                var titles = menuItems.Select(m => m.Title).ToList();
+
+                var option = ScrollMenu.ScrollingMenu(titles);
+
+                Console.CursorVisible = true;
+
+                menuItems[option].Action.Invoke();
             }
         }
     }

@@ -7,6 +7,7 @@
         public string RoomName { get; set; }
         public int Area { get; set; }
         public decimal Price { get; set; }
+        public bool IsActive { get; set; }
         public List<Booking> Bookings { get; set; } = 
             new List<Booking>();
 
@@ -46,11 +47,11 @@
             get
             {
                 if (Area >= 20)
-                    return "multi room";
+                    return "Multi rum";
                 else if (Area > 15)
-                    return "double room";
+                    return "Dubbel rum";
                 else
-                    return "single room";
+                    return "Enkel rum";
             }
         }
 

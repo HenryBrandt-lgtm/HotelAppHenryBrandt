@@ -64,6 +64,7 @@ namespace HotelApp.Data
                     RoomName = "Luxury OneBed",
                     Area = 12,
                     Price = 200,
+                    IsActive = true
                 });
             }
             if (!dbContext.Room.Any(r => r.RoomName == "Regular OneBed"))
@@ -73,6 +74,7 @@ namespace HotelApp.Data
                     RoomName = "Regular OneBed",
                     Area = 10,
                     Price = 150,
+                    IsActive= true
                 });
             }
             if (!dbContext.Room.Any(r => r.RoomName == "Buffert OneBed"))
@@ -82,15 +84,17 @@ namespace HotelApp.Data
                     RoomName = "Buffert OneBed",
                     Area = 9,
                     Price = 140,
+                    IsActive= true
                 });
             }
-            if (!dbContext.Room.Any(r => r.RoomName == "Luxury TwoBeds"))
+            if (!dbContext.Room.Any(r => r.RoomName == "Family Room"))
             {
                 dbContext.Room.Add(new Room
                 {
                     RoomName = "Family Room",
                     Area = 20,
                     Price = 350,
+                    IsActive = true
                 });
             }
         }

@@ -20,7 +20,8 @@ namespace kassasystem
                 switch (option)
                 {
                     case 0:
-                        //book a room
+                        var bookingService = new BookingService();
+                        bookingService.Create();
                         break;
                     case 1:
                         Console.Clear();
@@ -31,7 +32,8 @@ namespace kassasystem
                         CustomerMenu.ShowCustomerMenu();
                         break;
                     case 3:
-                        //CRUD Rooms
+                        Console.Clear();
+                        RoomMenu.ShowRoomMenu();
                         break;
                     case 4:
                         var terminating = new Text("Terminating...", new Style(Color.Red))

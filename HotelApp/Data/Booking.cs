@@ -11,6 +11,8 @@
         public int CostumerId { get; set; }
 
         public Customer Customer { get; set; }
+
+        public bool IsActive { get; set; }
         public bool IsBooked()
         {
             return DateTime.Now >= StartDate && DateTime.Now <= EndDate;
