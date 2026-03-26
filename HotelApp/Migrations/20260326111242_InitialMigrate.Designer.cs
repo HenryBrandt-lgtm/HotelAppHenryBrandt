@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260326091127_BookingsCanNowBeActive")]
-    partial class BookingsCanNowBeActive
+    [Migration("20260326111242_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,6 +121,9 @@ namespace HotelApp.Migrations
 
                     b.Property<int>("Area")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");

@@ -13,13 +13,9 @@ namespace HotelApp.UI.MenuDisplay
 
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.CustomerMenu(customerCrud,
-                    () =>
-                    {
-                        var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
-                        {
-                            Justification = Justify.Center
-                        };
+                var menuItems = MenuOptions.CustomerMenu(customerCrud,() =>
+                {var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
+                        { Justification = Justify.Center };
 
                         AnsiConsole.Write(terminating);
                         Thread.Sleep(1000);

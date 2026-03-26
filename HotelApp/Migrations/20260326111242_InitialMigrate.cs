@@ -35,7 +35,8 @@ namespace HotelApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoomName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Area = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,6 +73,7 @@ namespace HotelApp.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CostumerId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

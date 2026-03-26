@@ -22,15 +22,29 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine();
             using (var dbContext = new ApplicationDbContext())
             {
-                foreach (var guest in dbContext.Customer.Where(c => c.IsActive == true))
+                var activeGuests = dbContext.Customer.Where(c => c.IsActive == true);
+                if (!activeGuests.Any())
                 {
-
-                    var content = new Markup($"[yellow]Namn:[/] {guest.FullName}" +
-                        $"\n [blue]Ålder:[/] {guest.Age()}" +
-                        $"\n ====================");
-
-                    AnsiConsole.Write(Align.Center(content));
+                    AnsiConsole.WriteLine("Inga aktiva gäster att visa.");
+                    return;
                 }
+                else
+                {
+                    var panels = activeGuests.Select(guest =>
+                        new Panel(
+                            $"[yellow]Namn:[/] {guest.FullName}" +
+                            $"\n [blue]Ålder:[/] {guest.Age()}"
+                            )
+                        .Border(BoxBorder.Rounded)
+                        .Header($"[bold]{guest.LastName}[/]")
+                        .Padding(1, 1)
+                        .Expand()
+                        ).ToList();
+
+                    var columns = new Columns(panels);
+                    AnsiConsole.Write(columns);
+                }
+                
             }
 
             var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
@@ -126,7 +140,7 @@ namespace HotelApp.Services
         public void Update()
         {
             Console.Clear();
-            var selectMessage = new Text($"Välj från listan med gäster vem du vill ta uppdatera.", new Style(Color.Red))
+            var selectMessage = new Text($"Välj från listan med gäster vem du vill uppdatera.", new Style(Color.Red))
             {
                 Justification = Justify.Center
             };
