@@ -13,30 +13,37 @@ namespace HotelApp.Services.CreateBookingServices
 
             while (true)
             {
-                var startMessage = "Inceckningsdatum";
-                var endMessage = "Utceckningsdatum";
-                DateTime start = CalendarMenu.CalendarController(startMessage);
-
-                DateTime end = CalendarMenu.CalendarController(endMessage);                
-
+                DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+                DateTime start = CalendarMenu.CalendarController("Inceckningsdatum");
                 DateOnly startDate = DateOnly.FromDateTime(start);
+                if (startDate < today)
+                {
+                    Console.Clear();
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Incheckning kan inte vara före dagens datum.[/]")));
+                    CursorVisibility.WaitForKey();
+                    continue;
+                }
+                DateTime end = CalendarMenu.CalendarController("Utceckningsdatum");                
+                
                 DateOnly endDate = DateOnly.FromDateTime(end);
 
+                
                 if (endDate < startDate)
                 {
-                    AnsiConsole.MarkupLine("[red]Slutdatum kan inte vara före startdatum.[/]");
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före startdatum.[/]")));
+                    CursorVisibility.WaitForKey();
                     continue;
                 }
                 var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
                 if (numberOfGuests <= 0)
                 {
-                    AnsiConsole.MarkupLine("[red]Antal gäster måste vara minst 1.[/]");
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Antal gäster måste vara minst 1.[/]")));
+                    CursorVisibility.WaitForKey();
                     continue;
                 }
 
                 return (startDate, endDate, numberOfGuests);
             }
-
         }
     }
 }

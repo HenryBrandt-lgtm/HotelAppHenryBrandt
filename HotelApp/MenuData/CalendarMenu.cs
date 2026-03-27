@@ -60,6 +60,8 @@ namespace HotelApp.MenuData
             var content = new Rows(panel, new Markup($"\nAnvänd piltangenter [blue]< > ^ v[/] för att " +
                $"\nnavigera och [green]Enter[/] för att välja [yellow]{message}[/]."));
             AnsiConsole.Write(Align.Center(content));
+            Console.CursorVisible = false;
+
         }
         public static DateTime CalendarController(string message)
         {
@@ -89,8 +91,10 @@ namespace HotelApp.MenuData
                         selectedDate = selectedDate.AddDays(7);
                         break;
                     case ConsoleKey.Enter:
-                        AnsiConsole.MarkupLine($"\nDu valde: [green]{selectedDate:yyyy-MM-dd}[/]");
+                        AnsiConsole.Write(Align.Center(new Markup($"\nDu valde: [green]{selectedDate:yyyy-MM-dd}[/]")));
+                        CursorVisibility.WaitForKey();
                         return selectedDate; // Avslutar loopen
+
                     case ConsoleKey.Escape:
                         break; // Avbryter valet
                 }

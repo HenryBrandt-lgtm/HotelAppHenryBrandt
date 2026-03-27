@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spectre.Console;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -19,7 +20,7 @@ namespace HotelApp.Controllers
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
                 }
 
@@ -29,7 +30,7 @@ namespace HotelApp.Controllers
                 }
                 else
                 {
-                    Console.WriteLine("Ogiltigt tal. Ange ett heltal, t.ex. 5.");
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett heltal, t.ex. 5.")));
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace HotelApp.Controllers
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
                 }
 
@@ -54,7 +55,7 @@ namespace HotelApp.Controllers
                 }
                 else
                 {
-                    Console.WriteLine("Ogiltigt tal. Ange ett decimaltal, tex 123.45.");
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett decimaltal, tex 123.45.")));
                 }
             }
         }
@@ -64,19 +65,19 @@ namespace HotelApp.Controllers
 
             do
             {
-                Console.Write(message);
+                AnsiConsole.Write(Align.Center(new Markup(message)));
                 input = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                 }
 
             } while (string.IsNullOrWhiteSpace(input));
 
             return input;
         }
-        public static DateOnly GetValidDate(string message)
+        public static DateOnly GetValidDateOnly(string message)
         {
             int maxAge = 100;
             var today = DateOnly.FromDateTime(DateTime.Today);
@@ -87,7 +88,7 @@ namespace HotelApp.Controllers
             {
                 if (string.IsNullOrWhiteSpace(message))
                 {
-                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
                 }
                 Console.Write(message);
@@ -95,16 +96,16 @@ namespace HotelApp.Controllers
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
                 {
                     if (birthday >= today)
-                        Console.WriteLine("Personen måste vara äldre än dagens datum");
+                        AnsiConsole.Write(Align.Center(new Markup("Personen måste vara äldre än dagens datum")));
 
                     else if (birthday < minBirthday)
-                        Console.WriteLine("Personen kan nog inte vara så gammal");
+                        AnsiConsole.Write(Align.Center(new Markup("Personen kan nog inte vara så gammal")));
                     else
                         return birthday;
                     
                 }
                 else
-                    Console.WriteLine("Ogiltigt format, vänligen försök igen: yyyy-MM-dd");
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt format, vänligen försök igen: yyyy-MM-dd")));
 
             }
         }
@@ -119,7 +120,7 @@ namespace HotelApp.Controllers
             {
                 if (string.IsNullOrWhiteSpace(message))
                 {
-                    Console.WriteLine("Får inte vara tomt. Försök igen.");
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
                 }
                 Console.Write(message);
@@ -127,18 +128,18 @@ namespace HotelApp.Controllers
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
                 {
                     if (birthday < today)
-                        Console.WriteLine("Du kan inte boka ett datum bakåt i tiden");
+                        AnsiConsole.Write(Align.Center(new Markup("Du kan inte boka ett datum bakåt i tiden")));
 
                     else if (birthday > lateDate)
-                        Console.WriteLine("Vi tar inte boknignar så långt in i framtiden");
+                        AnsiConsole.Write(Align.Center(new Markup("Vi tar inte boknignar så långt in i framtiden")));
                     else
                         return birthday;
 
                 }
                 else
-                    Console.WriteLine("Ogiltigt format, vänligen försök igen: yyyy-MM-dd");
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt format, vänligen försök igen: yyyy-MM-dd")));
 
             }
-        }
+        }        
     }
 }

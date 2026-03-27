@@ -100,7 +100,7 @@ namespace HotelApp.Services
 
                 var lastNameInput = VarValidater.GetRequiredString("Ange efternamn: ");
 
-                var ageInput = VarValidater.GetValidDate("Ange födelseår (yyy-MM-dd): ");
+                var ageInput = VarValidater.GetValidDateOnly("Ange födelseår (yyy-MM-dd): ");
 
                 if (dbContext.Customer.Any(c => c.FirstName == firstNameInput && c.LastName == lastNameInput))
                     Console.WriteLine("Gästen finns redan inlagd. Dubbelkika bland raderade gäster om hen har blivit inaktiverad");
@@ -165,19 +165,43 @@ namespace HotelApp.Services
                 var updateOptions = new List<string> { "FirstName", "LastName", "Birthday" };
 
                 int updateIndex = ScrollMenu.ScrollingMenu(updateOptions);
+                var header = HeaderDisplay.GetHeader();
 
                 switch (updateIndex)
                 {
                     case 0:
-                        customerToUpdate.FirstName = VarValidater.GetRequiredString("Nytt förnamn: ");
+                        customerToUpdate.FirstName = VarValidater.GetRequiredString($"Tidigare namn: {customerToUpdate.FirstName}" +
+                            $"\nNytt förnamn: ");
+                        Console.Clear();
+                        AnsiConsole.WriteLine();
+                        AnsiConsole.Write(header);
+                        AnsiConsole.Write(Align.Center(new Panel($"[yellow]Förnamnet har uppdaterats till[/][cyan] {customerToUpdate.FirstName}[/]")
+                            .Border(BoxBorder.Rounded)));
+                        CursorVisibility.WaitForKey();
                         break;
 
                     case 1:
-                        customerToUpdate.LastName = VarValidater.GetRequiredString("Nytt efternamn: ");
+                        customerToUpdate.LastName = VarValidater.GetRequiredString($"Tidigare namn: {customerToUpdate.LastName}" +
+                            $"\nNytt efternamn: ");
+                        Console.Clear();
+                        AnsiConsole.WriteLine();
+                        AnsiConsole.Write(header);
+                        AnsiConsole.Write(Align.Center(new Panel($"[yellow]Efternamnet har uppdaterats till[/][cyan] {customerToUpdate.LastName}[/]")
+                            .Border(BoxBorder.Rounded)));
+
+                        CursorVisibility.WaitForKey();
                         break;
 
                     case 2:
-                        customerToUpdate.Birthday = VarValidater.GetValidDate("Ny födelsedag: ");
+                        customerToUpdate.Birthday = VarValidater.GetValidDateOnly($"Tidigare person.nr: {customerToUpdate.Birthday}" +
+                            $"\nNytt person.nr(yyyy-MM-dd): ");
+                        Console.Clear();
+                        AnsiConsole.WriteLine();
+                        AnsiConsole.Write(header);
+                        AnsiConsole.Write(Align.Center(new Panel($"[yellow]Person.nr har uppdaterats till[/][cyan] {customerToUpdate.Birthday}[/]")
+                            .Border(BoxBorder.Rounded)));
+
+                        CursorVisibility.WaitForKey();
                         break;
                 }
 
