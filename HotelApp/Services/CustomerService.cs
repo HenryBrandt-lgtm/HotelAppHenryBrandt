@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Spectre.Console;
 using System.Globalization;
+using System.Net;
+using System.Numerics;
 
 namespace HotelApp.Services
 {
@@ -100,30 +102,44 @@ namespace HotelApp.Services
 
                 var ageInput = VarValidater.GetValidDate("Ange födelseår (yyy-MM-dd): ");
 
-
-                //foreach (var county in dbContext.County)
-                //{
-                //    Console.WriteLine($"{county.Id} - {county.Name}");
-                //}
-                //Console.WriteLine("Ange Id på County");
-                //var countyId = Convert.ToInt32(Console.ReadLine());
-                //var countyInput = dbContext.County.First(c => c.Id == countyId);
-
                 if (dbContext.Customer.Any(c => c.FirstName == firstNameInput && c.LastName == lastNameInput))
                     Console.WriteLine("Gästen finns redan inlagd. Dubbelkika bland raderade gäster om hen har blivit inaktiverad");
                 else
                 {
-                    dbContext.Customer.Add(new Customer
+                    var timeNow = DateOnly.FromDateTime(DateTime.Today);
+                    int age = timeNow.Year - ageInput.Year;
+                    Console.Clear();
+                    AnsiConsole.MarkupLine("\n[bold green]Sammanfattning av kundinformation:[/]");
+                    var table = new Table();
+                    table.AddColumn("[red]Fält[/]");
+                    table.AddColumn("[red]Värde[/]");
+                    table.AddRow("Förnamn", firstNameInput);
+                    table.AddRow("Efternamn", lastNameInput);
+                    table.AddRow("Ålder", age.ToString());
+                    AnsiConsole.Write(table);
+
+                    AnsiConsole.Write("\nÄr alla uppgifter korrekta? (J/N)");
+
+                    var key = Console.ReadKey(true).Key;
+                    if (key != ConsoleKey.J)
                     {
-                        FirstName = firstNameInput,
-                        LastName = lastNameInput,
-                        Birthday = ageInput,
-                        IsActive = true
-                    });
-                    dbContext.SaveChanges();
+                        AnsiConsole.MarkupLine("[red]Avbryter.[/]");
+                        return;
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
+                        dbContext.Customer.Add(new Customer
+                        {
+                            FirstName = firstNameInput,
+                            LastName = lastNameInput,
+                            Birthday = ageInput,
+                            IsActive = true
+                        });
+                        dbContext.SaveChanges();
+                    }                                     
                 }
             }
-
         }
 
         public void Update()

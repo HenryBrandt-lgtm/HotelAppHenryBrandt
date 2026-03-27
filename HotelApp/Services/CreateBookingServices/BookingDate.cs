@@ -1,5 +1,7 @@
 ﻿using HotelApp.Controllers;
 using HotelApp.Data;
+using HotelApp.MenuData;
+using HotelApp.UI;
 using Spectre.Console;
 
 namespace HotelApp.Services.CreateBookingServices
@@ -11,8 +13,14 @@ namespace HotelApp.Services.CreateBookingServices
 
             while (true)
             {
-                DateOnly startDate = VarValidater.GetValidBookingDate("Ange startdatum (yyyy-MM-dd): ");
-                DateOnly endDate = VarValidater.GetValidBookingDate("Ange slutdatum (yyyy-MM-dd): ");
+                var startMessage = "Inceckningsdatum";
+                var endMessage = "Utceckningsdatum";
+                DateTime start = CalendarMenu.CalendarController(startMessage);
+
+                DateTime end = CalendarMenu.CalendarController(endMessage);                
+
+                DateOnly startDate = DateOnly.FromDateTime(start);
+                DateOnly endDate = DateOnly.FromDateTime(end);
 
                 if (endDate < startDate)
                 {

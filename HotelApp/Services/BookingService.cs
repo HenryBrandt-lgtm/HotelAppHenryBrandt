@@ -4,7 +4,6 @@ using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.Services.CreateBookingServices;
 using HotelApp.UI;
-using HotelApp.UI.MenuDisplay;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
 
@@ -43,10 +42,8 @@ namespace HotelApp.Services
                 // 3️. Visa lediga rum och välj
                 var selectedRoom = available.SelectRoom(availableRooms, startDate, endDate);
 
-
-                // 4️. välj/skapa kund
-                
-                var selectedCustomer = customerSelection.SelectOrCreateCustomer(customerService);                
+                // 4️. välj/skapa kund                
+                var selectedCustomer = customerSelection.SelectOrCreateCustomer(customerService);
 
                 // 6. Skapa bokning
                 var newBooking = new Booking
@@ -60,7 +57,7 @@ namespace HotelApp.Services
                 dbContext.Booking.Add(newBooking);
                 dbContext.SaveChanges();
                 //7. Ge totalpris
-                decimal totalCost = newBooking.DurationDays * selectedRoom.Price;
+                decimal totalCost = selectedRoom.GetTotalPrice(startDate, endDate);
                 AnsiConsole.MarkupLine($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]");
             }
 
@@ -94,14 +91,14 @@ namespace HotelApp.Services
 
                 var bookingToRemove = activeBookings[index];
 
-                var confirmMessage = new Text($"Är du säker på att du vill ta bort bokning ID: {bookingToRemove.BookingId}? (Y/N)", new Style(Color.Yellow))
+                var confirmMessage = new Text($"Är du säker på att du vill ta bort bokning ID: {bookingToRemove.BookingId}? (J/N)", new Style(Color.Yellow))
                 {
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(confirmMessage);
 
                 var key = Console.ReadKey(true).Key;
-                if (key != ConsoleKey.Y)
+                if (key != ConsoleKey.J)
                 {
                     AnsiConsole.MarkupLine("[green]Borttagning avbruten.[/]");
                     return;
@@ -235,7 +232,7 @@ namespace HotelApp.Services
                         var availableRooms = dbContext.Room.Include(r => r.Bookings).Where(r => r.IsActive).ToList()
                             .Where(r => r.IsAvailable(bookingToUpdate.StartDate, bookingToUpdate.EndDate, bookingToUpdate.BookingId)).ToList();
 
-                        if (!availableRooms.Any())
+                        if (availableRooms.Count == 0)
                         {
                             AnsiConsole.MarkupLine("[red]Inga rum lediga under de valda datumen.[/]");
                             return;

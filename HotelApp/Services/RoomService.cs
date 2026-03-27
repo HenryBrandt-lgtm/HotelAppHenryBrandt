@@ -21,15 +21,6 @@ namespace HotelApp.Services
 
                 var roomPrizeInput = VarValidater.GetRequiredDecimal("Ange rummets pris: ");
 
-
-                //foreach (var county in dbContext.County)
-                //{
-                //    Console.WriteLine($"{county.Id} - {county.Name}");
-                //}
-                //Console.WriteLine("Ange Id på County");
-                //var countyId = Convert.ToInt32(Console.ReadLine());
-                //var countyInput = dbContext.County.First(c => c.Id == countyId);
-
                 if (dbContext.Room.Any(r => r.RoomName == roomNameInput))
                     Console.WriteLine("Rummet finns redan inlagt. Dubbelkika bland raderade rum om det har blivit inavktiverat");
                 else
