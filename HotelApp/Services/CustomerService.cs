@@ -45,13 +45,8 @@ namespace HotelApp.Services
                 
             }
 
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
+            CursorVisibility.WaitForKey();
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
         }
         public void Delete()
         {
@@ -63,13 +58,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-                AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
-
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
+                CursorVisibility.WaitForKey();
 
                 var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
                 if (!activeCustomers.Any())
@@ -92,12 +81,8 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(removedCustomer);
-                AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
+                CursorVisibility.WaitForKey();
 
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
                 Console.Clear();
             }
         }
@@ -148,13 +133,9 @@ namespace HotelApp.Services
                 Justification = Justify.Center
             };
             AnsiConsole.Write(selectMessage);
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
+            CursorVisibility.WaitForKey();
+
             using (var dbContext = new ApplicationDbContext())
             {
                 var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
@@ -201,13 +182,7 @@ namespace HotelApp.Services
                 }
             }
 
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
-
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
+            CursorVisibility.WaitForKey();
             Console.Clear();
 
         }
@@ -221,13 +196,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-                AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
-
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
+                CursorVisibility.WaitForKey();
 
                 var activeCustomers = dbContext.Customer.Where(c => !c.IsActive).ToList();
 
@@ -245,12 +214,8 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(reactivatedCustomer);
-                AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
+                CursorVisibility.WaitForKey();
 
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
                 Console.Clear();
             }
         }

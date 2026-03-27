@@ -2,6 +2,7 @@
 using HotelApp.Data;
 using HotelApp.MenuData;
 using HotelApp.Models;
+using HotelApp.Services.CreateBookingServices;
 using HotelApp.UI;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
@@ -16,85 +17,42 @@ namespace HotelApp.Services
             AnsiConsole.Clear();
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
+            BookingDate bookingConditions = new BookingDate();
+            AvailableRooms available = new AvailableRooms();
+            CustomerSelection customerSelection = new CustomerSelection();
 
             using (var dbContext = new ApplicationDbContext())
             {
-                // 1️. Ange datum först
-                DateOnly startDate = VarValidater.GetValidBookingDate("Ange startdatum (yyyy-MM-dd): ");
-                DateOnly endDate = VarValidater.GetValidBookingDate("Ange slutdatum (yyyy-MM-dd): ");
+                // 1. välj datum och antal gäster
+                var result = bookingConditions.SetVisitingConditions();
+                var startDate = result.StartDate;
+                var endDate = result.EndDate;
+                int numberOfGuests = result.NumberOfGuests;
 
-                if (endDate < startDate)
+                // 2️. Filtrera fram lediga rum under perioden                
+                var availableRooms = available.SetAvailableRooms(startDate, endDate, numberOfGuests);
+
+                if(availableRooms == null || availableRooms.Any())
                 {
-                    AnsiConsole.MarkupLine("[red]Slutdatum kan inte vara före startdatum.[/]");
+                    AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
                     return;
                 }
-                var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
-
-                // 2️. Filtrera fram lediga rum under perioden
-                var availableRooms = dbContext.Room.Where(r => r.IsActive).Include(r => r.Bookings).ToList()
-                    .Where(r => r.IsAvailable(startDate, endDate)).Where(r => r.TotalBeds >= numberOfGuests)
-                    .ToList();
-
-
-                if (!availableRooms.Any())
-                {
-                    AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga under de valda datumen.[/]");
-                    return;
-                }
-
                 // 3️. Visa lediga rum och välj
-                var roomPanels = availableRooms.Select(r =>
-                {
-                    var totalCost = r.GetTotalPrice(startDate, endDate);
+                var selectedRoom = available.SelectRoom(availableRooms, startDate, endDate);
 
-                    return new Panel($"[yellow]Rum:[/] {r.RoomName}  [blue]Typ:[/] {r.RoomType}  " +
-                        $"[yellow]Pris/natt:[/] {r.Price:C} [blue]TotalPris:[/] {totalCost} " +
-                        $"[yellow]Antal sängar:[/] {r.Beds} [blue]Antal extrasängar:[/] {r.ExtraBeds}")
-                        .Border(BoxBorder.Rounded)
-                        .Padding(1, 1)
-                        .Header($"{r.RoomId}: {r.RoomName}")
-                        .Expand();
-                }).ToList();
 
-                AnsiConsole.MarkupLine("[bold]Lediga rum:[/]");
-                AnsiConsole.Write(new Columns(roomPanels));
-
-                int selectedRoomId = VarValidater.GetRequiredInt("Ange rummets ID i listan: ");
-                var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomId == selectedRoomId);
-                if (selectedRoom == null)
-                {
-                    AnsiConsole.MarkupLine("[red]Ogiltigt ID försök igen.[/]");
-                    return;
-                }
-
-                // 4️. Välj kund
-                var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
+                // 4️. visa kund
+                var activeCustomers = customerSelection.SetAvailableCustomers();
                 if (!activeCustomers.Any())
                 {
                     AnsiConsole.MarkupLine("[red]Inga aktiva kunder att boka för.[/]");
+                    AnsiConsole.MarkupLine("[yellow]Vill Du skapa en ny kund?[/]");
                     return;
                 }
+                //5. välj kund
+                var selectedCustomer = customerSelection.SelectCustomer(activeCustomers);
 
-                var customerPanels = activeCustomers.Select((c, idx) =>
-                    new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}")
-                        .Border(BoxBorder.Rounded)
-                        .Padding(1, 1)
-                        .Header($"{idx}: {c.LastName}")
-                        .Expand()
-                ).ToList();
-
-                AnsiConsole.MarkupLine("[bold]Välj kund:[/]");
-                AnsiConsole.Write(new Columns(customerPanels));
-
-                int customerIndex = VarValidater.GetRequiredInt("Ange kundens nummer i listan: ");
-                var selectedCustomer = activeCustomers.ElementAtOrDefault(customerIndex);
-                if (selectedCustomer == null)
-                {
-                    AnsiConsole.MarkupLine("[red]Ogiltigt val.[/]");
-                    return;
-                }
-
-                // 5️. Skapa bokning
+                // 6. Skapa bokning
                 var newBooking = new Booking
                 {
                     CustomerId = selectedCustomer.CustomerId,
@@ -105,18 +63,13 @@ namespace HotelApp.Services
 
                 dbContext.Booking.Add(newBooking);
                 dbContext.SaveChanges();
-
+                //7. Ge totalpris
                 decimal totalCost = newBooking.DurationDays * selectedRoom.Price;
                 AnsiConsole.MarkupLine($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]");
             }
 
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            Console.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
+            CursorVisibility.WaitForKey();
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
         }
 
         public void Delete()
@@ -129,13 +82,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-                AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
-
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
+                CursorVisibility.WaitForKey();
 
                 var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).Where(f => f.IsActive).ToList();
                 if (!activeBookings.Any())
@@ -172,11 +119,7 @@ namespace HotelApp.Services
                 };
                 AnsiConsole.Write(removedbooking);
                 AnsiConsole.WriteLine();
-                AnsiConsole.Write(pressAnyKeyMessage);
-
-                Console.CursorVisible = false;
-                Console.ReadKey(true);
-                Console.CursorVisible = true;
+                CursorVisibility.WaitForKey();
                 Console.Clear();
 
             }
@@ -222,14 +165,7 @@ namespace HotelApp.Services
 
                 AnsiConsole.Write(new Columns(panels));
             }
-
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
-
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
+            CursorVisibility.WaitForKey();
         }
 
         public void ReadDeleted()
@@ -245,13 +181,8 @@ namespace HotelApp.Services
                 Justification = Justify.Center
             };
             AnsiConsole.Write(selectMessage);
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
+            CursorVisibility.WaitForKey();
 
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
             using (var dbContext = new ApplicationDbContext())
             {
                 var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();

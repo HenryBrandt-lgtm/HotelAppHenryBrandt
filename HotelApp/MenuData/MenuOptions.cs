@@ -23,7 +23,7 @@ namespace HotelApp.MenuData
                 new("Se alla bokningar", bookingCrud.Read),
                 new("Uppdatera bokning", bookingCrud.Update),
                 new("Ta bort bokning", bookingCrud.Delete),
-                new("Go back to Main Menu", exitAction)
+                new("Gå tillbaka till huvudmenyn", exitAction)
                
             };
         }
@@ -37,7 +37,7 @@ namespace HotelApp.MenuData
                 new ("Radera gäst", customerCrud.Delete),
                 new ("Se inaktiva gäster", customerCrud.ReadDeleted),
                 new ("Återaktivera gäster", customerCrud.Reactivate),
-                new ("Go back to Main Menu", exitAction)
+                new ("Gå tillbaka till huvudmenyn", exitAction)
             };
         }
         public static List<MenuItem> RoomMenu(ICrud roomCrud, Action exit)
@@ -50,7 +50,7 @@ namespace HotelApp.MenuData
                 new("Radera rum", roomCrud.Delete),
                 new("Se inaktiva rum", roomCrud.ReadDeleted),
                 new("Aktivera inaktiva rum", roomCrud.Reactivate),
-                new("Go back to Main Menu", exit)
+                new("Gå tillbaka till huvudmenyn", exit)
             };
         }
     }

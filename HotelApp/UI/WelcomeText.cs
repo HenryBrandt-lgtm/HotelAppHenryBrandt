@@ -12,19 +12,12 @@ namespace HotelApp.UI
                 Justification = Justify.Center
             };
 
-            var header = HeaderDisplay.GetHeader();
-
-            var pressAnyKeyMessage = Messages.GetPressAnyKeyText();
-            
+            var header = HeaderDisplay.GetHeader();           
 
             AnsiConsole.Write(welcomeTo);
             AnsiConsole.Write(header);
-            AnsiConsole.WriteLine();
-            AnsiConsole.Write(pressAnyKeyMessage);
-
-            Console.CursorVisible = false;
-            Console.ReadKey(true);
-            Console.CursorVisible = true;
+            
+            CursorVisibility.WaitForKey();
         }
     }
 }

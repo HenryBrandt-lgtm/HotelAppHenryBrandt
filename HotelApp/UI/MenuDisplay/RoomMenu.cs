@@ -18,7 +18,7 @@ namespace HotelApp.UI.MenuDisplay
                 var menuItems = MenuOptions.RoomMenu(roomCrud,
                     () =>
                     {
-                        var terminating = new Text("Going back to MainMenu...", new Style(Color.Red))
+                        var terminating = new Text("Går tillbaka till huvudmenyn...", new Style(Color.Red))
                         {
                             Justification = Justify.Center
                         };
