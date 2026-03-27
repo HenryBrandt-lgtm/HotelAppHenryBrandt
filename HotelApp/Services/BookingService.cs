@@ -4,6 +4,7 @@ using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.Services.CreateBookingServices;
 using HotelApp.UI;
+using HotelApp.UI.MenuDisplay;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
 
@@ -20,6 +21,7 @@ namespace HotelApp.Services
             BookingDate bookingConditions = new BookingDate();
             AvailableRooms available = new AvailableRooms();
             CustomerSelection customerSelection = new CustomerSelection();
+            CustomerService customerService = new CustomerService();
 
             using (var dbContext = new ApplicationDbContext())
             {
@@ -32,25 +34,19 @@ namespace HotelApp.Services
                 // 2️. Filtrera fram lediga rum under perioden                
                 var availableRooms = available.SetAvailableRooms(startDate, endDate, numberOfGuests);
 
-                if(availableRooms == null || availableRooms.Any())
+                if (availableRooms == null || availableRooms.Count == 0)
                 {
                     AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
+                    CursorVisibility.WaitForKey();
                     return;
                 }
                 // 3️. Visa lediga rum och välj
                 var selectedRoom = available.SelectRoom(availableRooms, startDate, endDate);
 
 
-                // 4️. visa kund
-                var activeCustomers = customerSelection.SetAvailableCustomers();
-                if (!activeCustomers.Any())
-                {
-                    AnsiConsole.MarkupLine("[red]Inga aktiva kunder att boka för.[/]");
-                    AnsiConsole.MarkupLine("[yellow]Vill Du skapa en ny kund?[/]");
-                    return;
-                }
-                //5. välj kund
-                var selectedCustomer = customerSelection.SelectCustomer(activeCustomers);
+                // 4️. välj/skapa kund
+                
+                var selectedCustomer = customerSelection.SelectOrCreateCustomer(customerService);                
 
                 // 6. Skapa bokning
                 var newBooking = new Booking
@@ -84,7 +80,7 @@ namespace HotelApp.Services
                 AnsiConsole.Write(selectMessage);
                 CursorVisibility.WaitForKey();
 
-                var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).Where(f => f.IsActive).ToList();
+                var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
                 if (!activeBookings.Any())
                 {
                     AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");

@@ -7,43 +7,50 @@ namespace HotelApp.Services.CreateBookingServices
 {
     public class CustomerSelection
     {
-
-        public List<Customer> SetAvailableCustomers()
+        public Customer SelectOrCreateCustomer(CustomerService customerService)
         {
-            using (var dbContext = new ApplicationDbContext())
+            using var dbContext = new ApplicationDbContext();
             {
-                var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
+                while (true)
+                {
+                    Console.Clear();
+                    var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
 
+                    var customerPanels = activeCustomers.Select((c, idx) =>
+                        new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}")
+                            .Border(BoxBorder.Rounded)
+                            .Padding(1, 1)
+                            .Header($"{idx}: {c.LastName}")
+                            .Expand()
+                    ).ToList();
 
-                var customerPanels = activeCustomers.Select((c, idx) =>
-                    new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}")
+                    var createNewPanel = new Panel("[green]Skapa ny kund[/]")
                         .Border(BoxBorder.Rounded)
                         .Padding(1, 1)
-                        .Header($"{idx}: {c.LastName}")
-                        .Expand()
-                ).ToList();
-                AnsiConsole.MarkupLine("[bold]Välj kund:[/]");
-                AnsiConsole.Write(new Columns(customerPanels));
-                return activeCustomers;
-            }
-        }
-        public Customer SelectCustomer(List<Customer> activeCustomers)
-        {
+                        .Header($"{activeCustomers.Count}: Ny kund")
+                        .Expand();
 
-            while (true)
-            {
-                int customerIndex = VarValidater.GetRequiredInt("Ange kundens nummer i listan: ");
+                    customerPanels.Add(createNewPanel);
 
-                var selectedCustomer = activeCustomers.ElementAtOrDefault(customerIndex);
+                    AnsiConsole.MarkupLine("[bold]Välj kund:[/]");
+                    AnsiConsole.Write(new Columns(customerPanels));
 
-                if (selectedCustomer != null)
-                {
-                    return selectedCustomer;
+                    int customerIndex = VarValidater.GetRequiredInt("Ange kundens nummer i listan: ");
+
+                    if (customerIndex == activeCustomers.Count)
+                    {
+                        customerService.Create();
+                        continue;
+                    }
+
+                    var selectedCustomer = activeCustomers.ElementAtOrDefault(customerIndex);
+                    if (selectedCustomer != null)
+                        return selectedCustomer;
+
+                    AnsiConsole.MarkupLine("[red]Ogiltigt val, försök igen.[/]");
                 }
-                AnsiConsole.MarkupLine("[red]Ogiltigt val.[/]");
-
             }
-
         }
     }
 }
+

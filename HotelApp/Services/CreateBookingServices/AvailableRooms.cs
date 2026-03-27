@@ -24,6 +24,7 @@ namespace HotelApp.Services.CreateBookingServices
         }
         public Room SelectRoom(List<Room> availableRooms, DateOnly startDate, DateOnly endDate)
         {
+            Console.Clear();
             var roomPanels = availableRooms.Select(r =>
             {
                 var totalCost = r.GetTotalPrice(startDate, endDate);

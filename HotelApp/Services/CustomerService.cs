@@ -91,7 +91,8 @@ namespace HotelApp.Services
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                Console.WriteLine("Skapa en ny person");
+                Console.Clear();
+                Console.WriteLine("Skapa en ny gäst");
                                
                 var firstNameInput = VarValidater.GetRequiredString("Ange förnamn: ");
 
