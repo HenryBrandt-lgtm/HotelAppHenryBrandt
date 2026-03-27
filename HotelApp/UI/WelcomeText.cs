@@ -17,7 +17,7 @@ namespace HotelApp.UI
             AnsiConsole.Write(welcomeTo);
             AnsiConsole.Write(header);
             
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
         }
     }
 }

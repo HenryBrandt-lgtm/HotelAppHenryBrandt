@@ -48,7 +48,7 @@ namespace HotelApp.Services
                 };
                 AnsiConsole.Write(selectMessage);
 
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 var activeRooms = dbContext.Room.Where(c => c.IsActive).ToList();
                 if (!activeRooms.Any())
@@ -73,7 +73,7 @@ namespace HotelApp.Services
                 AnsiConsole.Write(removedRoom);
                 AnsiConsole.WriteLine();
 
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
                 Console.Clear();
             }
         }
@@ -89,7 +89,7 @@ namespace HotelApp.Services
                 };
                 AnsiConsole.Write(selectMessage);
                 
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 var activeRooms = dbContext.Room.Where(c => !c.IsActive).ToList();
 
@@ -108,7 +108,7 @@ namespace HotelApp.Services
                 };
                 AnsiConsole.Write(reactivatedCustomer);
                 AnsiConsole.WriteLine();
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
                 Console.Clear();
             }
         }
@@ -148,7 +148,7 @@ namespace HotelApp.Services
                     AnsiConsole.Write(columns);
                 }
             }
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
         }
 
         public void ReadDeleted()
@@ -173,7 +173,7 @@ namespace HotelApp.Services
                     AnsiConsole.Write(Align.Center(content));
                 }
             }           
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
         }
 
         public void Update()
@@ -185,7 +185,7 @@ namespace HotelApp.Services
             };
             AnsiConsole.Write(selectMessage);
             
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
 
             using (var dbContext = new ApplicationDbContext())
             {

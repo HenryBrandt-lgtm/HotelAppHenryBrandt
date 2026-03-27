@@ -20,7 +20,7 @@ namespace HotelApp.Services.CreateBookingServices
                 {
                     Console.Clear();
                     AnsiConsole.Write(Align.Center(new Markup("[red]Incheckning kan inte vara före dagens datum.[/]")));
-                    CursorVisibility.WaitForKey();
+                    Messages.WaitForKey();
                     continue;
                 }
                 DateTime end = CalendarMenu.CalendarController("Utceckningsdatum");                
@@ -31,14 +31,14 @@ namespace HotelApp.Services.CreateBookingServices
                 if (endDate < startDate)
                 {
                     AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före startdatum.[/]")));
-                    CursorVisibility.WaitForKey();
+                    Messages.WaitForKey();
                     continue;
                 }
                 var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
                 if (numberOfGuests <= 0)
                 {
                     AnsiConsole.Write(Align.Center(new Markup("[red]Antal gäster måste vara minst 1.[/]")));
-                    CursorVisibility.WaitForKey();
+                    Messages.WaitForKey();
                     continue;
                 }
 

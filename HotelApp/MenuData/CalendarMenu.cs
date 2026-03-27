@@ -92,7 +92,7 @@ namespace HotelApp.MenuData
                         break;
                     case ConsoleKey.Enter:
                         AnsiConsole.Write(Align.Center(new Markup($"\nDu valde: [green]{selectedDate:yyyy-MM-dd}[/]")));
-                        CursorVisibility.WaitForKey();
+                        Messages.WaitForKey();
                         return selectedDate; // Avslutar loopen
 
                     case ConsoleKey.Escape:

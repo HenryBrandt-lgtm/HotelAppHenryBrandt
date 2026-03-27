@@ -36,7 +36,7 @@ namespace HotelApp.Services
                 if (availableRooms == null || availableRooms.Count == 0)
                 {
                     AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
-                    CursorVisibility.WaitForKey();
+                    Messages.WaitForKey();
                     return;
                 }
                 // 3️. Visa lediga rum och välj
@@ -61,7 +61,7 @@ namespace HotelApp.Services
                 AnsiConsole.MarkupLine($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]");
             }
 
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
 
         }
 
@@ -75,7 +75,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 var activeBookings = dbContext.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
                 if (!activeBookings.Any())
@@ -112,7 +112,7 @@ namespace HotelApp.Services
                 };
                 AnsiConsole.Write(removedbooking);
                 AnsiConsole.WriteLine();
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
                 Console.Clear();
 
             }
@@ -158,7 +158,7 @@ namespace HotelApp.Services
 
                 AnsiConsole.Write(new Columns(panels));
             }
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
         }
 
         public void ReadDeleted()
@@ -174,7 +174,7 @@ namespace HotelApp.Services
                 Justification = Justify.Center
             };
             AnsiConsole.Write(selectMessage);
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
 
             using (var dbContext = new ApplicationDbContext())
             {

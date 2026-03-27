@@ -47,7 +47,7 @@ namespace HotelApp.Services
                 
             }
 
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
 
         }
         public void Delete()
@@ -60,7 +60,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
                 if (!activeCustomers.Any())
@@ -83,7 +83,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(removedCustomer);
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 Console.Clear();
             }
@@ -151,7 +151,7 @@ namespace HotelApp.Services
             };
             AnsiConsole.Write(selectMessage);
 
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
 
             using (var dbContext = new ApplicationDbContext())
             {
@@ -177,7 +177,7 @@ namespace HotelApp.Services
                         AnsiConsole.Write(header);
                         AnsiConsole.Write(Align.Center(new Panel($"[yellow]Förnamnet har uppdaterats till[/][cyan] {customerToUpdate.FirstName}[/]")
                             .Border(BoxBorder.Rounded)));
-                        CursorVisibility.WaitForKey();
+                        Messages.WaitForKey();
                         break;
 
                     case 1:
@@ -189,7 +189,7 @@ namespace HotelApp.Services
                         AnsiConsole.Write(Align.Center(new Panel($"[yellow]Efternamnet har uppdaterats till[/][cyan] {customerToUpdate.LastName}[/]")
                             .Border(BoxBorder.Rounded)));
 
-                        CursorVisibility.WaitForKey();
+                        Messages.WaitForKey();
                         break;
 
                     case 2:
@@ -201,7 +201,7 @@ namespace HotelApp.Services
                         AnsiConsole.Write(Align.Center(new Panel($"[yellow]Person.nr har uppdaterats till[/][cyan] {customerToUpdate.Birthday}[/]")
                             .Border(BoxBorder.Rounded)));
 
-                        CursorVisibility.WaitForKey();
+                        Messages.WaitForKey();
                         break;
                 }
 
@@ -223,7 +223,7 @@ namespace HotelApp.Services
                 }
             }
 
-            CursorVisibility.WaitForKey();
+            Messages.WaitForKey();
             Console.Clear();
 
         }
@@ -237,7 +237,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(selectMessage);
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 var activeCustomers = dbContext.Customer.Where(c => !c.IsActive).ToList();
 
@@ -255,7 +255,7 @@ namespace HotelApp.Services
                     Justification = Justify.Center
                 };
                 AnsiConsole.Write(reactivatedCustomer);
-                CursorVisibility.WaitForKey();
+                Messages.WaitForKey();
 
                 Console.Clear();
             }
