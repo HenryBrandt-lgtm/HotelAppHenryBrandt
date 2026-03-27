@@ -4,9 +4,6 @@ using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.UI;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Services
 {
@@ -243,7 +240,7 @@ namespace HotelApp.Services
                 int index = ScrollMenu.ScrollingMenu(nameOptions);
 
                 var roomToUpgrade = activeCustomers[index];
-                var updateOptions = new List<string> { "FirstName", "LastName", "Birthday" };
+                var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)", "Pris/natt" };
 
                 int updateIndex = ScrollMenu.ScrollingMenu(updateOptions);
 
@@ -254,7 +251,7 @@ namespace HotelApp.Services
                         break;
 
                     case 1:
-                        roomToUpgrade.Area = VarValidater.GetRequiredInt("Ny storleki kvm: ");
+                        roomToUpgrade.Area = VarValidater.GetRequiredInt("Ny storlek i kvm: ");
                         break;
 
                     case 2:

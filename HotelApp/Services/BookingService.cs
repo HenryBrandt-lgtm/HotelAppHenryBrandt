@@ -5,9 +5,6 @@ using HotelApp.Models;
 using HotelApp.UI;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Services
 {
@@ -22,7 +19,7 @@ namespace HotelApp.Services
 
             using (var dbContext = new ApplicationDbContext())
             {
-                // 1️⃣ Ange datum först
+                // 1️. Ange datum först
                 DateOnly startDate = VarValidater.GetValidBookingDate("Ange startdatum (yyyy-MM-dd): ");
                 DateOnly endDate = VarValidater.GetValidBookingDate("Ange slutdatum (yyyy-MM-dd): ");
 
@@ -33,7 +30,7 @@ namespace HotelApp.Services
                 }
                 var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
 
-                // 2️⃣ Filtrera fram lediga rum under perioden
+                // 2️. Filtrera fram lediga rum under perioden
                 var availableRooms = dbContext.Room.Where(r => r.IsActive).Include(r => r.Bookings).ToList()
                     .Where(r => r.IsAvailable(startDate, endDate)).Where(r => r.TotalBeds >= numberOfGuests)
                     .ToList();
@@ -45,7 +42,7 @@ namespace HotelApp.Services
                     return;
                 }
 
-                // 3️⃣ Visa lediga rum och välj
+                // 3️. Visa lediga rum och välj
                 var roomPanels = availableRooms.Select(r =>
                 {
                     var totalCost = r.GetTotalPrice(startDate, endDate);
@@ -70,7 +67,7 @@ namespace HotelApp.Services
                     return;
                 }
 
-                // 4️⃣ Välj kund
+                // 4️. Välj kund
                 var activeCustomers = dbContext.Customer.Where(c => c.IsActive).ToList();
                 if (!activeCustomers.Any())
                 {
@@ -97,7 +94,7 @@ namespace HotelApp.Services
                     return;
                 }
 
-                // 5️⃣ Skapa bokning
+                // 5️. Skapa bokning
                 var newBooking = new Booking
                 {
                     CustomerId = selectedCustomer.CustomerId,
@@ -181,7 +178,7 @@ namespace HotelApp.Services
                 Console.ReadKey(true);
                 Console.CursorVisible = true;
                 Console.Clear();
-                
+
             }
         }
 

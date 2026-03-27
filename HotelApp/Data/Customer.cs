@@ -1,15 +1,12 @@
 ﻿using HotelApp.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Models
 {
     public class Customer
     {
-        public int CustomerId { get; set; } 
+        public int CustomerId { get; set; }
 
-        public string FirstName {  get; set; }
+        public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
@@ -25,15 +22,15 @@ namespace HotelApp.Models
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public int Age ()
-        {  
+        public int Age()
+        {
             var today = DateOnly.FromDateTime(DateTime.Today);
             int age = today.Year - Birthday.Year;
             if (Birthday > today.AddYears(-age))
             {
                 age--;
             }
-            return age; 
+            return age;
         }
     }
 }
