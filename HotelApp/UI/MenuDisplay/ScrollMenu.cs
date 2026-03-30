@@ -2,11 +2,11 @@
 using Spectre.Console;
 using System;
 
-namespace HotelApp.MenuData
+namespace HotelApp.UI.MenuDisplay
 {
     public class ScrollMenu
     {
-        public static int ScrollingMenu(List<string> options)
+        public static int ShowScrollingMenu(List<string> options)
         {
             ConsoleKeyInfo key;
             int select = 0;

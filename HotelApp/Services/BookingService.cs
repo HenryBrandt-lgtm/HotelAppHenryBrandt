@@ -1,9 +1,9 @@
 ﻿using HotelApp.Controllers;
 using HotelApp.Data;
-using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.Services.CreateBookingServices;
 using HotelApp.UI;
+using HotelApp.UI.MenuDisplay;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
 
@@ -87,7 +87,7 @@ namespace HotelApp.Services
                 var bookingOptions = activeBookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
                 $"Incheckning: {f.StartDate} Utcheckning: {f.EndDate}").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(bookingOptions);
+                int index = ScrollMenu.ShowScrollingMenu(bookingOptions);
 
                 var bookingToRemove = activeBookings[index];
 
@@ -187,12 +187,12 @@ namespace HotelApp.Services
                 var bookingOptions = activeBookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
                 $"Incheckning: {f.StartDate} Utcheckning: {f.EndDate}").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(bookingOptions);
+                int index = ScrollMenu.ShowScrollingMenu(bookingOptions);
 
                 var bookingToUpdate = activeBookings[index];
                 var updateOptions = new List<string> { "Incheckningsdatum", "Utcheckningsdatum", "Rum" };
 
-                int updateIndex = ScrollMenu.ScrollingMenu(updateOptions);
+                int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
 
                 switch (updateIndex)
                 {

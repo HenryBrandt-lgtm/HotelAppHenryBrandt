@@ -1,8 +1,8 @@
 ﻿using HotelApp.Controllers;
 using HotelApp.Data;
-using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.UI;
+using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 
 namespace HotelApp.Services
@@ -59,7 +59,7 @@ namespace HotelApp.Services
 
                 var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName} ").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(roomOptions);
+                int index = ScrollMenu.ShowScrollingMenu(roomOptions);
 
                 var roomToRemove = activeRooms[index];
                 roomToRemove.IsActive = false;
@@ -95,7 +95,7 @@ namespace HotelApp.Services
 
                 var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(roomOptions);
+                int index = ScrollMenu.ShowScrollingMenu(roomOptions);
 
                 var returningRoom = activeRooms[index];
                 returningRoom.IsActive = true;
@@ -193,12 +193,12 @@ namespace HotelApp.Services
 
                 var nameOptions = activeCustomers.Select(c => $"Id: {c.RoomId} Namn: {c.RoomName}").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(nameOptions);
+                int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
                 var roomToUpgrade = activeCustomers[index];
                 var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)", "Pris/natt" };
 
-                int updateIndex = ScrollMenu.ScrollingMenu(updateOptions);
+                int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
 
                 switch (updateIndex)
                 {

@@ -13,8 +13,7 @@ namespace HotelApp.Controllers
         public static void Build()
         {
 
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", true, true);
+            var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, true);
 
             var config = builder.Build();
 

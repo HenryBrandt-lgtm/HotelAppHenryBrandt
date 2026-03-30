@@ -1,8 +1,8 @@
 ﻿using HotelApp.Controllers;
 using HotelApp.Data;
-using HotelApp.MenuData;
 using HotelApp.Models;
 using HotelApp.UI;
+using HotelApp.UI.MenuDisplay;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Spectre.Console;
@@ -71,7 +71,7 @@ namespace HotelApp.Services
 
                 var nameOptions = activeCustomers.Select(c => $"{c.FullName} {c.Age()} år").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(nameOptions);
+                int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
                 var customerToRemove = activeCustomers[index];
                 customerToRemove.IsActive = false;
@@ -103,7 +103,7 @@ namespace HotelApp.Services
                 var ageInput = VarValidater.GetValidDateOnly("Ange födelseår (yyy-MM-dd): ");
 
                 if (dbContext.Customer.Any(c => c.FirstName == firstNameInput && c.LastName == lastNameInput))
-                    Console.WriteLine("Gästen finns redan inlagd. Dubbelkika bland raderade gäster om hen har blivit inaktiverad");
+                    Console.WriteLine("Gästen finns redan inlagd. Dubbelkika bland raderade gäster om hen är inaktiverad");
                 else
                 {
                     var timeNow = DateOnly.FromDateTime(DateTime.Today);
@@ -159,12 +159,12 @@ namespace HotelApp.Services
 
                 var nameOptions = activeCustomers.Select(c => $"Namn: {c.FullName} person.nr: {c.Birthday}").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(nameOptions);
+                int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
                 var customerToUpdate = activeCustomers[index];
                 var updateOptions = new List<string> { "FirstName", "LastName", "Birthday" };
 
-                int updateIndex = ScrollMenu.ScrollingMenu(updateOptions);
+                int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
                 var header = HeaderDisplay.GetHeader();
 
                 switch (updateIndex)
@@ -243,7 +243,7 @@ namespace HotelApp.Services
 
                 var nameOptions = activeCustomers.Select(c => $"{c.FullName} {c.Age()} år").ToList();
 
-                int index = ScrollMenu.ScrollingMenu(nameOptions);
+                int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
                 var returningCustomer = activeCustomers[index];
                 returningCustomer.IsActive = true;

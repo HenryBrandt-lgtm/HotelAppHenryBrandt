@@ -2,7 +2,6 @@
 using HotelApp.Data;
 using HotelApp.Services;
 using HotelApp.UI;
-using kassasystem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

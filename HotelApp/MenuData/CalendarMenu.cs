@@ -57,7 +57,7 @@ namespace HotelApp.MenuData
 
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
-            var content = new Rows(panel, new Markup($"\nAnvänd piltangenter [blue]< > ^ v[/] för att " +
+            var content = new Rows(panel, new Markup($"\nAnvänd piltangenter [cyan]< > ^ v[/] för att " +
                $"\nnavigera och [green]Enter[/] för att välja [yellow]{message}[/]."));
             AnsiConsole.Write(Align.Center(content));
             Console.CursorVisible = false;
@@ -67,6 +67,7 @@ namespace HotelApp.MenuData
         {
             DateTime currentDate = DateTime.Now;
             DateTime selectedDate = new DateTime(currentDate.Year, currentDate.Month, 1);
+
 
             while (true)
             {

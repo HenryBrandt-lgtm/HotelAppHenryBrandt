@@ -6,7 +6,7 @@ namespace HotelApp.Data
 {
     public class Invoice
     {
-        public int Id { get; set; }
+        public int InvoiceId { get; set; }
 
         public decimal Amount { get; set; }
 

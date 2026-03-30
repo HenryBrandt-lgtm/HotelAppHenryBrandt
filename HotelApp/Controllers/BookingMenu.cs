@@ -1,11 +1,12 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
+using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelApp.UI.MenuDisplay
+namespace HotelApp.Controllers
 {
     public class BookingMenu
     {
@@ -15,8 +16,7 @@ namespace HotelApp.UI.MenuDisplay
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.BookingMenu(bookingCrud,
-                     () =>
+                var menuItems = MenuOptions.BookingMenu(bookingCrud, () =>
                      {
                          var terminating = new Text("Går tillbaka till huvudmenyn...", new Style(Color.Red))
                          {
@@ -29,7 +29,7 @@ namespace HotelApp.UI.MenuDisplay
                      });
                 var items = menuItems.Select(m => m.Title).ToList();
 
-                var option = ScrollMenu.ScrollingMenu(items);
+                var option = ScrollMenu.ShowScrollingMenu(items);
 
                 Console.CursorVisible = true;
 

@@ -4,7 +4,7 @@ using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 
-namespace kassasystem
+namespace HotelApp.Controllers
 {
     public class MainMenu
     {
@@ -14,7 +14,7 @@ namespace kassasystem
             while (!exitMenu)
             {
 
-                var option = ScrollMenu.ScrollingMenu(MenuOptions.MainMenu());
+                var option = ScrollMenu.ShowScrollingMenu(MenuOptions.MainMenu());
                 Console.CursorVisible = true;
 
                 switch (option)

@@ -1,11 +1,12 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
+using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelApp.UI.MenuDisplay
+namespace HotelApp.Controllers
 {
     internal class RoomMenu
     {
@@ -30,7 +31,7 @@ namespace HotelApp.UI.MenuDisplay
 
                 var titles = menuItems.Select(m => m.Title).ToList();
 
-                var option = ScrollMenu.ScrollingMenu(titles);
+                var option = ScrollMenu.ShowScrollingMenu(titles);
 
                 Console.CursorVisible = true;
 
