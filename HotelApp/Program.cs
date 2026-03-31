@@ -16,6 +16,10 @@ namespace HotelApp
             //Lägga till en README FIIL
 
             //I datainitilicer där jag seedar. Kan jag göra det till listor där jag jämför flera saker, dvs kan korta ner allt?
+
+            //skriv i readme
+
+            //Ska man kunna checka in ?
         }
     }
 }

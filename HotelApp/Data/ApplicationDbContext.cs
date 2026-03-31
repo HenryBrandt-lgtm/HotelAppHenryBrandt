@@ -23,12 +23,12 @@ namespace HotelApp.Data
             : base(options)
         { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=.;Database=HenrysHotel;Trusted_Connection=True;TrustServerCertificate=true;");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(@"Server=.;Database=HenrysHotel;Trusted_Connection=True;TrustServerCertificate=true;");
+        //    }
+        //}
     }
 }
