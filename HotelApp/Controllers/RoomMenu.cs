@@ -8,23 +8,23 @@ using System.Text;
 
 namespace HotelApp.Controllers
 {
-    internal class RoomMenu
+    public class RoomMenu
     {
-        public static void ShowRoomMenu()
+        private readonly RoomService _roomService;
+
+        public RoomMenu(RoomService roomService)
         {
-            ICrud roomCrud = new RoomService();
+            _roomService = roomService;
+        }
+        public void ShowRoomMenu()
+        {
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.RoomMenu(roomCrud,
+                var menuItems = MenuOptions.RoomMenu(_roomService,
                     () =>
                     {
-                        var terminating = new Text("Går tillbaka till huvudmenyn...", new Style(Color.Red))
-                        {
-                            Justification = Justify.Center
-                        };
-
-                        AnsiConsole.Write(terminating);
+                        AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");
                         Thread.Sleep(1000);
                         exitMenu = true;
                     });

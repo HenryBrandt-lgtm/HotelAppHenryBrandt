@@ -8,8 +8,19 @@ namespace HotelApp.Controllers
 {
     public class MainMenu
     {
-        public static void ShowMainMenu()
+        private readonly BookingService _bookingService;
+        private readonly BookingMenu _bookingMenu;
+        private readonly CustomerMenu _customerMenu;
+        private readonly RoomMenu _roomMenu;
+
+        public MainMenu(BookingService bookingService)
         {
+            _bookingService = bookingService;
+        }
+        
+        public void ShowMainMenu(BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
+        {
+
             bool exitMenu = false;
             while (!exitMenu)
             {
@@ -20,20 +31,19 @@ namespace HotelApp.Controllers
                 switch (option)
                 {
                     case 0:
-                        var bookingService = new BookingService();
-                        bookingService.Create();
+                        _bookingService.Create();
                         break;
                     case 1:
                         Console.Clear();
-                        BookingMenu.ShowBookingMenu();
+                        bookingMenu.ShowBookingMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        CustomerMenu.ShowCustomerMenu();
+                        customerMenu.ShowCustomerMenu();
                         break;
                     case 3:
                         Console.Clear();
-                        RoomMenu.ShowRoomMenu();
+                        roomMenu.ShowRoomMenu();
                         break;
                     case 4:
                         var terminating = new Text("Terminating...", new Style(Color.Red))
