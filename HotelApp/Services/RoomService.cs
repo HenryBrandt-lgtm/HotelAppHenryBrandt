@@ -25,11 +25,11 @@ namespace HotelApp.Services
 
             var roomPrizeInput = VarValidater.GetRequiredDecimal("Ange rummets pris: ");
 
-            if (_db.Room.Any(r => r.RoomName == roomNameInput))
+            if (_db.Rooms.Any(r => r.RoomName == roomNameInput))
                 Console.WriteLine("Rummet finns redan inlagt. Dubbelkika bland raderade rum om det har blivit inavktiverat");
             else
             {
-                _db.Room.Add(new Room
+                _db.Rooms.Add(new Room
                 {
                     RoomName = roomNameInput,
                     Area = roomSizeInput,
@@ -53,7 +53,7 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
 
-            var activeRooms = _db.Room.Where(c => c.IsActive).ToList();
+            var activeRooms = _db.Rooms.Where(c => c.IsActive).ToList();
             if (!activeRooms.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga rum att radera.[/]");
@@ -93,7 +93,7 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
 
-            var activeRooms = _db.Room.Where(c => !c.IsActive).ToList();
+            var activeRooms = _db.Rooms.Where(c => !c.IsActive).ToList();
 
             var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
 
@@ -121,7 +121,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
 
-            var activeRooms = _db.Room.Where(r => r.IsActive).ToList();
+            var activeRooms = _db.Rooms.Where(r => r.IsActive).ToList();
             if (!activeRooms.Any())
             {
                 AnsiConsole.WriteLine("Inga aktiva rum att visa.");
@@ -159,7 +159,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
 
-            foreach (var room in _db.Room.Where(r => !r.IsActive))
+            foreach (var room in _db.Rooms.Where(r => !r.IsActive))
             {
 
                 var content = new Markup($"[yellow]Rum:[/] {room.RoomName}" +
@@ -188,7 +188,7 @@ namespace HotelApp.Services
             Messages.WaitForKey();
 
 
-            var activeCustomers = _db.Room.Where(c => c.IsActive).ToList();
+            var activeCustomers = _db.Rooms.Where(c => c.IsActive).ToList();
 
             var nameOptions = activeCustomers.Select(c => $"Id: {c.RoomId} Namn: {c.RoomName}").ToList();
 

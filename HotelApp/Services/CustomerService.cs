@@ -21,7 +21,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
 
-            var activeGuests = _db.Customer.Where(c => c.IsActive == true);
+            var activeGuests = _db.Customers.Where(c => c.IsActive == true);
             if (!activeGuests.Any())
             {
                 AnsiConsole.WriteLine("Inga aktiva gäster att visa.");
@@ -60,7 +60,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(selectMessage);
             Messages.WaitForKey();
 
-            var activeCustomers = _db.Customer.Where(c => c.IsActive).ToList();
+            var activeCustomers = _db.Customers.Where(c => c.IsActive).ToList();
             if (!activeCustomers.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga gäster att radera.[/]");
@@ -99,7 +99,7 @@ namespace HotelApp.Services
 
             var ageInput = VarValidater.GetValidDateOnly("Ange födelseår (yyy-MM-dd): ");
 
-            if (_db.Customer.Any(c => c.FirstName == firstNameInput && c.LastName == lastNameInput))
+            if (_db.Customers.Any(c => c.FirstName == firstNameInput && c.LastName == lastNameInput))
                 Console.WriteLine("Gästen finns redan inlagd. Dubbelkika bland raderade gäster om hen är inaktiverad");
             else
             {
@@ -126,7 +126,7 @@ namespace HotelApp.Services
                 else
                 {
                     AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
-                    _db.Customer.Add(new Customer
+                    _db.Customers.Add(new Customer
                     {
                         FirstName = firstNameInput,
                         LastName = lastNameInput,
@@ -151,7 +151,7 @@ namespace HotelApp.Services
             Messages.WaitForKey();
 
 
-            var activeCustomers = _db.Customer.Where(c => c.IsActive).ToList();
+            var activeCustomers = _db.Customers.Where(c => c.IsActive).ToList();
 
             var nameOptions = activeCustomers.Select(c => $"Namn: {c.FullName} person.nr: {c.Birthday}").ToList();
 
@@ -208,7 +208,7 @@ namespace HotelApp.Services
         public void ReadDeleted()
         {
 
-            foreach (var guest in _db.Customer.Where(c => c.IsActive == false))
+            foreach (var guest in _db.Customers.Where(c => c.IsActive == false))
             {
                 var content = new Markup($"[yellow]Namn:[/] {guest.FullName}" +
                     $"\n [blue]Ålder:[/] {guest.Age()}" +
@@ -233,7 +233,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(selectMessage);
             Messages.WaitForKey();
 
-            var activeCustomers = _db.Customer.Where(c => !c.IsActive).ToList();
+            var activeCustomers = _db.Customers.Where(c => !c.IsActive).ToList();
 
             var nameOptions = activeCustomers.Select(c => $"{c.FullName} {c.Age()} år").ToList();
 

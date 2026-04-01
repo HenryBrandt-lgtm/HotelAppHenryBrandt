@@ -13,12 +13,15 @@ namespace HotelApp.Controllers
         private readonly CustomerMenu _customerMenu;
         private readonly RoomMenu _roomMenu;
 
-        public MainMenu(BookingService bookingService)
+        public MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
         {
             _bookingService = bookingService;
+            _bookingMenu = bookingMenu;
+            _customerMenu = customerMenu;
+            _roomMenu = roomMenu;
         }
         
-        public void ShowMainMenu(BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
+        public void ShowMainMenu()
         {
 
             bool exitMenu = false;
@@ -35,15 +38,15 @@ namespace HotelApp.Controllers
                         break;
                     case 1:
                         Console.Clear();
-                        bookingMenu.ShowBookingMenu();
+                        _bookingMenu.ShowBookingMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        customerMenu.ShowCustomerMenu();
+                        _customerMenu.ShowCustomerMenu();
                         break;
                     case 3:
                         Console.Clear();
-                        roomMenu.ShowRoomMenu();
+                        _roomMenu.ShowRoomMenu();
                         break;
                     case 4:
                         var terminating = new Text("Terminating...", new Style(Color.Red))

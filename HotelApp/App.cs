@@ -20,8 +20,7 @@ namespace HotelApp
             // services
             var services = new ServiceCollection();
             services.AddSingleton<IConfiguration>(config);
-            services.AddDbContext<ApplicationDbContext>(opts =>
-                opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<DataInitializer>();
             services.AddScoped<BookingService>();
             services.AddScoped<CustomerService>();
@@ -31,22 +30,19 @@ namespace HotelApp
             services.AddScoped<CustomerMenu>();
             services.AddScoped<RoomMenu>();
 
-            // ... other services
+            // ... other stuff
 
             using var provider = services.BuildServiceProvider();
             using var scope = provider.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var initializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
             var mainMenu = scope.ServiceProvider.GetRequiredService<MainMenu>();
-            var customerMenu = scope.ServiceProvider.GetRequiredService<CustomerMenu>();
-            var roomMenu = scope.ServiceProvider.GetRequiredService<RoomMenu>();
-            var bookingMenu = scope.ServiceProvider.GetRequiredService<BookingMenu>();
 
             initializer.MigrateAndSeed(db);
 
             // proceed to run UI
             WelcomeText.WelcomeScreen();
-            mainMenu.ShowMainMenu(bookingMenu, customerMenu, roomMenu);
+            mainMenu.ShowMainMenu();
         }
     }
 }

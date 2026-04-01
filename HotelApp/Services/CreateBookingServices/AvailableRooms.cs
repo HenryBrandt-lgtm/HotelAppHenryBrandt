@@ -11,16 +11,22 @@ namespace HotelApp.Services.CreateBookingServices
 {
     public class AvailableRooms
     {
+        private readonly ApplicationDbContext _db;
+
+        public AvailableRooms(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public List<Room> SetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfGuests)
         {
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var rooms = dbContext.Room.Where(r => r.IsActive).Include(r => r.Bookings).ToList()
-                    .Where(r => r.IsAvailable(startDate, endDate) && r.TotalBeds >= numberOfGuests)
-                    .ToList();
 
-                return rooms;
-            }
+            var rooms = _db.Rooms.Where(r => r.IsActive).Include(r => r.Bookings).ToList()
+                .Where(r => r.IsAvailable(startDate, endDate) && r.TotalBeds >= numberOfGuests)
+                .ToList();
+
+            return rooms;
+
         }
         public Room SelectRoom(List<Room> availableRooms, DateOnly startDate, DateOnly endDate)
         {

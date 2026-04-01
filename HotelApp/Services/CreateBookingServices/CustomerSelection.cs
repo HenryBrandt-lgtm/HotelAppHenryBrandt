@@ -18,7 +18,7 @@ namespace HotelApp.Services.CreateBookingServices
             while (true)
             {
                 Console.Clear();
-                var activeCustomers = _db.Customer.Where(c => c.IsActive).ToList();
+                var activeCustomers = _db.Customers.Where(c => c.IsActive).ToList();
 
                 var customerPanels = activeCustomers.Select((c, idx) =>
                     new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}")

@@ -25,7 +25,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
             BookingDate bookingConditions = new BookingDate();
-            AvailableRooms available = new AvailableRooms();
+            AvailableRooms available = new AvailableRooms(_db);
             CustomerSelection customerSelection = new CustomerSelection(_db);
             CustomerService customerService = new CustomerService(_db);
 
@@ -60,7 +60,7 @@ namespace HotelApp.Services
                 EndDate = endDate,
             };
 
-            _db.Booking.Add(newBooking);
+            _db.Bookings.Add(newBooking);
             _db.SaveChanges();
             //7. Ge totalpris
             decimal totalCost = selectedRoom.GetTotalPrice(startDate, endDate);
@@ -82,7 +82,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(selectMessage);
             Messages.WaitForKey();
 
-            var activeBookings = _db.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
+            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
             if (!activeBookings.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");
@@ -108,7 +108,7 @@ namespace HotelApp.Services
                 AnsiConsole.MarkupLine("[green]Borttagning avbruten.[/]");
                 return;
             }
-            _db.Booking.Remove(bookingToRemove);
+            _db.Bookings.Remove(bookingToRemove);
             _db.SaveChanges();
 
             var removedbooking = new Text($"Bokning med ID: {bookingToRemove.BookingId} har blivit raderad.", new Style(Color.Red))
@@ -136,12 +136,12 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine();
 
 
-            var activeBookings = _db.Booking.Include(b => b.Customer).Include(b => b.Room).ToList()
+            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList()
                 .Where(b => b.IsActive).ToList();
 
             if (!activeBookings.Any())
             {
-                AnsiConsole.WriteLine("[red]Inga aktiva bokningar att visa.[/]");
+                AnsiConsole.MarkupLine("[red]Inga aktiva bokningar att visa.[/]");
                 Messages.WaitForKey();
                 return;
             }
@@ -182,7 +182,7 @@ namespace HotelApp.Services
             Messages.WaitForKey();
 
 
-            var activeBookings = _db.Booking.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
+            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
             if (!activeBookings.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");
@@ -233,7 +233,7 @@ namespace HotelApp.Services
                     break;
 
                 case 2:
-                    var availableRooms = _db.Room.Include(r => r.Bookings).Where(r => r.IsActive).ToList()
+                    var availableRooms = _db.Rooms.Include(r => r.Bookings).Where(r => r.IsActive).ToList()
                         .Where(r => r.IsAvailable(bookingToUpdate.StartDate, bookingToUpdate.EndDate, bookingToUpdate.BookingId)).ToList();
 
                     if (availableRooms.Count == 0)

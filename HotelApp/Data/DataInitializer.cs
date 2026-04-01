@@ -14,9 +14,9 @@ namespace HotelApp.Data
         }
         private void SeedCustomers(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Customer.Any(c => c.FirstName == "Henry" && c.LastName == "Brandt"))
+            if (!dbContext.Customers.Any(c => c.FirstName == "Henry" && c.LastName == "Brandt"))
             {
-                dbContext.Customer.Add(new Customer
+                dbContext.Customers.Add(new Customer
                 {
                     FirstName = "Henry",
                     LastName = "Brandt",
@@ -24,9 +24,9 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Hanna" && c.LastName == "Verlage"))
+            if (!dbContext.Customers.Any(c => c.FirstName == "Hanna" && c.LastName == "Verlage"))
             {
-                dbContext.Customer.Add(new Customer
+                dbContext.Customers.Add(new Customer
                 {
                     FirstName = "Hanna",
                     LastName = "Verlage",
@@ -34,9 +34,9 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Alex" && c.LastName == "Araujo"))
+            if (!dbContext.Customers.Any(c => c.FirstName == "Alex" && c.LastName == "Araujo"))
             {
-                dbContext.Customer.Add(new Customer
+                dbContext.Customers.Add(new Customer
                 {
                     FirstName = "Alex",
                     LastName = "Araujo",
@@ -44,9 +44,9 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Customer.Any(c => c.FirstName == "Mirza" && c.LastName == "Hujic"))
+            if (!dbContext.Customers.Any(c => c.FirstName == "Mirza" && c.LastName == "Hujic"))
             {
-                dbContext.Customer.Add(new Customer
+                dbContext.Customers.Add(new Customer
                 {
                     FirstName = "Mirza",
                     LastName = "Hujic",
@@ -57,9 +57,9 @@ namespace HotelApp.Data
         }
         private void SeedRooms(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Room.Any(r => r.RoomName == "Luxury OneBed"))
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Luxury OneBed"))
             {
-                dbContext.Room.Add(new Room
+                dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Luxury OneBed",
                     Area = 12,
@@ -67,19 +67,19 @@ namespace HotelApp.Data
                     IsActive = true
                 });
             }
-            if (!dbContext.Room.Any(r => r.RoomName == "Regular OneBed"))
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Regular TwoBed"))
             {
-                dbContext.Room.Add(new Room
+                dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Regular OneBed",
-                    Area = 10,
-                    Price = 150,
+                    RoomName = "Regular TwoBed",
+                    Area = 16,
+                    Price = 280,
                     IsActive= true
                 });
             }
-            if (!dbContext.Room.Any(r => r.RoomName == "Buffert OneBed"))
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Buffert OneBed"))
             {
-                dbContext.Room.Add(new Room
+                dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Buffert OneBed",
                     Area = 9,
@@ -87,9 +87,9 @@ namespace HotelApp.Data
                     IsActive= true
                 });
             }
-            if (!dbContext.Room.Any(r => r.RoomName == "Family Room"))
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Family Room"))
             {
-                dbContext.Room.Add(new Room
+                dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Family Room",
                     Area = 20,

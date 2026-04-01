@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260331073448_initialmigrate")]
-    partial class initialmigrate
+    [Migration("20260401120009_requiredStuff")]
+    partial class requiredStuff
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace HotelApp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("HotelApp.Models.Booking", b =>
@@ -75,7 +75,7 @@ namespace HotelApp.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Booking");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("HotelApp.Models.Customer", b =>
@@ -102,7 +102,7 @@ namespace HotelApp.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("HotelApp.Models.Room", b =>
@@ -128,7 +128,7 @@ namespace HotelApp.Migrations
 
                     b.HasKey("RoomId");
 
-                    b.ToTable("Room");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("HotelApp.Data.Invoice", b =>
