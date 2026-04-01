@@ -31,8 +31,6 @@ namespace HotelApp.Controllers
 
                 var option = ScrollMenu.ShowScrollingMenu(titles);
 
-                Console.CursorVisible = true;
-
                 menuItems[option].Action.Invoke();
             }
         }

@@ -6,20 +6,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HotelApp.Controllers
 {
-    public class MainMenu
+    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
     {
-        private readonly BookingService _bookingService;
-        private readonly BookingMenu _bookingMenu;
-        private readonly CustomerMenu _customerMenu;
-        private readonly RoomMenu _roomMenu;
+        //private readonly BookingService _bookingService;
+        //private readonly BookingMenu _bookingMenu;
+        //private readonly CustomerMenu _customerMenu;
+        //private readonly RoomMenu _roomMenu;
 
-        public MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
-        {
-            _bookingService = bookingService;
-            _bookingMenu = bookingMenu;
-            _customerMenu = customerMenu;
-            _roomMenu = roomMenu;
-        }
+        //public MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
+        //{
+        //    _bookingService = bookingService;
+        //    _bookingMenu = bookingMenu;
+        //    _customerMenu = customerMenu;
+        //    _roomMenu = roomMenu;
+        //}
         
         public void ShowMainMenu()
         {
@@ -29,24 +29,23 @@ namespace HotelApp.Controllers
             {
 
                 var option = ScrollMenu.ShowScrollingMenu(MenuOptions.MainMenu());
-                Console.CursorVisible = true;
 
                 switch (option)
                 {
                     case 0:
-                        _bookingService.Create();
+                        bookingService.Create();
                         break;
                     case 1:
                         Console.Clear();
-                        _bookingMenu.ShowBookingMenu();
+                        bookingMenu.ShowBookingMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        _customerMenu.ShowCustomerMenu();
+                        customerMenu.ShowCustomerMenu();
                         break;
                     case 3:
                         Console.Clear();
-                        _roomMenu.ShowRoomMenu();
+                        roomMenu.ShowRoomMenu();
                         break;
                     case 4:
                         var terminating = new Text("Terminating...", new Style(Color.Red))

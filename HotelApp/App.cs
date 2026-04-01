@@ -17,7 +17,8 @@ namespace HotelApp
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
 
-            // services
+            // skapar upp en serviceCollection och fyller den med alla services som behövs i applikationen,
+            // inklusive DbContext och menyer
             var services = new ServiceCollection();
             services.AddSingleton<IConfiguration>(config);
             services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
@@ -30,7 +31,9 @@ namespace HotelApp
             services.AddScoped<CustomerMenu>();
             services.AddScoped<RoomMenu>();
 
-            // ... other stuff
+            // skapar upp en serviceProvider och en scope för att kunna använda de services som registrerats,
+            // inklusive databasinitialisering,
+            // kan tex skapa upp controllers och skicka genom appen
 
             using var provider = services.BuildServiceProvider();
             using var scope = provider.CreateScope();
@@ -38,6 +41,7 @@ namespace HotelApp
             var initializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
             var mainMenu = scope.ServiceProvider.GetRequiredService<MainMenu>();
 
+            // Skapar upp databasen med hjälp av migration filerna och seedar databasen med datan jag skapat upp (4pers och 4rum)
             initializer.MigrateAndSeed(db);
 
             // proceed to run UI
