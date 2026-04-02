@@ -20,6 +20,7 @@ namespace HotelApp
             // skapar upp en serviceCollection och fyller den med alla services som behövs i applikationen,
             // inklusive DbContext och menyer
             var services = new ServiceCollection();
+            //används bara en gång i början av körningen?
             services.AddSingleton<IConfiguration>(config);
             services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<DataInitializer>();
@@ -32,7 +33,7 @@ namespace HotelApp
             services.AddScoped<RoomMenu>();
 
             // skapar upp en serviceProvider och en scope för att kunna använda de services som registrerats,
-            // inklusive databasinitialisering,
+            // mainMenu och databasinitialisering,
             // kan tex skapa upp controllers och skicka genom appen
 
             using var provider = services.BuildServiceProvider();
@@ -46,7 +47,8 @@ namespace HotelApp
 
             // proceed to run UI
             WelcomeText.WelcomeScreen();
-            mainMenu.ShowMainMenu();
+            mainMenu.ShowMenu();
+
         }
     }
 }

@@ -1,24 +1,19 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
-using HotelApp.UI.MenuDisplay;
+using HotelApp.UI;
 using Spectre.Console;
 
 namespace HotelApp.Controllers
 {
-    public class BookingMenu
+    public class BookingMenu(BookingService bookingService) : IMenu
     {
-        private readonly BookingService _bookingService;
-
-        public BookingMenu(BookingService bookingService)
-        {
-            _bookingService = bookingService;
-        }
-        public void ShowBookingMenu()
+        
+        public void ShowMenu()
         {
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.BookingMenu(_bookingService, () =>
+                var menuItems = MenuOptions.BookingMenu(bookingService, () =>
                      {
                          AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");
                          Thread.Sleep(1000);

@@ -2,7 +2,6 @@
 using HotelApp.Data;
 using HotelApp.Models;
 using HotelApp.UI;
-using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 
 namespace HotelApp.Services
@@ -93,13 +92,18 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
 
-            var activeRooms = _db.Rooms.Where(c => !c.IsActive).ToList();
+            var inactiveRooms = _db.Rooms.Where(c => !c.IsActive).ToList();
+            if (!inactiveRooms.Any())
+            {
+                AnsiConsole.MarkupLine("[red]Inga  inaktiva rum att aktivera.[/]");
+                return;
+            }
 
-            var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
+            var roomOptions = inactiveRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
 
             int index = ScrollMenu.ShowScrollingMenu(roomOptions);
 
-            var returningRoom = activeRooms[index];
+            var returningRoom = inactiveRooms[index];
             returningRoom.IsActive = true;
             _db.SaveChanges();
 
@@ -124,7 +128,7 @@ namespace HotelApp.Services
             var activeRooms = _db.Rooms.Where(r => r.IsActive).ToList();
             if (!activeRooms.Any())
             {
-                AnsiConsole.WriteLine("Inga aktiva rum att visa.");
+                AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
                 return;
             }
             else
@@ -159,7 +163,15 @@ namespace HotelApp.Services
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
 
-            foreach (var room in _db.Rooms.Where(r => !r.IsActive))
+            var deletedRooms = _db.Rooms.Where(r => !r.IsActive).ToList();
+
+            if (!deletedRooms.Any())
+            {
+                AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
+                return;
+            }
+
+            foreach (var room in deletedRooms)
             {
 
                 var content = new Markup($"[yellow]Rum:[/] {room.RoomName}" +
@@ -187,14 +199,19 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
 
+            var rooms = _db.Rooms.Where(c => c.IsActive).ToList();
 
-            var activeCustomers = _db.Rooms.Where(c => c.IsActive).ToList();
+            if (!rooms.Any())
+            {
+                AnsiConsole.MarkupLine("[red]Inga rum att visa.[/]");
+                return;
+            }
 
-            var nameOptions = activeCustomers.Select(c => $"Id: {c.RoomId} Namn: {c.RoomName}").ToList();
+            var nameOptions = rooms.Select(c => $"Id: {c.RoomId} Namn: {c.RoomName}").ToList();
 
             int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
-            var roomToUpgrade = activeCustomers[index];
+            var roomToUpgrade = rooms[index];
             var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)", "Pris/natt" };
 
             int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);

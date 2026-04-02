@@ -15,10 +15,8 @@
         {
             get
             {
-                if (Area >= 20)
-                    return 4;
-                else if (Area >= 15)
-                    return 2;
+                if (Area >= 30)
+                    return 2;                
                 else return 1;
             }
         }
@@ -27,9 +25,9 @@
         {
             get
             {
-                if (Area >= 20)
+                if (Area >= 40)
                     return 2;
-                else if (Area > 15)
+                else if (Area > 20)
                     return 1;
                 else return 0;
             }
@@ -47,12 +45,10 @@
         {
             get
             {
-                if (Area >= 20)
-                    return "Multi rum";
-                else if (Area > 15)
-                    return "Dubbel rum";
+                if (Area >= 30)
+                    return "Dubbelrum";                
                 else
-                    return "Enkel rum";
+                    return "Enkelrum";
             }
         }
         public bool IsAvailable(DateOnly start, DateOnly end, int? excludeBookingId = null)

@@ -62,7 +62,7 @@ namespace HotelApp.Data
                 dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Luxury OneBed",
-                    Area = 12,
+                    Area = 28,
                     Price = 200,
                     IsActive = true
                 });
@@ -72,7 +72,7 @@ namespace HotelApp.Data
                 dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Regular TwoBed",
-                    Area = 16,
+                    Area = 35,
                     Price = 280,
                     IsActive= true
                 });
@@ -82,17 +82,17 @@ namespace HotelApp.Data
                 dbContext.Rooms.Add(new Room
                 {
                     RoomName = "Buffert OneBed",
-                    Area = 9,
+                    Area = 15,
                     Price = 140,
                     IsActive= true
                 });
             }
-            if (!dbContext.Rooms.Any(r => r.RoomName == "Family Room"))
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Luxury TwoBed"))
             {
                 dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Family Room",
-                    Area = 20,
+                    RoomName = "Luxury TwoBed",
+                    Area = 45,
                     Price = 350,
                     IsActive = true
                 });

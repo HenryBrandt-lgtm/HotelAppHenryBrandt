@@ -1,8 +1,7 @@
-﻿using HotelApp.UI;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System;
 
-namespace HotelApp.UI.MenuDisplay
+namespace HotelApp.UI
 {
     public class ScrollMenu
     {

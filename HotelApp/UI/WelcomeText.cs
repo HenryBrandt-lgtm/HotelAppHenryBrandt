@@ -6,7 +6,7 @@ namespace HotelApp.UI
     {
         public static void WelcomeScreen()
         {
-            var welcomeTo = new FigletText("Welcome to")
+            var welcomeTo = new FigletText("Välkommen till")
             {
                 Color = Color.Cyan,
                 Justification = Justify.Center

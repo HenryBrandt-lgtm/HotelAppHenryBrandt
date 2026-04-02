@@ -2,7 +2,6 @@
 using HotelApp.Data;
 using HotelApp.Models;
 using HotelApp.UI;
-using HotelApp.UI.MenuDisplay;
 using Spectre.Console;
 
 namespace HotelApp.Services
@@ -72,6 +71,14 @@ namespace HotelApp.Services
             int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
             var customerToRemove = activeCustomers[index];
+
+            if (customerToRemove.Bookings.Contains((Booking)_db.Bookings.Where(b => b.CustomerId == customerToRemove.CustomerId && b.IsActive)))
+            {
+                AnsiConsole.MarkupLine("[red]Gästen har aktiva bokningar och kan inte tas bort.[/]");
+                Messages.WaitForKey();
+                return;
+            }
+
             customerToRemove.IsActive = false;
             _db.SaveChanges();
 
@@ -91,7 +98,7 @@ namespace HotelApp.Services
         {
 
             Console.Clear();
-            Console.WriteLine("Skapa en ny gäst");
+            AnsiConsole.Write(Align.Center(new Markup("[cyan]Skapa en ny gäst[/]")));
 
             var firstNameInput = VarValidater.GetRequiredString("Ange förnamn: ");
 
@@ -150,8 +157,12 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
 
-
             var activeCustomers = _db.Customers.Where(c => c.IsActive).ToList();
+            if (!activeCustomers.Any())
+            {
+                AnsiConsole.MarkupLine("[red]Inga gäster att uppdatera.[/]");
+                return;
+            }
 
             var nameOptions = activeCustomers.Select(c => $"Namn: {c.FullName} person.nr: {c.Birthday}").ToList();
 
@@ -234,6 +245,11 @@ namespace HotelApp.Services
             Messages.WaitForKey();
 
             var activeCustomers = _db.Customers.Where(c => !c.IsActive).ToList();
+            if (!activeCustomers.Any())
+            {
+                AnsiConsole.MarkupLine("[red]Det finns inga inaktiva gäster.[/]");
+                return;
+            }
 
             var nameOptions = activeCustomers.Select(c => $"{c.FullName} {c.Age()} år").ToList();
 

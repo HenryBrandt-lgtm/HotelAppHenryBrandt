@@ -1,6 +1,6 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
-using HotelApp.UI.MenuDisplay;
+using HotelApp.UI;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -8,20 +8,15 @@ using System.Text;
 
 namespace HotelApp.Controllers
 {
-    public class RoomMenu
+    public class RoomMenu(RoomService roomService) : IMenu
     {
-        private readonly RoomService _roomService;
-
-        public RoomMenu(RoomService roomService)
-        {
-            _roomService = roomService;
-        }
-        public void ShowRoomMenu()
+        
+        public void ShowMenu()
         {
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.RoomMenu(_roomService,
+                var menuItems = MenuOptions.RoomMenu(roomService,
                     () =>
                     {
                         AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");

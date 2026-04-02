@@ -1,12 +1,12 @@
 ﻿using HotelApp.MenuData;
 using HotelApp.Services;
-using HotelApp.UI.MenuDisplay;
+using HotelApp.UI;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 
 namespace HotelApp.Controllers
 {
-    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu)
+    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu) : IMenu
     {
         //private readonly BookingService _bookingService;
         //private readonly BookingMenu _bookingMenu;
@@ -20,8 +20,8 @@ namespace HotelApp.Controllers
         //    _customerMenu = customerMenu;
         //    _roomMenu = roomMenu;
         //}
-        
-        public void ShowMainMenu()
+
+        public void ShowMenu()
         {
 
             bool exitMenu = false;
@@ -37,15 +37,15 @@ namespace HotelApp.Controllers
                         break;
                     case 1:
                         Console.Clear();
-                        bookingMenu.ShowBookingMenu();
+                        bookingMenu.ShowMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        customerMenu.ShowCustomerMenu();
+                        customerMenu.ShowMenu();
                         break;
                     case 3:
                         Console.Clear();
-                        roomMenu.ShowRoomMenu();
+                        roomMenu.ShowMenu();
                         break;
                     case 4:
                         var terminating = new Text("Terminating...", new Style(Color.Red))

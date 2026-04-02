@@ -70,7 +70,7 @@ namespace HotelApp.Controllers
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
                 }
 
             } while (string.IsNullOrWhiteSpace(input));
@@ -88,7 +88,7 @@ namespace HotelApp.Controllers
             {
                 if (string.IsNullOrWhiteSpace(message))
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
                     continue;
                 }
                 Console.Write(message);

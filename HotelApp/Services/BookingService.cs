@@ -3,7 +3,6 @@ using HotelApp.Data;
 using HotelApp.Models;
 using HotelApp.Services.CreateBookingServices;
 using HotelApp.UI;
-using HotelApp.UI.MenuDisplay;
 using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
 
