@@ -34,7 +34,8 @@ namespace HotelApp.Services.CreateBookingServices
                     Messages.WaitForKey();
                     continue;
                 }
-                var numberOfGuests = VarValidater.GetRequiredInt("Ange antal personer som ska dela rummet: ");
+                Console.Clear();
+                var numberOfGuests = VarValidater.GetRequiredIntOverZero("Ange antal personer som ska dela rummet: ");
                 if (numberOfGuests <= 0)
                 {
                     AnsiConsole.Write(Align.Center(new Markup("[red]Antal gäster måste vara minst 1.[/]")));

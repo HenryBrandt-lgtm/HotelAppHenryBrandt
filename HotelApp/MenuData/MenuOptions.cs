@@ -9,11 +9,12 @@ namespace HotelApp.MenuData
         {
             return new List<string>
             {
-            "Skapa en ny Bokning",
-            "Hantera Bokningar",
-            "Hantera Gäster",
-            "Hantera Rum",
-            "Avsluta program"
+                "Se lediga rum",
+                "Skapa en ny Bokning",
+                "Hantera Bokningar",
+                "Hantera Gäster",
+                "Hantera Rum",
+                "Avsluta program"
             };
         }
         public static List<MenuItem> BookingMenu(ICrud bookingCrud, Action exitAction)

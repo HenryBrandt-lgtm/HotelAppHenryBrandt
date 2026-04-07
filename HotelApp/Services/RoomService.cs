@@ -20,9 +20,11 @@ namespace HotelApp.Services
 
             var roomNameInput = VarValidater.GetRequiredString("Ange rummets namn: ");
 
-            var roomSizeInput = VarValidater.GetRequiredInt("Ange rummets storlek i kvm: ");
+            var roomSizeInput = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");            
 
-            var roomPrizeInput = VarValidater.GetRequiredDecimal("Ange rummets pris: ");
+            var amountOfBeds = VarValidater.GetRequiredIntOverZero("Ange antal sängar i rummet: ");            
+
+            var roomPrizeInput = VarValidater.GetRequiredDecimalOverZero("Ange rummets pris/natt: ");
 
             if (_db.Rooms.Any(r => r.RoomName == roomNameInput))
                 Console.WriteLine("Rummet finns redan inlagt. Dubbelkika bland raderade rum om det har blivit inavktiverat");
@@ -32,6 +34,7 @@ namespace HotelApp.Services
                 {
                     RoomName = roomNameInput,
                     Area = roomSizeInput,
+                    Beds = amountOfBeds,
                     Price = roomPrizeInput,
                     IsActive = true
                 });
@@ -64,6 +67,14 @@ namespace HotelApp.Services
             int index = ScrollMenu.ShowScrollingMenu(roomOptions);
 
             var roomToRemove = activeRooms[index];
+
+            if (roomToRemove.Bookings?.Any(b => b.IsActive) == true)
+            {
+                AnsiConsole.MarkupLine("[red]Rummet du vill radera har en kommande eller pågående bokning.[/]");
+                Console.Clear();
+                return;
+            }
+
             roomToRemove.IsActive = false;
             _db.SaveChanges();
 
@@ -212,7 +223,7 @@ namespace HotelApp.Services
             int index = ScrollMenu.ShowScrollingMenu(nameOptions);
 
             var roomToUpgrade = rooms[index];
-            var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)", "Pris/natt" };
+            var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)","Antal sängar", "Pris/natt" };
 
             int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
 
@@ -223,11 +234,14 @@ namespace HotelApp.Services
                     break;
 
                 case 1:
-                    roomToUpgrade.Area = VarValidater.GetRequiredInt("Ny storlek i kvm: ");
+                    roomToUpgrade.Area = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
+                    break;
+                case 2:
+                    roomToUpgrade.Beds = VarValidater.GetRequiredIntOverZero("Nytt antal sängar: ");
                     break;
 
-                case 2:
-                    roomToUpgrade.Price = VarValidater.GetRequiredDecimal("Nytt pris: ");
+                case 3:
+                    roomToUpgrade.Price = VarValidater.GetRequiredDecimalOverZero("Nytt pris: ");
                     break;
             }
 

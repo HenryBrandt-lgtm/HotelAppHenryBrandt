@@ -21,6 +21,12 @@ namespace HotelApp
             //email måste kolla om den redan finns. Får inte ha samma pga invoice
 
             //Ska man kunna checka in ?
+
+            // behöver lägga till så att man väljer antal sängar
+
+            // hur vill jag göra med room enums?
+
+            // ta bort Invoice från kunder och istället lägga i booking?
         }
     }
 }

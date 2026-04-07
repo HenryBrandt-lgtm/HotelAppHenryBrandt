@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelApp
 {
-    class App
+    public class App
     {
         public static void RunProgram()
         {
@@ -22,7 +22,8 @@ namespace HotelApp
             var services = new ServiceCollection();
             //används bara en gång i början av körningen?
             services.AddSingleton<IConfiguration>(config);
-            services.AddDbContext<ApplicationDbContext>(opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>
+                (opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
             services.AddScoped<DataInitializer>();
             services.AddScoped<BookingService>();
             services.AddScoped<CustomerService>();

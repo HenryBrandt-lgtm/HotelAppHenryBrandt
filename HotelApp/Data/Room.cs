@@ -4,22 +4,14 @@
     {
         public int RoomId { get; set; }
 
-        public string RoomName { get; set; }
-        public int Area { get; set; }
-        public decimal Price { get; set; }
+        public required string RoomName { get; set; }
+        public required int Area { get; set; }
+        public required decimal Price { get; set; }
         public bool IsActive { get; set; }
         public List<Booking> Bookings { get; set; } = 
             new List<Booking>();
 
-        public int Beds
-        {
-            get
-            {
-                if (Area >= 30)
-                    return 2;                
-                else return 1;
-            }
-        }
+        public int Beds { get; set; }
 
         public int ExtraBeds
         {
@@ -27,7 +19,7 @@
             {
                 if (Area >= 40)
                     return 2;
-                else if (Area > 20)
+                else if (Area > 30)
                     return 1;
                 else return 0;
             }

@@ -72,7 +72,7 @@ namespace HotelApp.Services
 
             var customerToRemove = activeCustomers[index];
 
-            if (customerToRemove.Bookings.Contains((Booking)_db.Bookings.Where(b => b.CustomerId == customerToRemove.CustomerId && b.IsActive)))
+            if (customerToRemove.Bookings?.Any(b => b.IsActive) == true)
             {
                 AnsiConsole.MarkupLine("[red]Gästen har aktiva bokningar och kan inte tas bort.[/]");
                 Messages.WaitForKey();

@@ -164,6 +164,31 @@ namespace HotelApp.Services
 
             Messages.WaitForKey();
         }
+        public void ReadAvailableRooms()
+        {
+            BookingDate bookingConditions = new BookingDate();
+            AvailableRooms available = new AvailableRooms(_db);
+
+
+            // 1. välj datum och antal gäster
+            var result = bookingConditions.SetVisitingConditions();
+            var startDate = result.StartDate;
+            var endDate = result.EndDate;
+            int numberOfGuests = result.NumberOfGuests;
+
+            // 2️. Filtrera fram lediga rum under perioden                
+            var availableRooms = available.SetAvailableRooms(startDate, endDate, numberOfGuests);
+
+            if (availableRooms == null || availableRooms.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
+                Messages.WaitForKey();
+                return;
+            }
+            // 3️. Visa lediga rum och välj
+            available.ReadAvailableRooms(availableRooms, startDate, endDate);
+            Messages.WaitForKey();
+        }
 
         public void ReadDeleted()
         {
@@ -256,7 +281,7 @@ namespace HotelApp.Services
                     AnsiConsole.MarkupLine("[bold]Välj rum:[/]");
                     AnsiConsole.Write(new Columns(roomPanels));
 
-                    int selectedRoomId = VarValidater.GetRequiredInt("Ange rummets ID i listan: ");
+                    int selectedRoomId = VarValidater.GetRequiredIntOverZero("Ange rummets ID i listan: ");
                     var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomId == selectedRoomId);
                     if (selectedRoom == null)
                     {

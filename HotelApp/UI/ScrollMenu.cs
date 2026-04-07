@@ -29,7 +29,9 @@ namespace HotelApp.UI
                     AnsiConsole.Write(line);
 
                 }
-               
+                AnsiConsole.Write(Align.Center(new Markup($"\nAnvänd piltangenter [cyan]^ v[/] för att " +
+               $"\nnavigera och [green]Enter[/] för att välja.")));
+
                 key = Console.ReadKey(true);
 
                 switch (key.Key)

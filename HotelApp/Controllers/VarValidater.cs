@@ -8,7 +8,7 @@ namespace HotelApp.Controllers
 {
     public class VarValidater
     {
-        public static int GetRequiredInt (string message)
+        public static int GetRequiredIntOverZero (string message)
         {
             int value;
             string input;
@@ -24,17 +24,17 @@ namespace HotelApp.Controllers
                     continue;
                 }
 
-                if (int.TryParse(input, out value))
+                if (int.TryParse(input, out value) && value > 0)
                 {
                     return value;
                 }
                 else
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett heltal, t.ex. 5.")));
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett heltal över 0, t.ex. 2.")));
                 }
             }
         }
-        public static decimal GetRequiredDecimal(string message)
+        public static decimal GetRequiredDecimalOverZero(string message)
         {
             decimal value;
             string input;
@@ -45,17 +45,17 @@ namespace HotelApp.Controllers
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
                     continue;
                 }
 
-                if (decimal.TryParse(input, out value))
+                if (decimal.TryParse(input, out value) && value > 0)
                 {
                     return value;
                 }
                 else
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett decimaltal, tex 123.45.")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltigt tal. Ange ett decimaltal över 0, tex 123.45.[/]")));
                 }
             }
         }
