@@ -40,7 +40,7 @@ namespace HotelApp.Services
 
             if (availableRooms == null || availableRooms.Count == 0)
             {
-                AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
+                AnsiConsole.Write(Align.Center(new Markup("[red]Inga tillräckligt stora rum lediga.[/]")));
                 Messages.WaitForKey();
                 return;
             }
@@ -51,19 +51,26 @@ namespace HotelApp.Services
             var selectedCustomer = customerSelection.SelectOrCreateCustomer(customerService);
 
             // 6. Skapa bokning
+            decimal totalCost = selectedRoom.GetTotalPrice(startDate, endDate);
+
             var newBooking = new Booking
             {
                 CustomerId = selectedCustomer.CustomerId,
                 RoomId = selectedRoom.RoomId,
                 StartDate = startDate,
                 EndDate = endDate,
+                Invoice = new Invoice
+                {
+                    Amount = totalCost,
+                    InvoiceDate = DateTime.Now,
+                    IsPaid = false
+                }
             };
 
             _db.Bookings.Add(newBooking);
             _db.SaveChanges();
             //7. Ge totalpris
-            decimal totalCost = selectedRoom.GetTotalPrice(startDate, endDate);
-            AnsiConsole.MarkupLine($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]");
+            AnsiConsole.Write(Align.Center(new Markup($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]")));
 
 
             Messages.WaitForKey();
@@ -84,7 +91,7 @@ namespace HotelApp.Services
             var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
             if (!activeBookings.Any())
             {
-                AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");
+                AnsiConsole.Write(Align.Center(new Markup("[red]Inga bokningar att radera.[/]")));
                 return;
             }
 
@@ -104,7 +111,7 @@ namespace HotelApp.Services
             var key = Console.ReadKey(true).Key;
             if (key != ConsoleKey.J)
             {
-                AnsiConsole.MarkupLine("[green]Borttagning avbruten.[/]");
+                AnsiConsole.Write(Align.Center(new Markup("[green]Borttagning avbruten.[/]")));
                 return;
             }
             _db.Bookings.Remove(bookingToRemove);
@@ -127,9 +134,37 @@ namespace HotelApp.Services
             throw new NotImplementedException();
         }
 
+        public void Pay()
+        {
+            AnsiConsole.Clear();
+            AnsiConsole.Write(HeaderDisplay.GetHeader());
+            AnsiConsole.WriteLine();
+
+
+            var unpaidBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).Include(b => b.Invoice).ToList()
+                .Where(b => b.IsActive && b.Invoice != null && !b.Invoice.IsPaid).ToList();
+
+            if (!unpaidBookings.Any())
+            {
+                AnsiConsole.Write(Align.Center(new Markup("[red]Inga obetalda bokningar att visa.[/]")));
+                Messages.WaitForKey();
+                return;
+            }
+            var option = ScrollMenu.ShowScrollingMenu(unpaidBookings.Select(b => $"Boknings ID: {b.BookingId} " +
+            $"Kund: {b.Customer.FullName} Incheckningsdag: {b.StartDate} Belopp {b.Invoice.Amount}kr)").ToList());
+
+            var selectedBooking = unpaidBookings.ElementAt(option);
+
+            selectedBooking.Invoice.IsPaid = true;
+
+            _db.SaveChanges();
+
+            AnsiConsole.Write(Align.Center(new Markup("[green]Fakturan är nu betald![/]")));
+            Messages.WaitForKey();
+        }
+
         public void Read()
         {
-            Console.Clear();
             AnsiConsole.Clear();
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
@@ -161,7 +196,6 @@ namespace HotelApp.Services
             ).ToList();
 
             AnsiConsole.Write(new Columns(panels));
-
             Messages.WaitForKey();
         }
         public void ReadAvailableRooms()
@@ -181,7 +215,7 @@ namespace HotelApp.Services
 
             if (availableRooms == null || availableRooms.Count == 0)
             {
-                AnsiConsole.MarkupLine("[red]Inga tillräckligt stora rum lediga.[/]");
+                AnsiConsole.Write(Align.Center(new Markup("[red]Inga tillräckligt stora rum lediga.[/]")));
                 Messages.WaitForKey();
                 return;
             }
@@ -228,14 +262,14 @@ namespace HotelApp.Services
                     var newStart = VarValidater.GetValidBookingDate("Nytt incheckningsdatum: ");
                     if (!bookingToUpdate.Room.IsAvailable(newStart, bookingToUpdate.EndDate, bookingToUpdate.BookingId))
                     {
-                        AnsiConsole.MarkupLine("[red]Rummet är redan bokat under den perioden![/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Rummet är redan bokat under den perioden![/]")));
                         return;
                     }
                     bookingToUpdate.StartDate = newStart;
 
                     if (bookingToUpdate.EndDate < bookingToUpdate.StartDate)
                     {
-                        AnsiConsole.MarkupLine("[red]Startdatum kan inte vara efter slutdatum.[/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Startdatum kan inte vara efter slutdatum.[/]")));
                         return;
                     }
                     break;
@@ -244,14 +278,14 @@ namespace HotelApp.Services
                     var newEnd = VarValidater.GetValidBookingDate("Nytt utcheckningsdatum: ");
                     if (!bookingToUpdate.Room.IsAvailable(bookingToUpdate.StartDate, newEnd, bookingToUpdate.BookingId))
                     {
-                        AnsiConsole.MarkupLine("[red]Rummet är redan bokat under den perioden![/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Rummet är redan bokat under den perioden![/]")));
                         return;
                     }
                     bookingToUpdate.EndDate = newEnd;
 
                     if (bookingToUpdate.EndDate < bookingToUpdate.StartDate)
                     {
-                        AnsiConsole.MarkupLine("[red]Slutdatum kan inte vara före startdatum.[/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före startdatum.[/]")));
                         return;
                     }
                     break;
@@ -262,7 +296,7 @@ namespace HotelApp.Services
 
                     if (availableRooms.Count == 0)
                     {
-                        AnsiConsole.MarkupLine("[red]Inga rum lediga under de valda datumen.[/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Inga rum lediga under de valda datumen.[/]")));
                         return;
                     }
 
@@ -278,14 +312,14 @@ namespace HotelApp.Services
                             .Expand();
                     }).ToList();
 
-                    AnsiConsole.MarkupLine("[bold]Välj rum:[/]");
+                    AnsiConsole.Write(Align.Center(new Markup("[bold]Välj rum:[/]")));
                     AnsiConsole.Write(new Columns(roomPanels));
 
                     int selectedRoomId = VarValidater.GetRequiredIntOverZero("Ange rummets ID i listan: ");
                     var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomId == selectedRoomId);
                     if (selectedRoom == null)
                     {
-                        AnsiConsole.MarkupLine("[red]Ogiltigt ID försök igen.[/]");
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltigt ID försök igen.[/]")));
                         return;
                     }
                     bookingToUpdate.Room = selectedRoom;

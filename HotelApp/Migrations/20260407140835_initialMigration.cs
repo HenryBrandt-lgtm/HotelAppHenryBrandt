@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HotelApp.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigrate : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Customers",
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
@@ -24,11 +24,26 @@ namespace HotelApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Room",
+                name: "Invoices",
+                columns: table => new
+                {
+                    InvoiceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.InvoiceId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rooms",
                 columns: table => new
                 {
                     RoomId = table.Column<int>(type: "int", nullable: false)
@@ -36,35 +51,16 @@ namespace HotelApp.Migrations
                     RoomName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Area = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Beds = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Room", x => x.RoomId);
+                    table.PrimaryKey("PK_Rooms", x => x.RoomId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invoice",
-                columns: table => new
-                {
-                    InvoiceId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoice", x => x.InvoiceId);
-                    table.ForeignKey(
-                        name: "FK_Invoice_Customer_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customer",
-                        principalColumn: "CustomerId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Booking",
+                name: "Bookings",
                 columns: table => new
                 {
                     BookingId = table.Column<int>(type: "int", nullable: false)
@@ -72,55 +68,62 @@ namespace HotelApp.Migrations
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    RoomId = table.Column<int>(type: "int", nullable: false)
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    InvoiceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Booking", x => x.BookingId);
+                    table.PrimaryKey("PK_Bookings", x => x.BookingId);
                     table.ForeignKey(
-                        name: "FK_Booking_Customer_CustomerId",
+                        name: "FK_Bookings_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Booking_Room_RoomId",
+                        name: "FK_Bookings_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "InvoiceId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Rooms_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Room",
+                        principalTable: "Rooms",
                         principalColumn: "RoomId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_CustomerId",
-                table: "Booking",
+                name: "IX_Bookings_CustomerId",
+                table: "Bookings",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_RoomId",
-                table: "Booking",
+                name: "IX_Bookings_InvoiceId",
+                table: "Bookings",
+                column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_RoomId",
+                table: "Bookings",
                 column: "RoomId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoice_CustomerId",
-                table: "Invoice",
-                column: "CustomerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Invoice");
+                name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Room");
+                name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Rooms");
         }
     }
 }

@@ -14,11 +14,7 @@ namespace HotelApp.Models
 
         public bool IsActive { get; set; }
 
-        public List<Invoice> Invoices { get; set; } =
-            new List<Invoice>();
-
-        public List<Booking> Bookings { get; set; } =
-            new List<Booking>();
+        public List<Booking> Bookings { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
 

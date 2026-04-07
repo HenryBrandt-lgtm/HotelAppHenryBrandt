@@ -63,6 +63,7 @@ namespace HotelApp.Data
                 {
                     RoomName = "Luxury OneBed",
                     Area = 28,
+                    Beds = 1,
                     Price = 200,
                     IsActive = true
                 });
@@ -73,6 +74,7 @@ namespace HotelApp.Data
                 {
                     RoomName = "Regular TwoBed",
                     Area = 35,
+                    Beds = 2,
                     Price = 280,
                     IsActive= true
                 });
@@ -83,6 +85,7 @@ namespace HotelApp.Data
                 {
                     RoomName = "Buffert OneBed",
                     Area = 15,
+                    Beds = 1,
                     Price = 140,
                     IsActive= true
                 });
@@ -93,6 +96,7 @@ namespace HotelApp.Data
                 {
                     RoomName = "Luxury TwoBed",
                     Area = 45,
+                    Beds = 2,
                     Price = 350,
                     IsActive = true
                 });

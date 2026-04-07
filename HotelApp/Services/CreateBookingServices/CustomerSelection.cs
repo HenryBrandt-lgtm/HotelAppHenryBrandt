@@ -39,7 +39,7 @@ namespace HotelApp.Services.CreateBookingServices
                 AnsiConsole.MarkupLine("[bold]Välj kund:[/]");
                 AnsiConsole.Write(new Columns(customerPanels));
 
-                int customerIndex = VarValidater.GetRequiredIntOverZero("Ange kundens nummer i listan: ");
+                int customerIndex = VarValidater.GetRequiredInt("Ange kundens nummer i listan: ");
 
                 if (customerIndex == activeCustomers.Count)
                 {

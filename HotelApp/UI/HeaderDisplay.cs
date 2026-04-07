@@ -4,7 +4,7 @@ namespace HotelApp.UI
 {
     public class HeaderDisplay
     {
-        public static FigletText GetHeader(string message = "Henrys Hotel")
+        public static FigletText GetHeader(string message = "Henrys Hotell")
         {
 
             var header = new FigletText(message)

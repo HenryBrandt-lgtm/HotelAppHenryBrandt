@@ -22,11 +22,13 @@ namespace HotelApp
 
             //Ska man kunna checka in ?
 
-            // behöver lägga till så att man väljer antal sängar
-
             // hur vill jag göra med room enums?
 
             // ta bort Invoice från kunder och istället lägga i booking?
+
+            // lägga till avbokning som eget menyval?
+
+            // dependency injection i bookingservice med extra services, eller flytta dem?
         }
     }
 }

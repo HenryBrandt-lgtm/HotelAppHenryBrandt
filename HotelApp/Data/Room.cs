@@ -3,13 +3,11 @@
     public class Room
     {
         public int RoomId { get; set; }
-
         public required string RoomName { get; set; }
         public required int Area { get; set; }
         public required decimal Price { get; set; }
         public bool IsActive { get; set; }
-        public List<Booking> Bookings { get; set; } = 
-            new List<Booking>();
+        public List<Booking> Bookings { get; set; }
 
         public int Beds { get; set; }
 

@@ -11,6 +11,7 @@ namespace HotelApp.MenuData
             {
                 "Se lediga rum",
                 "Skapa en ny Bokning",
+                "Betala bokning",
                 "Hantera Bokningar",
                 "Hantera Gäster",
                 "Hantera Rum",

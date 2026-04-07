@@ -34,6 +34,32 @@ namespace HotelApp.Controllers
                 }
             }
         }
+        public static int GetRequiredInt(string message)
+        {
+            int value;
+            string input;
+
+            while (true)
+            {
+                Console.Write(message);
+                input = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    continue;
+                }
+
+                if (int.TryParse(input, out value))
+                {
+                    return value;
+                }
+                else
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett heltal över 0, t.ex. 2.")));
+                }
+            }
+        }
         public static decimal GetRequiredDecimalOverZero(string message)
         {
             decimal value;
