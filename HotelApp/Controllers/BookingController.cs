@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HotelApp.Controllers
 {
-    public class BookingController(BookingService bookingService, CustomerService customerService, RoomService roomService)
+    public class BookingController(BookingService bookingService, CustomerService customerService)
     {
         public (DateOnly StartDate, DateOnly EndDate, int NumberOfGuests) SetVisitingConditions()
         {

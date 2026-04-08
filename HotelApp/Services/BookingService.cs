@@ -1,14 +1,10 @@
-﻿using HotelApp.Controllers;
-using HotelApp.Data;
-using HotelApp.MenuData;
+﻿using HotelApp.Data;
 using HotelApp.Models;
-using HotelApp.UI;
 using Microsoft.EntityFrameworkCore;
-using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class BookingService(ApplicationDbContext db, CustomerService customerService)
+    public class BookingService(ApplicationDbContext db)
     {
         public List<Room> SetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfGuests)
         {
@@ -31,7 +27,7 @@ namespace HotelApp.Services
 
         public void Create(Customer selectedCustomer, Room selectedRoom, DateOnly startDate, DateOnly endDate, decimal totalCost)
         {
-            
+
             var newBooking = new Booking
             {
                 CustomerId = selectedCustomer.CustomerId,
@@ -49,7 +45,7 @@ namespace HotelApp.Services
             db.Bookings.Add(newBooking);
             db.SaveChanges();
         }
-       
+
         public void Delete(Booking bookingToRemove)
         {
             db.Bookings.Remove(bookingToRemove);
@@ -63,7 +59,7 @@ namespace HotelApp.Services
         }
 
         public void Update(Booking booking)
-        {            
+        {
             db.SaveChanges();
         }
     }
