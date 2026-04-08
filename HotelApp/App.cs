@@ -1,4 +1,5 @@
 ﻿using HotelApp.Controllers;
+using HotelApp.Controllers.MenuControllers;
 using HotelApp.Data;
 using HotelApp.Services;
 using HotelApp.UI;
@@ -32,6 +33,8 @@ namespace HotelApp
             services.AddScoped<MainMenu>();
             services.AddScoped<CustomerMenu>();
             services.AddScoped<RoomMenu>();
+            services.AddScoped<CustomerController>();
+            services.AddScoped<RoomController>();
 
             // skapar upp en serviceProvider och en scope för att kunna använda de services som registrerats,
             // mainMenu och databasinitialisering,

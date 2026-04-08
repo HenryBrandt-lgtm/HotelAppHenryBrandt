@@ -1,4 +1,5 @@
-﻿using HotelApp.Data;
+﻿using HotelApp.Controllers;
+using HotelApp.Data;
 using HotelApp.Services;
 
 namespace HotelApp.MenuData
@@ -24,34 +25,34 @@ namespace HotelApp.MenuData
             {
                 new("Se alla bokningar", bookingCrud.Read),
                 new("Uppdatera bokning", bookingCrud.Update),
-                new("Ta bort bokning", bookingCrud.Delete),
+                new("Avboka", bookingCrud.Delete),
                 new("Gå tillbaka till huvudmenyn", exitAction)
                
             };
         }
-        public static List<MenuItem> CustomerMenu(CustomerService customerCrud, Action exitAction)
+        public static List<MenuItem> CustomerMenu(CustomerController controller, Action exitAction)
         {
             return new List<MenuItem>
             {
-                new ("Lägg till ny gäst", customerCrud.Create),
-                new ("Se alla gäster", customerCrud.Read),
-                new ("Uppdatera gäst", customerCrud.Update),
-                new ("Radera gäst", customerCrud.Delete),
-                new ("Se inaktiva gäster", customerCrud.ReadDeleted),
-                new ("Återaktivera gäster", customerCrud.Reactivate),
+                new ("Lägg till ny gäst", controller.Create),
+                new ("Se alla gäster", controller.Read),
+                new ("Uppdatera gäst", controller.Update),
+                new ("Radera gäst", controller.Delete),
+                new ("Se inaktiva gäster", controller.ReadDeleted),
+                new ("Återaktivera gäster", controller.Reactivate),
                 new ("Gå tillbaka till huvudmenyn", exitAction)
             };
         }
-        public static List<MenuItem> RoomMenu(RoomService roomCrud, Action exit)
+        public static List<MenuItem> RoomMenu(RoomController controller, Action exit)
         {
             return new List<MenuItem>
             {
-                new("Lägg till nytt rum", roomCrud.Create),
-                new("Se alla rum", roomCrud.Read),
-                new("Uppdatera rum", roomCrud.Update),
-                new("Radera rum", roomCrud.Delete),
-                new("Se inaktiva rum", roomCrud.ReadDeleted),
-                new("Aktivera inaktiva rum", roomCrud.Reactivate),
+                new("Lägg till nytt rum", controller.CreateRoom),
+                new("Se alla rum", controller.ReadRooms),
+                new("Uppdatera rum", controller.UpdateRoom),
+                new("Radera rum", controller.DeleteRoom),
+                new("Se inaktiva rum", controller.ReadDeletedRooms),
+                new("Aktivera inaktiva rum", controller.ReactivateRoom),
                 new("Gå tillbaka till huvudmenyn", exit)
             };
         }

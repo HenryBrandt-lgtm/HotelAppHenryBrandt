@@ -6,247 +6,55 @@ using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class RoomService 
+    public class RoomService (ApplicationDbContext db)
     {
-        private readonly ApplicationDbContext _db;
-        public RoomService(ApplicationDbContext db)
+        public List<Room> GetActiveRooms()
         {
-            _db = db;
+            return db.Rooms.Where(r => r.IsActive).ToList();
         }
-        public void Create()
+        public List<Room> GetInactiveRooms()
         {
-
-            Console.WriteLine("Skapa ett nytt rum");
-
-            var roomNameInput = VarValidater.GetRequiredString("Ange rummets namn: ");
-
-            var roomSizeInput = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");            
-
-            var amountOfBeds = VarValidater.GetRequiredIntOverZero("Ange antal sängar i rummet: ");            
-
-            var roomPrizeInput = VarValidater.GetRequiredDecimalOverZero("Ange rummets pris/natt: ");
-
-            if (_db.Rooms.Any(r => r.RoomName == roomNameInput))
-                Console.WriteLine("Rummet finns redan inlagt. Dubbelkika bland raderade rum om det har blivit inavktiverat");
-            else
-            {
-                _db.Rooms.Add(new Room
-                {
-                    RoomName = roomNameInput,
-                    Area = roomSizeInput,
-                    Beds = amountOfBeds,
-                    Price = roomPrizeInput,
-                    IsActive = true
-                });
-                _db.SaveChanges();
-            }
-
+            return db.Rooms.Where(r => !r.IsActive).ToList();
         }
-
-        public void Delete()
+        public Room CreateRoom(string name, int area, int beds, decimal price)
         {
+            if (db.Rooms.Any(r => r.RoomName == name))
+                return null;
 
-            Console.Clear();
-            var selectMessage = new Text($"Välj från listan med rum vilket du vill ta bort.", new Style(Color.Red))
+            var room = new Room
             {
-                Justification = Justify.Center
+                RoomName = name,
+                Area = area,
+                Beds = beds,
+                Price = price,
+                IsActive = true
             };
-            AnsiConsole.Write(selectMessage);
 
-            Messages.WaitForKey();
+            db.Rooms.Add(room);
+            db.SaveChanges();
 
-            var activeRooms = _db.Rooms.Where(c => c.IsActive).ToList();
-            if (!activeRooms.Any())
-            {
-                AnsiConsole.MarkupLine("[red]Inga rum att radera.[/]");
-                return;
-            }
-
-            var roomOptions = activeRooms.Select(c => $"{c.RoomId} {c.RoomName} ").ToList();
-
-            int index = ScrollMenu.ShowScrollingMenu(roomOptions);
-
-            var roomToRemove = activeRooms[index];
-
-            if (roomToRemove.Bookings?.Any(b => b.IsActive) == true)
-            {
-                AnsiConsole.MarkupLine("[red]Rummet du vill radera har en kommande eller pågående bokning.[/]");
-                Console.Clear();
-                return;
-            }
-
-            roomToRemove.IsActive = false;
-            _db.SaveChanges();
-
-
-            var removedRoom = new Text($"{roomToRemove.RoomName} har tagits bort.", new Style(Color.Red))
-            {
-                Justification = Justify.Center
-            };
-            AnsiConsole.Write(removedRoom);
-            AnsiConsole.WriteLine();
-
-            Messages.WaitForKey();
-            Console.Clear();
-
+            return room;
         }
 
-        public void Reactivate()
+        public void Delete(Room room)
         {
-
-            Console.Clear();
-            var selectMessage = new Text($"Välj från listan med inaktiva rum vilket du vill aktivera.", new Style(Color.Cyan))
-            {
-                Justification = Justify.Center
-            };
-            AnsiConsole.Write(selectMessage);
-
-            Messages.WaitForKey();
-
-            var inactiveRooms = _db.Rooms.Where(c => !c.IsActive).ToList();
-            if (!inactiveRooms.Any())
-            {
-                AnsiConsole.MarkupLine("[red]Inga  inaktiva rum att aktivera.[/]");
-                return;
-            }
-
-            var roomOptions = inactiveRooms.Select(c => $"{c.RoomId} {c.RoomName}").ToList();
-
-            int index = ScrollMenu.ShowScrollingMenu(roomOptions);
-
-            var returningRoom = inactiveRooms[index];
-            returningRoom.IsActive = true;
-            _db.SaveChanges();
-
-
-            var reactivatedCustomer = new Text($"{returningRoom.RoomName} har återaktiverats.", new Style(Color.Green))
-            {
-                Justification = Justify.Center
-            };
-            AnsiConsole.Write(reactivatedCustomer);
-            AnsiConsole.WriteLine();
-            Messages.WaitForKey();
-            Console.Clear();
-
+            room.IsActive = false;
+            db.SaveChanges();
+        }
+        public void Reactivate(Room room)
+        {
+            room.IsActive = true;
+            db.SaveChanges();
         }
 
-        public void Read()
+        public void Update(Room room, string? name = null, int? area = null, int? beds = null, decimal? price = null)
         {
-            AnsiConsole.Clear();
-            AnsiConsole.Write(HeaderDisplay.GetHeader());
-            AnsiConsole.WriteLine();
+            if (name != null) room.RoomName = name;
+            if (area != null) room.Area = area.Value;
+            if (beds != null) room.Beds = beds.Value;
+            if (price != null) room.Price = price.Value;
 
-            var activeRooms = _db.Rooms.Where(r => r.IsActive).ToList();
-            if (!activeRooms.Any())
-            {
-                AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
-                return;
-            }
-            else
-            {
-                var panels = activeRooms.Select(room =>
-                    new Panel(
-                        $"[yellow]Rum:[/] {room.RoomName}\n" +
-                        $"[blue]Rumstyp:[/] {room.RoomType}\n" +
-                        $"[yellow]Sängar:[/] {room.Beds}\n" +
-                        $"[blue]Extra sängar:[/] {room.ExtraBeds}\n" +
-                        $"[yellow]Storlek:[/] {room.Area} m²\n" +
-                        $"[blue]Pris:[/] {room.Price:C}\n" +
-                        $"[green]Status:[/] {(room.IsBooked ? "[red]Upptaget[/]" : "Ledigt")}"
-                    )
-                    .Border(BoxBorder.Rounded)
-                    .Header($"[bold]{room.RoomName}[/]")
-                    .Padding(1, 1)
-                    .Expand()
-                ).ToList();
-
-                var columns = new Columns(panels);
-                AnsiConsole.Write(columns);
-            }
-
-            Messages.WaitForKey();
-        }
-
-        public void ReadDeleted()
-        {
-            Console.Clear();
-            AnsiConsole.Clear();
-            AnsiConsole.Write(HeaderDisplay.GetHeader());
-            AnsiConsole.WriteLine();
-
-            var deletedRooms = _db.Rooms.Where(r => !r.IsActive).ToList();
-
-            if (!deletedRooms.Any())
-            {
-                AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
-                return;
-            }
-
-            foreach (var room in deletedRooms)
-            {
-
-                var content = new Markup($"[yellow]Rum:[/] {room.RoomName}" +
-                    $"n [blue]Rumstyp:[/] {room.RoomType}" +
-                    $"n [yellow]Antal sängar:[/] {room.Beds}" +
-                    $"n [blue]Extra sängar:[/] {room.ExtraBeds}" +
-                    $"\n [yellow]Storlek:[/] {room.Area}" +
-                    $"\n[blue]Pris:[/] {room.Price}" +
-                    $"\n [yellow]====================");
-
-                AnsiConsole.Write(Align.Center(content));
-            }
-
-            Messages.WaitForKey();
-        }
-
-        public void Update()
-        {
-            Console.Clear();
-            var selectMessage = new Text($"Välj från listan med rum vilket du vill uppdatera.", new Style(Color.Red))
-            {
-                Justification = Justify.Center
-            };
-            AnsiConsole.Write(selectMessage);
-
-            Messages.WaitForKey();
-
-            var rooms = _db.Rooms.Where(c => c.IsActive).ToList();
-
-            if (!rooms.Any())
-            {
-                AnsiConsole.MarkupLine("[red]Inga rum att visa.[/]");
-                return;
-            }
-
-            var nameOptions = rooms.Select(c => $"Id: {c.RoomId} Namn: {c.RoomName}").ToList();
-
-            int index = ScrollMenu.ShowScrollingMenu(nameOptions);
-
-            var roomToUpgrade = rooms[index];
-            var updateOptions = new List<string> { "Rummets namn", "Rummets storlek (kvm)","Antal sängar", "Pris/natt" };
-
-            int updateIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
-
-            switch (updateIndex)
-            {
-                case 0:
-                    roomToUpgrade.RoomName = VarValidater.GetRequiredString("Nytt rumsnamn: ");
-                    break;
-
-                case 1:
-                    roomToUpgrade.Area = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
-                    break;
-                case 2:
-                    roomToUpgrade.Beds = VarValidater.GetRequiredIntOverZero("Nytt antal sängar: ");
-                    break;
-
-                case 3:
-                    roomToUpgrade.Price = VarValidater.GetRequiredDecimalOverZero("Nytt pris: ");
-                    break;
-            }
-
-            _db.SaveChanges();
-
+            db.SaveChanges();
         }
     }
 }

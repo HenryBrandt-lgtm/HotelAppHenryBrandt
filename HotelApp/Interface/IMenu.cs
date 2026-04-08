@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelApp.Controllers
+namespace HotelApp.Interface
 {
     public interface IMenu
     {

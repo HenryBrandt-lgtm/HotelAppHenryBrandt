@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace HotelApp.Controllers
+namespace HotelApp.UI
 {
     public class VarValidater
     {

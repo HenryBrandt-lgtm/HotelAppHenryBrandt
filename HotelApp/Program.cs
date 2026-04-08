@@ -26,10 +26,6 @@ namespace HotelApp
 
             // lägga till avbokning som eget menyval?
 
-            // dependency injection i bookingservice med extra services, eller flytta dem?
-
-            //flytta alla models till en models mapp
-
         }
     }
 }

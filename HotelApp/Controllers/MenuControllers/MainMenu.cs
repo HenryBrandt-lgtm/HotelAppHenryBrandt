@@ -1,11 +1,13 @@
-﻿using HotelApp.MenuData;
+﻿using HotelApp.Interface;
+using HotelApp.MenuData;
 using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
 
-namespace HotelApp.Controllers
+namespace HotelApp.Controllers.MenuControllers
 {
-    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, CustomerMenu customerMenu, RoomMenu roomMenu) : IMenu
+    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, 
+        CustomerMenu customerMenu, RoomMenu roomMenu, CustomerController customerController) : IMenu
     {
         public void ShowMenu()
         {
@@ -22,7 +24,7 @@ namespace HotelApp.Controllers
                         bookingService.ReadAvailableRooms();
                         break;
                     case 1:
-                        bookingService.Create();
+                        bookingService.Create(customerController);
                         break;
                     case 2:
                         bookingService.Pay();

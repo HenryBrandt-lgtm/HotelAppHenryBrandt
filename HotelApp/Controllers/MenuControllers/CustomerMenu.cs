@@ -1,11 +1,12 @@
-﻿using HotelApp.MenuData;
+﻿using HotelApp.Interface;
+using HotelApp.MenuData;
 using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
 
-namespace HotelApp.Controllers
+namespace HotelApp.Controllers.MenuControllers
 {
-    public class CustomerMenu(CustomerService customerService) : IMenu
+    public class CustomerMenu(CustomerController controller) : IMenu
     {
        
         public void ShowMenu()
@@ -14,7 +15,7 @@ namespace HotelApp.Controllers
 
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.CustomerMenu(customerService, () =>
+                var menuItems = MenuOptions.CustomerMenu(controller, () =>
 
                 {
                     AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");
