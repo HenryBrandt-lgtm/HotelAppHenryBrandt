@@ -1,5 +1,4 @@
 ﻿using HotelApp.Controllers;
-using HotelApp.Data;
 using HotelApp.Services;
 
 namespace HotelApp.MenuData
