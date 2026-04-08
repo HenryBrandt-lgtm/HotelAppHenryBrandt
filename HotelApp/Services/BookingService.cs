@@ -88,7 +88,7 @@ namespace HotelApp.Services
             AnsiConsole.Write(selectMessage);
             Messages.WaitForKey();
 
-            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList().Where(f => f.IsActive).ToList();
+            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).Include(b => b.Invoice).ToList().Where(f => f.IsActive).ToList();
             if (!activeBookings.Any())
             {
                 AnsiConsole.Write(Align.Center(new Markup("[red]Inga bokningar att radera.[/]")));
@@ -96,7 +96,7 @@ namespace HotelApp.Services
             }
 
             var bookingOptions = activeBookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
-            $"Incheckning: {f.StartDate} Utcheckning: {f.EndDate}").ToList();
+            $"Incheckning: {f.StartDate} Utcheckning: {f.EndDate} Betalning: {(f.Invoice.IsPaid ? "Betald" : "Ej betald")}").ToList();
 
             int index = ScrollMenu.ShowScrollingMenu(bookingOptions);
 
@@ -116,12 +116,12 @@ namespace HotelApp.Services
             }
             _db.Bookings.Remove(bookingToRemove);
             _db.SaveChanges();
-
-            var removedbooking = new Text($"Bokning med ID: {bookingToRemove.BookingId} har blivit raderad.", new Style(Color.Red))
+            if (bookingToRemove.Invoice.IsPaid)
             {
-                Justification = Justify.Center
-            };
-            AnsiConsole.Write(removedbooking);
+                AnsiConsole.Write(Align.Center(new Markup($"Betalningen för bokningen har blivit återbetald och\n" +
+                    $"[red]Bokning med ID: {bookingToRemove.BookingId} har blivit raderad.[/]")));               
+            }
+            AnsiConsole.Write(Align.Center(new Markup($"[red]Bokning med ID: {bookingToRemove.BookingId} har blivit raderad.[/]")));
             AnsiConsole.WriteLine();
             Messages.WaitForKey();
             Console.Clear();
@@ -170,7 +170,7 @@ namespace HotelApp.Services
             AnsiConsole.WriteLine();
 
 
-            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).ToList()
+            var activeBookings = _db.Bookings.Include(b => b.Customer).Include(b => b.Room).Include(b => b.Invoice).ToList()
                 .Where(b => b.IsActive).ToList();
 
             if (!activeBookings.Any())
@@ -188,6 +188,7 @@ namespace HotelApp.Services
                     $"[blue]SlutDatum:[/] {booking.EndDate}  " +
                     $"[yellow]Nätter:[/] {booking.DurationDays}  " +
                     $"[blue]Totalkostnad:[/] {booking.TotalCost:C}  " +
+                    $"[green]Status:[/] {(booking.Invoice.IsPaid ? "Betald" : "[red]Ej betald[/]")}  " +
                     $"[green]Status:[/] {(booking.IsBooked() ? "[red]Pågående[/]" : "Ej pågående")}"
                 )
                 .Border(BoxBorder.Rounded)

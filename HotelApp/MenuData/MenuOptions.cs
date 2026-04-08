@@ -55,14 +55,7 @@ namespace HotelApp.MenuData
                 new("Gå tillbaka till huvudmenyn", exit)
             };
         }
-        public static List<string> YesOrNo()
-        {
-            return new List<string>
-            {
-            "Ja",
-            "Nej"
-            };
-        }
+       
     }
 }
 

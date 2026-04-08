@@ -17,7 +17,7 @@
             {
                 if (Area >= 40)
                     return 2;
-                else if (Area > 30)
+                else if (Area >= 30)
                     return 1;
                 else return 0;
             }
