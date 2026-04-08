@@ -18,7 +18,7 @@ namespace HotelApp.MenuData
                 "Avsluta program"
             };
         }
-        public static List<MenuItem> BookingMenu(ICrud bookingCrud, Action exitAction)
+        public static List<MenuItem> BookingMenu(BookingService bookingCrud, Action exitAction)
         {
             return new List<MenuItem>
             {
@@ -29,7 +29,7 @@ namespace HotelApp.MenuData
                
             };
         }
-        public static List<MenuItem> CustomerMenu(ICrud customerCrud, Action exitAction)
+        public static List<MenuItem> CustomerMenu(CustomerService customerCrud, Action exitAction)
         {
             return new List<MenuItem>
             {
@@ -42,7 +42,7 @@ namespace HotelApp.MenuData
                 new ("Gå tillbaka till huvudmenyn", exitAction)
             };
         }
-        public static List<MenuItem> RoomMenu(ICrud roomCrud, Action exit)
+        public static List<MenuItem> RoomMenu(RoomService roomCrud, Action exit)
         {
             return new List<MenuItem>
             {

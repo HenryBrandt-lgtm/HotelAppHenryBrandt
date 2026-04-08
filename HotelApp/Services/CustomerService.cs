@@ -6,12 +6,16 @@ using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class CustomerService : ICrud
+    public class CustomerService 
     {
         private readonly ApplicationDbContext _db;
         public CustomerService(ApplicationDbContext db)
         {
             _db = db;
+        }
+        public bool CustomerExists(string firstName, string lastName)
+        {
+            return _db.Customers.Any(c => c.FirstName == firstName && c.LastName == lastName);
         }
         public void Read()
         {
@@ -132,7 +136,6 @@ namespace HotelApp.Services
                 }
                 else
                 {
-                    AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
                     _db.Customers.Add(new Customer
                     {
                         FirstName = firstNameInput,
@@ -140,6 +143,8 @@ namespace HotelApp.Services
                         Birthday = ageInput,
                         IsActive = true
                     });
+                    AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
+
                     _db.SaveChanges();
                 }
             }

@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class RoomService : ICrud
+    public class RoomService 
     {
         private readonly ApplicationDbContext _db;
         public RoomService(ApplicationDbContext db)

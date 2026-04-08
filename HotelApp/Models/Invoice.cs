@@ -1,9 +1,8 @@
-﻿using HotelApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotelApp.Data
+namespace HotelApp.Models
 {
     public class Invoice
     {
