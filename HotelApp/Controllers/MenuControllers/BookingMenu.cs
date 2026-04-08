@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HotelApp.Controllers.MenuControllers
 {
-    public class BookingMenu(BookingService bookingService) : IMenu
+    public class BookingMenu(BookingController controller) : IMenu
     {
         
         public void ShowMenu()
@@ -14,7 +14,7 @@ namespace HotelApp.Controllers.MenuControllers
             bool exitMenu = false;
             while (!exitMenu)
             {
-                var menuItems = MenuOptions.BookingMenu(bookingService, () =>
+                var menuItems = MenuOptions.BookingMenu(controller, () =>
                      {
                          AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");
                          Thread.Sleep(1000);

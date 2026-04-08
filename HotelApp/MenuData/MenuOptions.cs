@@ -18,13 +18,13 @@ namespace HotelApp.MenuData
                 "Avsluta program"
             };
         }
-        public static List<MenuItem> BookingMenu(BookingService bookingCrud, Action exitAction)
+        public static List<MenuItem> BookingMenu(BookingController controller, Action exitAction)
         {
             return new List<MenuItem>
             {
-                new("Se alla bokningar", bookingCrud.Read),
-                new("Uppdatera bokning", bookingCrud.Update),
-                new("Avboka", bookingCrud.Delete),
+                new("Se alla bokningar", controller.Read),
+                new("Uppdatera bokning", controller.Update),
+                new("Avboka", controller.Delete),
                 new("Gå tillbaka till huvudmenyn", exitAction)
                
             };

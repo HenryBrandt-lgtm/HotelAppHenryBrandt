@@ -8,14 +8,8 @@ using System.Text;
 
 namespace HotelApp.Controllers
 {
-    public class CustomerController
+    public class CustomerController (CustomerService service)
     {
-        private readonly CustomerService _service;
-
-        public CustomerController(CustomerService service)
-        {
-            _service = service;
-        }
         public void Create()
         {
             Console.Clear();
@@ -25,7 +19,7 @@ namespace HotelApp.Controllers
             var lastNameInput = VarValidater.GetRequiredString("Ange efternamn: ");
             var birthdayInput = VarValidater.GetValidDateOnly("Ange födelseår (yyyy-MM-dd): ");
 
-            if (_service.CustomerExists(firstNameInput, lastNameInput))
+            if (service.CustomerExists(firstNameInput, lastNameInput))
             {
                 AnsiConsole.MarkupLine("[red]Gästen finns redan.[/]");
                 return;
@@ -55,7 +49,7 @@ namespace HotelApp.Controllers
                 return;
             }
 
-            _service.CreateCustomer(firstNameInput, lastNameInput, birthdayInput);
+            service.CreateCustomer(firstNameInput, lastNameInput, birthdayInput);
 
             AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
         }
@@ -63,7 +57,7 @@ namespace HotelApp.Controllers
         {
             Console.Clear();
 
-            var activeCustomers = _service.GetActiveCustomers();
+            var activeCustomers = service.GetActiveCustomers();
 
             if (!activeCustomers.Any())
             {
@@ -76,13 +70,13 @@ namespace HotelApp.Controllers
 
             var customerToDelete = activeCustomers[index];
 
-            if (_service.HasActiveBookings(customerToDelete))
+            if (service.HasActiveBookings(customerToDelete))
             {
                 AnsiConsole.MarkupLine("[red]Har aktiva bokningar.[/]");
                 return;
             }
 
-            _service.Delete(customerToDelete);
+            service.Delete(customerToDelete);
 
             AnsiConsole.MarkupLine("[red]Gäst borttagen.[/]");
             Messages.WaitForKey();
@@ -91,7 +85,7 @@ namespace HotelApp.Controllers
         {
             Console.Clear();
 
-            var customers = _service.GetActiveCustomers();
+            var customers = service.GetActiveCustomers();
 
             if (!customers.Any())
             {
@@ -122,7 +116,7 @@ namespace HotelApp.Controllers
                     break;
             }
 
-            _service.Update(customer);
+            service.Update(customer);
 
             AnsiConsole.MarkupLine("[green]Uppdaterad![/]");
             Messages.WaitForKey();
@@ -133,7 +127,7 @@ namespace HotelApp.Controllers
             AnsiConsole.Write(HeaderDisplay.GetHeader());
             AnsiConsole.WriteLine();
 
-            var activeGuests = _service.GetActiveCustomers();
+            var activeGuests = service.GetActiveCustomers();
             if (!activeGuests.Any())
             {
                 AnsiConsole.WriteLine("Inga aktiva gäster att visa.");
@@ -161,7 +155,7 @@ namespace HotelApp.Controllers
         {
             Console.Clear();
 
-            var inactiveCustomers = _service.GetInactiveCustomers();
+            var inactiveCustomers = service.GetInactiveCustomers();
 
             if (!inactiveCustomers.Any())
             {
@@ -174,14 +168,14 @@ namespace HotelApp.Controllers
 
             var customer = inactiveCustomers[index];
 
-            _service.Reactivate(customer);
+            service.Reactivate(customer);
 
             AnsiConsole.MarkupLine("[green]Återaktiverad![/]");
             Messages.WaitForKey();
         }
         public void ReadDeleted()
         {
-            var inactiveGuests = _service.GetInactiveCustomers();
+            var inactiveGuests = service.GetInactiveCustomers();
             if (!inactiveGuests.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga inaktiva gäster.[/]");
@@ -201,5 +195,6 @@ namespace HotelApp.Controllers
             Console.Clear();
 
         }
+
     }
 }

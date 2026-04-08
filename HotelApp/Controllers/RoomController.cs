@@ -9,7 +9,7 @@ using System.Text;
 
 namespace HotelApp.Controllers
 {
-    public class RoomController(RoomService roomService, ApplicationDbContext db)
+    public class RoomController(RoomService roomService)
     {
         public void CreateRoom()
         {
@@ -156,19 +156,19 @@ namespace HotelApp.Controllers
 
             switch (fieldIndex)
             {
-                case 0: // Namn
+                case 0:
                     var newName = VarValidater.GetRequiredString("Nytt rumsnamn: ");
                     roomService.Update(room, name: newName);
                     break;
-                case 1: // Storlek
+                case 1: 
                     var newArea = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
                     roomService.Update(room, area: newArea);
                     break;
-                case 2: // Antal sängar
+                case 2:
                     var newBeds = VarValidater.GetRequiredIntOverZero("Nytt antal sängar: ");
                     roomService.Update(room, beds: newBeds);
                     break;
-                case 3: // Pris/natt
+                case 3:
                     var newPrice = VarValidater.GetRequiredDecimalOverZero("Nytt pris/natt: ");
                     roomService.Update(room, price: newPrice);
                     break;

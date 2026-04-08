@@ -26,6 +26,7 @@ namespace HotelApp
 
             // lägga till avbokning som eget menyval?
 
+            //hittade bugg, lägger man till kund vid bokning så börjar bokningen om
         }
     }
 }

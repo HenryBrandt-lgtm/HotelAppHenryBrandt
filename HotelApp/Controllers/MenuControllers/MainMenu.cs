@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HotelApp.Controllers.MenuControllers
 {
-    public class MainMenu(BookingService bookingService, BookingMenu bookingMenu, 
+    public class MainMenu(BookingMenu bookingMenu, BookingController bookingController,
         CustomerMenu customerMenu, RoomMenu roomMenu, CustomerController customerController) : IMenu
     {
         public void ShowMenu()
@@ -21,13 +21,13 @@ namespace HotelApp.Controllers.MenuControllers
                 switch (option)
                 {
                     case 0:
-                        bookingService.ReadAvailableRooms();
+                        bookingController.ReadAvailableRooms();
                         break;
                     case 1:
-                        bookingService.Create(customerController);
+                        bookingController.Create();
                         break;
                     case 2:
-                        bookingService.Pay();
+                        bookingController.Pay();
                         break;
                     case 3:
                         Console.Clear();
