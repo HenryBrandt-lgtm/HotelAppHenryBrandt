@@ -20,10 +20,9 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 
 -----------------------------------------
 🧱 Projektstruktur
-HotelApp/
+
 
 │
-
 ├── Controllers/          # Logik för hantering av data (Booking, Customer, Room)
 
 │   └── MenuControllers/  # Menyhantering i konsolen
