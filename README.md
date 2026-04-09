@@ -21,18 +21,31 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 -----------------------------------------
 🧱 Projektstruktur
 HotelApp/
+
 │
+
 ├── Controllers/          # Logik för hantering av data (Booking, Customer, Room)
+
 │   └── MenuControllers/  # Menyhantering i konsolen
+
 │
+
 ├── Data/                 # Databas och DbContext
+
 │
+
 ├── Services/             # Affärslogik
+
 │
+
 ├── UI/                   # UI-komponenter (t.ex. välkomsttext)
+
 │
+
 ├── Program.cs            # Startpunkt
+
 ├── App.cs                # Konfiguration och uppstart
+
 └── appsettings.json      # Konfiguration (t.ex. connection string)
 
 -----------------------------------------
@@ -41,18 +54,26 @@ HotelApp/
 När applikationen startar:
 
 -🔧 Dependency Injection sätts upp
+
 -🗄️ Databasen migreras automatiskt
+
 -🌱 Data seedas (exempeldata läggs till)
+
 -👋 En välkomstskärm visas
+
 -📋 Huvudmenyn startar
 
 ------------------------------------------
 ⚠️ Kända förbättringsområden
 
 -Validering av t.ex. e-post (unika kunder)
+
 -Hantering av extrasängar
+
 -Möjlighet till in-/utcheckning
+
 -Bugg vid skapande av kund under bokning
+
 -Förbättrad struktur för enums och logik
 
 ------------------------------------------
