@@ -51,7 +51,7 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 -----------------------------------------
 🚀 Installation & Körning
 1. Klona repot
-git clone <repo-url>
+git clone <[repo-url](https://github.com/HenryBrandt-lgtm/HotelAppHenryBrandt.git)>
 cd HotelApp
 2. Konfigurera databas
 
