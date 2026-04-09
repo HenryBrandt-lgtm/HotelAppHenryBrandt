@@ -34,12 +34,16 @@ namespace HotelApp.Services
                 RoomId = selectedRoom.RoomId,
                 StartDate = startDate,
                 EndDate = endDate,
-                Invoice = new Invoice
-                {
-                    Amount = totalCost,
-                    InvoiceDate = DateTime.Now,
-                    IsPaid = false
-                }
+                Room = selectedRoom,
+                Customer = selectedCustomer
+            };
+            newBooking.Invoice = new Invoice
+            {
+                Amount = totalCost,
+                InvoiceDate = DateTime.Now,
+                IsPaid = false,
+                Booking = newBooking,
+                BookingId = newBooking.BookingId
             };
 
             db.Bookings.Add(newBooking);

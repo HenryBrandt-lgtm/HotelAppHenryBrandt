@@ -8,6 +8,13 @@ namespace HotelApp.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Invoice)
+                .WithOne(i => i.Booking)
+                .HasForeignKey<Invoice>(i => i.BookingId);
+        }
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Room> Rooms { get; set; }

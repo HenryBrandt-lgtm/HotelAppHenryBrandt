@@ -7,7 +7,7 @@
         public required int Area { get; set; }
         public required decimal Price { get; set; }
         public bool IsActive { get; set; }
-        public List<Booking> Bookings { get; set; }
+        public List<Booking>? Bookings { get; set; }
 
         public int Beds { get; set; }
 

@@ -25,6 +25,8 @@ namespace HotelApp
             //flytta container from app.cs till egen klass?
 
             //kolla notpad med saker som finns kvar
+
+            // fixa med nvarchar grejer och se till att det inte går att skriva in mer än 255 tecken i email tex.
         }
     }
 }

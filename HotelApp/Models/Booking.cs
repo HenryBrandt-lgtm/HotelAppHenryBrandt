@@ -8,13 +8,13 @@
         public DateOnly EndDate { get; set; }
 
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public required Customer Customer { get; set; }
 
         public int RoomId { get; set; }
-        public Room Room { get; set; }
+        public required Room Room { get; set; }
 
         public int InvoiceId { get; set; }
-        public Invoice Invoice { get; set; }
+        public Invoice? Invoice { get; set; }
 
         public bool IsActive
         {
