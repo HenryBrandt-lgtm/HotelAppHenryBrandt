@@ -22,8 +22,6 @@ namespace HotelApp
 
             // hur vill jag göra med room enums?
 
-            //hittade bugg, lägger man till kund vid bokning så börjar bokningen om
-
             //flytta container from app.cs till egen klass?
 
             //kolla notpad med saker som finns kvar

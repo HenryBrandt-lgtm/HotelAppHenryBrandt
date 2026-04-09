@@ -8,19 +8,23 @@ namespace HotelApp.UI
 {
     public class VarValidater
     {
-        public static int GetRequiredIntOverZero (string message)
+        public static int GetRequiredIntOverZero(string message)
         {
             int value;
             string input;
 
             while (true)
             {
-                Console.Write(message);
-                input = Console.ReadLine();
+                input = AnsiConsole.Ask<string>(message);
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    continue;
+                }
+                else if (input.Length < 2)
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("För kort input.")));
                     continue;
                 }
 
@@ -41,8 +45,7 @@ namespace HotelApp.UI
 
             while (true)
             {
-                Console.Write(message);
-                input = Console.ReadLine();
+                input = AnsiConsole.Ask<string>(message);
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
@@ -64,7 +67,7 @@ namespace HotelApp.UI
         {
             decimal value;
             string input;
-            while(true)
+            while (true)
             {
                 Console.Write(message);
                 input = Console.ReadLine();
@@ -91,8 +94,7 @@ namespace HotelApp.UI
 
             do
             {
-                AnsiConsole.Write(Align.Center(new Markup(message)));
-                input = Console.ReadLine();
+                input = AnsiConsole.Ask<string>(message);
 
                 if (string.IsNullOrWhiteSpace(input))
                 {
@@ -114,11 +116,7 @@ namespace HotelApp.UI
             DateOnly birthday = default;
             while (true)
             {
-                if (string.IsNullOrWhiteSpace(message))
-                {
-                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
-                    continue;
-                }
+
                 Console.Write(message);
                 if (DateOnly.TryParseExact(Console.ReadLine(),
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
@@ -130,7 +128,7 @@ namespace HotelApp.UI
                         AnsiConsole.Write(Align.Center(new Markup("Personen kan nog inte vara så gammal")));
                     else
                         return birthday;
-                    
+
                 }
                 else
                     AnsiConsole.Write(Align.Center(new Markup("Ogiltigt format, vänligen försök igen: yyyy-MM-dd")));
@@ -168,6 +166,6 @@ namespace HotelApp.UI
                     AnsiConsole.Write(Align.Center(new Markup("Ogiltigt format, vänligen försök igen: yyyy-MM-dd")));
 
             }
-        }        
+        }
     }
 }

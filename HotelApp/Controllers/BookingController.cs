@@ -117,7 +117,6 @@ namespace HotelApp.Controllers
 
             bookingService.Create(selectedCustomer, selectedRoom, startDate, endDate, totalCost);
 
-            //7. Ge totalpris
             AnsiConsole.Write(Align.Center(new Markup($"[green]Bokningen skapad! Total kostnad: {totalCost:C}[/]")));
 
 

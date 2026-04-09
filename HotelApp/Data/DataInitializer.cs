@@ -57,6 +57,17 @@ namespace HotelApp.Data
         }
         private void SeedRooms(ApplicationDbContext dbContext)
         {
+            if (!dbContext.Rooms.Any(r => r.RoomName == "Buffert OneBed"))
+            {
+                dbContext.Rooms.Add(new Room
+                {
+                    RoomName = "Buffert OneBed",
+                    Area = 15,
+                    Beds = 1,
+                    Price = 140,
+                    IsActive= true
+                });
+            }
             if (!dbContext.Rooms.Any(r => r.RoomName == "Luxury OneBed"))
             {
                 dbContext.Rooms.Add(new Room
@@ -76,17 +87,6 @@ namespace HotelApp.Data
                     Area = 35,
                     Beds = 2,
                     Price = 280,
-                    IsActive= true
-                });
-            }
-            if (!dbContext.Rooms.Any(r => r.RoomName == "Buffert OneBed"))
-            {
-                dbContext.Rooms.Add(new Room
-                {
-                    RoomName = "Buffert OneBed",
-                    Area = 15,
-                    Beds = 1,
-                    Price = 140,
                     IsActive= true
                 });
             }
