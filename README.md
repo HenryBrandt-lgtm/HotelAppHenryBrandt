@@ -5,11 +5,17 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 
 ------------------------------------------
 -📌 Funktioner
+
 -👤 Hantera kunder (skapa, visa, etc.)
+
 -🛏️ Hantera rum
+
 -📅 Skapa och hantera bokningar
+
 -🧭 Menybaserat användargränssnitt i konsolen
+
 -💾 Databaslagring med Entity Framework Core
+
 -🔄 Automatisk migrering och seedning av data vid start
 
 -----------------------------------------
