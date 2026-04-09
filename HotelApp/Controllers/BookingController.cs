@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace HotelApp.Controllers
 {
-    public class BookingController(BookingService bookingService, CustomerService customerService)
+    public class BookingController(BookingService bookingService, CustomerService customerService, CustomerController customerController)
     {
         public (DateOnly StartDate, DateOnly EndDate, int NumberOfGuests) SetVisitingConditions()
         {
@@ -155,7 +155,7 @@ namespace HotelApp.Controllers
 
                 if (customerIndex == activeCustomers.Count)
                 {
-                    Create();
+                    customerController.Create();
                     continue;
                 }
 
@@ -169,13 +169,11 @@ namespace HotelApp.Controllers
         public void ReadAvailableRooms()
         {
 
-            // 1. välj datum och antal gäster
             var result = SetVisitingConditions();
             var startDate = result.StartDate;
             var endDate = result.EndDate;
             int numberOfGuests = result.NumberOfGuests;
 
-            // 2️. Filtrera fram lediga rum under perioden                
             var availableRooms = bookingService.SetAvailableRooms(startDate, endDate, numberOfGuests);
 
             if (availableRooms == null || availableRooms.Count == 0)
@@ -184,7 +182,6 @@ namespace HotelApp.Controllers
                 Messages.WaitForKey();
                 return;
             }
-            // 3️. Visa lediga rum och välj
             ReadAvailableRooms(availableRooms, startDate, endDate);
             Messages.WaitForKey();
         }

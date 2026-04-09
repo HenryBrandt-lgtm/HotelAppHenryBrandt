@@ -106,8 +106,10 @@ namespace HotelApp.UI
         public static DateOnly GetValidDateOnly(string message)
         {
             int maxAge = 100;
+            int minAge = 18;
             var today = DateOnly.FromDateTime(DateTime.Today);
             var minBirthday = today.AddYears(-maxAge);
+            var maxBirthday = today.AddYears(-minAge);
 
             DateOnly birthday = default;
             while (true)
@@ -121,8 +123,8 @@ namespace HotelApp.UI
                 if (DateOnly.TryParseExact(Console.ReadLine(),
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
                 {
-                    if (birthday >= today)
-                        AnsiConsole.Write(Align.Center(new Markup("Personen måste vara äldre än dagens datum")));
+                    if (birthday >= maxBirthday)
+                        AnsiConsole.Write(Align.Center(new Markup("Personen måste vara äldre än dagens 18år för att kunna boka")));
 
                     else if (birthday < minBirthday)
                         AnsiConsole.Write(Align.Center(new Markup("Personen kan nog inte vara så gammal")));
