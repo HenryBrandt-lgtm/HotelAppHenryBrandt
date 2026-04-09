@@ -81,13 +81,11 @@ När applikationen startar:
 ------------------------------------------
 ⚠️ Kända förbättringsområden
 
--Validering av t.ex. e-post (unika kunder)
+-Input och validering av e-post (unika kunder)
 
 -Hantering av extrasängar
 
 -Möjlighet till in-/utcheckning
-
--Bugg vid skapande av kund under bokning
 
 -Förbättrad struktur för enums och logik
 
