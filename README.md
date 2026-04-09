@@ -23,6 +23,7 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 
 
 │
+
 ├── Controllers/          # Logik för hantering av data (Booking, Customer, Room)
 
 │   └── MenuControllers/  # Menyhantering i konsolen
@@ -46,6 +47,21 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 ├── App.cs                # Konfiguration och uppstart
 
 └── appsettings.json      # Konfiguration (t.ex. connection string)
+
+-----------------------------------------
+🚀 Installation & Körning
+1. Klona repot
+git clone <repo-url>
+cd HotelApp
+2. Konfigurera databas
+
+Uppdatera appsettings.json:
+
+"ConnectionStrings": {
+  "DefaultConnection": "Server=.;Database=HotelAppDb;Trusted_Connection=True;"
+}
+3. Kör projektet
+dotnet run
 
 -----------------------------------------
 🧪 Vad händer vid start?
