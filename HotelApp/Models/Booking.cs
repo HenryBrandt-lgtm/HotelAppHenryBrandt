@@ -13,7 +13,6 @@
         public int RoomId { get; set; }
         public required Room Room { get; set; }
 
-        public int InvoiceId { get; set; }
         public Invoice? Invoice { get; set; }
 
         public bool IsActive

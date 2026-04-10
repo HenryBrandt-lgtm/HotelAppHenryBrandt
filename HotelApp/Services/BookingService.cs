@@ -40,7 +40,7 @@ namespace HotelApp.Services
             newBooking.Invoice = new Invoice
             {
                 Amount = totalCost,
-                InvoiceDate = DateTime.Now,
+                InvoiceStartDate = DateTime.Now,
                 IsPaid = false,
                 Booking = newBooking,
                 BookingId = newBooking.BookingId

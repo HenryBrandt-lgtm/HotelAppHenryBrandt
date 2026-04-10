@@ -28,9 +28,9 @@ namespace HotelApp.Controllers
                 DateOnly endDate = DateOnly.FromDateTime(end);
 
 
-                if (endDate < startDate)
+                if (endDate <= startDate)
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före startdatum.[/]")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före eller samam dag som startdatum.[/]")));
                     Messages.WaitForKey();
                     continue;
                 }

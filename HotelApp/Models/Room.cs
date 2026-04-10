@@ -24,13 +24,7 @@
         }
         public int TotalBeds => Beds + ExtraBeds;
 
-        public bool IsBooked
-        {
-            get
-            {
-                return Bookings.Any(b => b.IsBooked());
-            }
-        }
+        public bool IsBooked => Bookings.Any(b => b.IsBooked());
         public string RoomType
         {
             get

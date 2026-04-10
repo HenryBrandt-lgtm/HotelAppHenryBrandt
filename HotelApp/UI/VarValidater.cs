@@ -21,12 +21,7 @@ namespace HotelApp.UI
                 {
                     AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
-                }
-                else if (input.Length < 2)
-                {
-                    AnsiConsole.Write(Align.Center(new Markup("För kort input.")));
-                    continue;
-                }
+                }                
 
                 if (int.TryParse(input, out value) && value > 0)
                 {
@@ -99,6 +94,11 @@ namespace HotelApp.UI
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
+                }
+                else if (input.Length < 2)
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("För kort input.")));
+                    continue;
                 }
 
             } while (string.IsNullOrWhiteSpace(input));
