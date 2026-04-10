@@ -81,7 +81,7 @@ När applikationen startar:
 ------------------------------------------
 ⚠️ Kända förbättringsområden
 
--Input och validering av e-post (unika kunder)
+-Input och validering av e-post för att skicka invoice
 
 -Hantering av extrasängar
 
