@@ -54,12 +54,6 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 git clone <[repo-url](https://github.com/HenryBrandt-lgtm/HotelAppHenryBrandt.git)>
 cd HotelApp
 2. Konfigurera databas
-
-Uppdatera appsettings.json:
-
-"ConnectionStrings": {
-  "DefaultConnection": "Server=.;Database=HotelAppDb;Trusted_Connection=True;"
-}
 3. Kör projektet
 dotnet run
 
