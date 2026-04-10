@@ -1,19 +1,28 @@
 ﻿using System.ComponentModel;
+using System.Reflection;
 
 namespace HotelApp.Enums
 {
-    public class RoomEnums
+    public enum RoomType
     {
-        public enum RoomTypes
+        [Description("Enkelrum")]
+        OneBed,
+        [Description("Tvåbäddsrum")]
+        TwoBed
+    }
+    public static class RoomEnums
+    {
+        
+        public static string GetDescription(this Enum value)
         {
-            [Description("Luxury OneBed")]
-            LuxuryOneBed,
-            [Description("Luxury TwoBed")]
-            LuxuryTwoBed,
-            [Description("Regular OneBed")]
-            RegularOneBed,
-            [Description("Regular TwoBed")]
-            RegularTwoBed
+            var field = value.GetType().GetField(value.ToString());
+            if (field == null)
+            {
+                return value.ToString();
+            }
+
+            var attribute = field.GetCustomAttribute<DescriptionAttribute>();
+            return attribute != null ? attribute.Description : value.ToString();
         }
     }
 }

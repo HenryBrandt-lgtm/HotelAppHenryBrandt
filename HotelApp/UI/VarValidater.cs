@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using HotelApp.Enums;
+using Spectre.Console;
 using System.Globalization;
 
 namespace HotelApp.UI
@@ -164,5 +165,40 @@ namespace HotelApp.UI
 
             }
         }
+        public static int GetRequiredExtraBeds(string message, int area, int beds)
+        {
+            int value;
+            string input;
+
+            while (true)
+            {
+                input = AnsiConsole.Ask<string>(message);
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
+                    continue;
+                }
+
+                if (int.TryParse(input, out value) && value >= 0 && value <= 2)
+                {
+                    if (area < 30 && value > 1)
+                    {
+                        AnsiConsole.Write(Align.Center(new Markup("[red]Fler extrasängar än 1 kräver att rummet är minst 30 kvm.[/] Försök igen.")));
+                        continue;
+                    }
+                    else if (area < 20  && value > 0 && beds < 2)
+                    {
+                        AnsiConsole.Write(Align.Center(new Markup("[red]En extrasäng kräver att rummet är minst 20 kvm och ett dubbelrum.[/] Försök igen.")));
+                        continue;
+                    }
+                    return value;
+                }
+                else
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltigt tal. Ange ett heltal över 0, t.ex. 2.[/]")));
+                }
+            }
+        }        
     }
 }

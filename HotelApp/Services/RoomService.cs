@@ -1,4 +1,5 @@
 ﻿using HotelApp.Data;
+using HotelApp.Enums;
 using HotelApp.Models;
 
 namespace HotelApp.Services
@@ -13,7 +14,7 @@ namespace HotelApp.Services
         {
             return db.Rooms.Where(r => !r.IsActive).ToList();
         }
-        public Room CreateRoom(string name, int area, int beds, decimal price)
+        public Room CreateRoom(string name, int area, RoomType roomType, int beds, int extraBeds, decimal price)
         {
             if (db.Rooms.Any(r => r.RoomName == name))
                 return null;
@@ -22,7 +23,9 @@ namespace HotelApp.Services
             {
                 RoomName = name,
                 Area = area,
+                RoomType = roomType,
                 Beds = beds,
+                ExtraBeds = extraBeds,
                 Price = price,
                 IsActive = true
             };

@@ -1,4 +1,7 @@
-﻿namespace HotelApp.Models
+﻿using HotelApp.Enums;
+using static HotelApp.Enums.RoomEnums;
+
+namespace HotelApp.Models
 {
     public class Room
     {
@@ -9,32 +12,25 @@
         public bool IsActive { get; set; }
         public List<Booking>? Bookings { get; set; }
 
+        public RoomType RoomType { get; set; }
+
         public int Beds { get; set; }
 
-        public int ExtraBeds
-        {
-            get
-            {
-                if (Area >= 40)
-                    return 2;
-                else if (Area >= 30)
-                    return 1;
-                else return 0;
-            }
-        }
+        public int ExtraBeds { get; set; }
         public int TotalBeds => Beds + ExtraBeds;
 
         public bool IsBooked => Bookings.Any(b => b.IsBooked());
-        public string RoomType
-        {
-            get
-            {
-                if (Area >= 30)
-                    return "Dubbelrum";                
-                else
-                    return "Enkelrum";
-            }
-        }
+
+        //public string RoomType
+        //{
+        //    get
+        //    {
+        //        if (Area >= 30)
+        //            return "Dubbelrum";                
+        //        else
+        //            return "Enkelrum";
+        //    }
+        //}
         public bool IsAvailable(DateOnly start, DateOnly end, int? excludeBookingId = null)
         {
             return !Bookings

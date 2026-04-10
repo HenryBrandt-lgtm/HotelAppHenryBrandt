@@ -1,4 +1,5 @@
 ﻿using HotelApp.Controllers;
+using HotelApp.Enums;
 
 namespace HotelApp.MenuData
 {
@@ -15,6 +16,14 @@ namespace HotelApp.MenuData
                 "Hantera Gäster",
                 "Hantera Rum",
                 "Avsluta program"
+            };
+        }
+        public static List<RoomType> RoomTypeMenu()
+        {
+            return new List<RoomType>
+            {
+                RoomType.OneBed,
+                RoomType.TwoBed
             };
         }
         public static List<MenuItem> BookingMenu(BookingController controller, Action exitAction)

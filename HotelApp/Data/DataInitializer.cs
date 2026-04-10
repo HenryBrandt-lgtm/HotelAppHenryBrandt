@@ -86,6 +86,7 @@ namespace HotelApp.Data
                     RoomName = "Regular TwoBed",
                     Area = 35,
                     Beds = 2,
+                    ExtraBeds = 1,
                     Price = 280,
                     IsActive= true
                 });
@@ -97,6 +98,7 @@ namespace HotelApp.Data
                     RoomName = "Luxury TwoBed",
                     Area = 45,
                     Beds = 2,
+                    ExtraBeds= 2,
                     Price = 350,
                     IsActive = true
                 });

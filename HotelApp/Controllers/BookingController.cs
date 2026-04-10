@@ -14,7 +14,7 @@ namespace HotelApp.Controllers
             while (true)
             {
                 DateOnly today = DateOnly.FromDateTime(DateTime.Now);
-                DateTime start = CalendarMenu.CalendarController("Inceckningsdatum");
+                DateTime start = CalendarMenu.CalendarController("Incheckningsdatum");
                 DateOnly startDate = DateOnly.FromDateTime(start);
                 if (startDate < today)
                 {
@@ -23,14 +23,14 @@ namespace HotelApp.Controllers
                     Messages.WaitForKey();
                     continue;
                 }
-                DateTime end = CalendarMenu.CalendarController("Utceckningsdatum");
+                DateTime end = CalendarMenu.CalendarController("Utcheckningsdatum");
 
                 DateOnly endDate = DateOnly.FromDateTime(end);
 
 
                 if (endDate <= startDate)
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före eller samam dag som startdatum.[/]")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Utcheckningsdatum kan inte vara före eller samma dag som Incheckningsdatum.[/]")));
                     Messages.WaitForKey();
                     continue;
                 }

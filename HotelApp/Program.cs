@@ -4,10 +4,7 @@
     {
         static void Main(string[] args)
         {
-
             App.RunProgram();
-
-            // Lägga till extrasängar vid bokning?
 
             // I datainitilicer där jag seedar. Kan jag göra det till listor där jag jämför flera saker, dvs kan korta ner allt?
 
@@ -15,11 +12,10 @@
 
             // Ska man kunna checka in ?
 
-            // hur vill jag göra med room enums?
-
             //kolla notpad med saker som finns kvar
 
             // fixa med nvarchar grejer och se till att det inte går att skriva in mer än 25 tecken i name tex.
+
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260407153414_FixInvoiceBookingRelation")]
-    partial class FixInvoiceBookingRelation
+    [Migration("20260410140953_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,28 +24,6 @@ namespace HotelApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("HotelApp.Data.Invoice", b =>
-                {
-                    b.Property<int>("InvoiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceId"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.HasKey("InvoiceId");
-
-                    b.ToTable("Invoices");
-                });
 
             modelBuilder.Entity("HotelApp.Models.Booking", b =>
                 {
@@ -61,9 +39,6 @@ namespace HotelApp.Migrations
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
@@ -73,9 +48,6 @@ namespace HotelApp.Migrations
                     b.HasKey("BookingId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("InvoiceId")
-                        .IsUnique();
 
                     b.HasIndex("RoomId");
 
@@ -109,6 +81,34 @@ namespace HotelApp.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("HotelApp.Models.Invoice", b =>
+                {
+                    b.Property<int>("InvoiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InvoiceStartDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.HasKey("InvoiceId");
+
+                    b.HasIndex("BookingId")
+                        .IsUnique();
+
+                    b.ToTable("Invoices");
+                });
+
             modelBuilder.Entity("HotelApp.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")
@@ -123,6 +123,9 @@ namespace HotelApp.Migrations
                     b.Property<int>("Beds")
                         .HasColumnType("int");
 
+                    b.Property<int>("ExtraBeds")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -132,6 +135,9 @@ namespace HotelApp.Migrations
                     b.Property<string>("RoomName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomType")
+                        .HasColumnType("int");
 
                     b.HasKey("RoomId");
 
@@ -146,12 +152,6 @@ namespace HotelApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HotelApp.Data.Invoice", "Invoice")
-                        .WithOne("Booking")
-                        .HasForeignKey("HotelApp.Models.Booking", "InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HotelApp.Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("RoomId")
@@ -160,15 +160,23 @@ namespace HotelApp.Migrations
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Invoice");
-
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HotelApp.Data.Invoice", b =>
+            modelBuilder.Entity("HotelApp.Models.Invoice", b =>
                 {
-                    b.Navigation("Booking")
+                    b.HasOne("HotelApp.Models.Booking", "Booking")
+                        .WithOne("Invoice")
+                        .HasForeignKey("HotelApp.Models.Invoice", "BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("HotelApp.Models.Booking", b =>
+                {
+                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("HotelApp.Models.Customer", b =>

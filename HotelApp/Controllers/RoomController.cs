@@ -1,4 +1,6 @@
-﻿using HotelApp.Services;
+﻿using HotelApp.Enums;
+using HotelApp.MenuData;
+using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
 
@@ -10,13 +12,28 @@ namespace HotelApp.Controllers
         {
             Console.Clear();
             AnsiConsole.Write(HeaderDisplay.GetHeader());
+            int beds;
+            int extraBeds = 0;
 
             var name = VarValidater.GetRequiredString("Ange rummets namn: ");
             var area = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");
-            var beds = VarValidater.GetRequiredIntOverZero("Ange antal sängar: ");
+            var roomType = ScrollMenu.ShowScrollingEnumMenu(MenuOptions.RoomTypeMenu());
+            if (RoomType.OneBed == roomType)
+                beds = 1;
+            else if (RoomType.TwoBed == roomType && area > 20)
+            {
+                beds = 2;
+                extraBeds = VarValidater.GetRequiredExtraBeds("Ange antal extrasängar (0 om inga)\n" +
+                    "dubbelrum över 30kvm kan ha 2 extrasängar och dubbelrum över 20kvm kan ha 1 extrasäng: ", area, beds);
+            }
+            else
+                beds = 0;
+
             var price = VarValidater.GetRequiredDecimalOverZero("Ange pris/natt: ");
 
-            var room = roomService.CreateRoom(name, area, beds, price);
+            //Gör input beroende på rumstypen
+
+            var room = roomService.CreateRoom(name, area, roomType, beds, extraBeds, price);
 
             if (room == null)
                 AnsiConsole.MarkupLine("[red]Rummet finns redan inlagt.[/]");

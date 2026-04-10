@@ -12,6 +12,7 @@ namespace HotelApp.UI
 
             Console.CursorVisible = false;
             Console.ReadKey();
+            Console.Clear();
             Console.CursorVisible = true;
         }
         public static Text GetPressAnyKeyText(string message = "Tryck på valfri knapp för att fortsätta", Color? color = null)

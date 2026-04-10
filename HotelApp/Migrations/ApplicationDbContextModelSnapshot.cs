@@ -120,6 +120,9 @@ namespace HotelApp.Migrations
                     b.Property<int>("Beds")
                         .HasColumnType("int");
 
+                    b.Property<int>("ExtraBeds")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -129,6 +132,9 @@ namespace HotelApp.Migrations
                     b.Property<string>("RoomName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomType")
+                        .HasColumnType("int");
 
                     b.HasKey("RoomId");
 
