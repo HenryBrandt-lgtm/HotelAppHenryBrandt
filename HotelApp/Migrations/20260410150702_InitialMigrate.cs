@@ -37,7 +37,7 @@ namespace HotelApp.Migrations
                     Area = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    RoomType = table.Column<int>(type: "int", nullable: false),
+                    RoomType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Beds = table.Column<int>(type: "int", nullable: false),
                     ExtraBeds = table.Column<int>(type: "int", nullable: false)
                 },

@@ -11,6 +11,9 @@ namespace HotelApp.Data
                 .HasOne(b => b.Invoice)
                 .WithOne(i => i.Booking)
                 .HasForeignKey<Invoice>(i => i.BookingId);
+            modelBuilder.Entity<Room>()
+                .Property(r => r.RoomType)
+                .HasConversion<string>();
         }
         public DbSet<Customer> Customers { get; set; }
 
