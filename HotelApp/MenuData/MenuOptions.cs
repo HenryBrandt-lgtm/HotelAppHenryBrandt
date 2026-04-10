@@ -1,5 +1,4 @@
 ﻿using HotelApp.Controllers;
-using HotelApp.Services;
 
 namespace HotelApp.MenuData
 {
@@ -26,7 +25,7 @@ namespace HotelApp.MenuData
                 new("Uppdatera bokning", controller.Update),
                 new("Ta bort bokning/avboka", controller.Delete),
                 new("Gå tillbaka till huvudmenyn", exitAction)
-               
+
             };
         }
         public static List<MenuItem> CustomerMenu(CustomerController controller, Action exitAction)
@@ -55,7 +54,7 @@ namespace HotelApp.MenuData
                 new("Gå tillbaka till huvudmenyn", exit)
             };
         }
-       
+
     }
 }
 

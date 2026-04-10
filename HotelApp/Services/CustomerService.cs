@@ -1,12 +1,9 @@
-﻿using HotelApp.Controllers;
-using HotelApp.Data;
+﻿using HotelApp.Data;
 using HotelApp.Models;
-using HotelApp.UI;
-using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class CustomerService (ApplicationDbContext db)
+    public class CustomerService(ApplicationDbContext db)
     {
         public bool CustomerExists(string firstName, string lastName)
         {
@@ -16,7 +13,7 @@ namespace HotelApp.Services
 
         public List<Customer> GetInactiveCustomers() => db.Customers.Where(c => !c.IsActive).ToList();
         public bool HasActiveBookings(Customer customer) => customer.Bookings?.Any(b => b.IsActive) == true;
-        
+
         public void Delete(Customer customer)
         {
             customer.IsActive = false;
@@ -40,10 +37,10 @@ namespace HotelApp.Services
 
 
         public void Update(Customer customer)
-        {            
+        {
             db.SaveChanges();
         }
-        
+
         public void Reactivate(Customer customer)
         {
             customer.IsActive = true;

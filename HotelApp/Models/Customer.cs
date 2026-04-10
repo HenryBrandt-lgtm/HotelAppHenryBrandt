@@ -1,6 +1,4 @@
-﻿using HotelApp.Data;
-
-namespace HotelApp.Models
+﻿namespace HotelApp.Models
 {
     public class Customer
     {

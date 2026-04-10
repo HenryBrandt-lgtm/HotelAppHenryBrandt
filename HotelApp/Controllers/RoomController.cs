@@ -1,11 +1,6 @@
-﻿using HotelApp.Data;
-using HotelApp.Models;
-using HotelApp.Services;
+﻿using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Controllers
 {
@@ -125,7 +120,6 @@ namespace HotelApp.Controllers
 
             foreach (var room in deletedRooms)
             {
-
                 var content = new Markup($"[yellow]Rum:[/] {room.RoomName}" +
                     $"n [blue]Rumstyp:[/] {room.RoomType}" +
                     $"n [yellow]Antal sängar:[/] {room.Beds}" +
@@ -160,7 +154,7 @@ namespace HotelApp.Controllers
                     var newName = VarValidater.GetRequiredString("Nytt rumsnamn: ");
                     roomService.Update(room, name: newName);
                     break;
-                case 1: 
+                case 1:
                     var newArea = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
                     roomService.Update(room, area: newArea);
                     break;

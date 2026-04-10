@@ -1,8 +1,5 @@
 ﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace HotelApp.UI
 {
@@ -21,7 +18,7 @@ namespace HotelApp.UI
                 {
                     AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
                     continue;
-                }                
+                }
 
                 if (int.TryParse(input, out value) && value > 0)
                 {

@@ -1,8 +1,5 @@
 ﻿using HotelApp.UI;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.MenuData
 {
@@ -48,7 +45,7 @@ namespace HotelApp.MenuData
                 }
             }
 
-            // Skapa en panel med dubbla kanter
+            // Skapa en panel
             var panel = new Panel(calendarContent.ToString())
             {
                 Border = BoxBorder.Double,
@@ -74,7 +71,6 @@ namespace HotelApp.MenuData
                 Console.Clear();
                 RenderCalendar(selectedDate, message);
 
-                // Läsa användarens tangent
                 var key = Console.ReadKey(true).Key;
 
                 switch (key)
@@ -94,10 +90,10 @@ namespace HotelApp.MenuData
                     case ConsoleKey.Enter:
                         AnsiConsole.Write(Align.Center(new Markup($"\nDu valde: [green]{selectedDate:yyyy-MM-dd}[/]")));
                         Messages.WaitForKey();
-                        return selectedDate; // Avslutar loopen
+                        return selectedDate; 
 
                     case ConsoleKey.Escape:
-                        break; // Avbryter valet
+                        break; 
                 }
             }
         }

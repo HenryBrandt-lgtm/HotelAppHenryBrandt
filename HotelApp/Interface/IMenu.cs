@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HotelApp.Interface
+﻿namespace HotelApp.Interface
 {
     public interface IMenu
     {

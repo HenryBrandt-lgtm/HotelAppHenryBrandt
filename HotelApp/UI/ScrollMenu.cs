@@ -1,5 +1,4 @@
 ﻿using Spectre.Console;
-using System;
 
 namespace HotelApp.UI
 {
@@ -24,7 +23,7 @@ namespace HotelApp.UI
                     var line = new Text(indicator + options[i], i == select ? new Style(Color.Green) : null)
                     {
                         Justification = Justify.Center
-                    };                   
+                    };
 
                     AnsiConsole.Write(line);
 
@@ -47,10 +46,10 @@ namespace HotelApp.UI
                     case ConsoleKey.Enter:
                         Console.CursorVisible = true;
                         return select;
-                        
-                        
+
+
                 }
             }
-        }             
+        }
     }
 }

@@ -1,12 +1,9 @@
-﻿using HotelApp.Controllers;
-using HotelApp.Data;
+﻿using HotelApp.Data;
 using HotelApp.Models;
-using HotelApp.UI;
-using Spectre.Console;
 
 namespace HotelApp.Services
 {
-    public class RoomService (ApplicationDbContext db)
+    public class RoomService(ApplicationDbContext db)
     {
         public List<Room> GetActiveRooms()
         {

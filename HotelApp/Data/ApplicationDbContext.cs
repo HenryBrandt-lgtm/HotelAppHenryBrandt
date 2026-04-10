@@ -1,8 +1,5 @@
 ﻿using HotelApp.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Data
 {
@@ -21,7 +18,7 @@ namespace HotelApp.Data
 
         public DbSet<Invoice> Invoices { get; set; }
 
-        public DbSet <Booking> Bookings { get; set; } 
+        public DbSet<Booking> Bookings { get; set; }
 
         public ApplicationDbContext()
         { }

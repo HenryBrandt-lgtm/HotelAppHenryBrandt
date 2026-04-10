@@ -1,9 +1,4 @@
-﻿using HotelApp.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection.Metadata;
-
-namespace HotelApp
+﻿namespace HotelApp
 {
     public class Program
     {

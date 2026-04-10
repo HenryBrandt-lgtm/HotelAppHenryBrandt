@@ -1,14 +1,10 @@
-﻿using HotelApp.Models;
-using HotelApp.Services;
+﻿using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HotelApp.Controllers
 {
-    public class CustomerController (CustomerService service)
+    public class CustomerController(CustomerService service)
     {
         public void Create()
         {

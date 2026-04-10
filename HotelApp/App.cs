@@ -1,10 +1,6 @@
-﻿using HotelApp.Controllers;
-using HotelApp.Controllers.MenuControllers;
+﻿using HotelApp.Controllers.MenuControllers;
 using HotelApp.Data;
-using HotelApp.Services;
 using HotelApp.UI;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelApp
@@ -13,7 +9,7 @@ namespace HotelApp
     {
         public static void RunProgram()
         {
-            
+
             var config = AppConfiguration.BuildConfiguration();
 
             using var provider = AppConfiguration.BuildServiceProvider(config);

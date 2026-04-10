@@ -1,6 +1,5 @@
 ﻿using HotelApp.Interface;
 using HotelApp.MenuData;
-using HotelApp.Services;
 using HotelApp.UI;
 using Spectre.Console;
 
@@ -8,7 +7,7 @@ namespace HotelApp.Controllers.MenuControllers
 {
     public class BookingMenu(BookingController controller) : IMenu
     {
-        
+
         public void ShowMenu()
         {
             bool exitMenu = false;
