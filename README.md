@@ -6,11 +6,11 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 ------------------------------------------
 -📌 Funktioner
 
--👤 Hantera kunder (skapa, visa, etc.)
+-👤 Hantera kunder 
 
 -🛏️ Hantera rum
 
--📅 Skapa och hantera bokningar
+-📅 Skapa och hantera bokningar med faktura
 
 -🧭 Menybaserat användargränssnitt i konsolen
 
