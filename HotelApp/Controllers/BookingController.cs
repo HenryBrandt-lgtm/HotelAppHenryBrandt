@@ -195,19 +195,19 @@ namespace HotelApp.Controllers
             AnsiConsole.Write(selectMessage);
             Messages.WaitForKey();
 
-            var activeBookings = bookingService.GetActiveBookings();
-            if (!activeBookings.Any())
+            var bookings = bookingService.GetAllBookings();
+            if (!bookings.Any())
             {
                 AnsiConsole.Write(Align.Center(new Markup("[red]Inga bokningar att radera.[/]")));
                 return;
             }
 
-            var bookingOptions = activeBookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
+            var bookingOptions = bookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
             $"Incheckning: {f.StartDate} Utcheckning: {f.EndDate} Betalning: {(f.Invoice.IsPaid ? "Betald" : "Ej betald")}").ToList();
 
             int index = ScrollMenu.ShowScrollingMenu(bookingOptions);
 
-            var bookingToRemove = activeBookings[index];
+            var bookingToRemove = bookings[index];
 
             var confirmMessage = new Text($"Är du säker på att du vill ta bort bokning ID: {bookingToRemove.BookingId}? (J/N)", new Style(Color.Yellow))
             {

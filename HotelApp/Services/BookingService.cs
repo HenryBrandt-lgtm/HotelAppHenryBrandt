@@ -25,6 +25,7 @@ namespace HotelApp.Services
         public List<Booking> GetUnpaidBookings() => db.Bookings.Include(b => b.Customer).Include(b => b.Room).Include(b => b.Invoice).ToList()
                 .Where(b => b.IsActive && b.Invoice != null && !b.Invoice.IsPaid).ToList();
 
+        public List<Booking> GetAllBookings() => db.Bookings.Include(b => b.Customer).Include(b => b.Room).Include(b => b.Invoice).ToList();
         public void Create(Customer selectedCustomer, Room selectedRoom, DateOnly startDate, DateOnly endDate, decimal totalCost)
         {
 

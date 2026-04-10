@@ -24,7 +24,7 @@ namespace HotelApp.MenuData
             {
                 new("Se alla bokningar", controller.Read),
                 new("Uppdatera bokning", controller.Update),
-                new("Avboka", controller.Delete),
+                new("Ta bort bokning/avboka", controller.Delete),
                 new("Gå tillbaka till huvudmenyn", exitAction)
                
             };
