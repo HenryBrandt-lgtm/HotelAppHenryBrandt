@@ -22,11 +22,9 @@ namespace HotelApp
 
             // hur vill jag göra med room enums?
 
-            //flytta container from app.cs till egen klass?
-
             //kolla notpad med saker som finns kvar
 
-            // fixa med nvarchar grejer och se till att det inte går att skriva in mer än 255 tecken i email tex.
+            // fixa med nvarchar grejer och se till att det inte går att skriva in mer än 25 tecken i name tex.
         }
     }
 }

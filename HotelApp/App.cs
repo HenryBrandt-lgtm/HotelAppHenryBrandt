@@ -13,44 +13,18 @@ namespace HotelApp
     {
         public static void RunProgram()
         {
-            // load config
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
+            
+            var config = AppConfiguration.BuildConfiguration();
 
-            // skapar upp en serviceCollection och fyller den med alla services som behövs i applikationen,
-            // inklusive DbContext och menyer
-            var services = new ServiceCollection();
-            //används bara en gång i början av körningen?
-            services.AddSingleton<IConfiguration>(config);
-            services.AddDbContext<ApplicationDbContext>
-                (opts => opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
-            services.AddScoped<DataInitializer>();
-            services.AddScoped<BookingService>();
-            services.AddScoped<CustomerService>();
-            services.AddScoped<RoomService>();
-            services.AddScoped<BookingMenu>();
-            services.AddScoped<MainMenu>();
-            services.AddScoped<CustomerMenu>();
-            services.AddScoped<RoomMenu>();
-            services.AddScoped<CustomerController>();
-            services.AddScoped<RoomController>();
-            services.AddScoped<BookingController>();
-
-            // skapar upp en serviceProvider och en scope för att kunna använda de services som registrerats,
-            // mainMenu och databasinitialisering,
-            // kan tex skapa upp controllers och skicka genom appen
-
-            using var provider = services.BuildServiceProvider();
+            using var provider = AppConfiguration.BuildServiceProvider(config);
             using var scope = provider.CreateScope();
+
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var initializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
             var mainMenu = scope.ServiceProvider.GetRequiredService<MainMenu>();
 
-            // Skapar upp databasen med hjälp av migration filerna och seedar databasen med datan jag skapat upp (4pers och 4rum)
             initializer.MigrateAndSeed(db);
 
-            // proceed to run UI
             WelcomeText.WelcomeScreen();
             mainMenu.ShowMenu();
 
