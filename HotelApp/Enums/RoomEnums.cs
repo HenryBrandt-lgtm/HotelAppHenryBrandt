@@ -11,8 +11,7 @@ namespace HotelApp.Enums
         TwoBed
     }
     public static class RoomEnums
-    {
-        
+    {        
         public static string GetDescription(this Enum value)
         {
             var field = value.GetType().GetField(value.ToString());

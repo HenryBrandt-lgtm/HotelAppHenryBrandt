@@ -16,6 +16,7 @@
 
             // fixa med nvarchar grejer och se till att det inte går att skriva in mer än 25 tecken i name tex.
 
+            //är inte mina fk, fks i sql? måste sätta nvarchars osv i vs
         }
     }
 }

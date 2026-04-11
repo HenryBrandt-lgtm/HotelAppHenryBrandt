@@ -21,16 +21,6 @@ namespace HotelApp.Models
 
         public bool IsBooked => Bookings.Any(b => b.IsBooked());
 
-        //public string RoomType
-        //{
-        //    get
-        //    {
-        //        if (Area >= 30)
-        //            return "Dubbelrum";                
-        //        else
-        //            return "Enkelrum";
-        //    }
-        //}
         public bool IsAvailable(DateOnly start, DateOnly end, int? excludeBookingId = null)
         {
             return !Bookings
