@@ -18,9 +18,9 @@ namespace HotelApp.Controllers
             var name = VarValidater.GetRequiredString("Ange rummets namn: ");
             var area = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");
             var roomType = ScrollMenu.ShowScrollingEnumMenu(MenuOptions.RoomTypeMenu());
-            if (RoomType.OneBed == roomType)
+            if (RoomType.Single == roomType)
                 beds = 1;
-            else if (RoomType.TwoBed == roomType && area > 20)
+            else if (RoomType.Double == roomType && area > 20)
             {
                 beds = 2;
                 extraBeds = VarValidater.GetRequiredExtraBeds("Ange antal extrasängar (0 om inga)\n" +

@@ -1,4 +1,5 @@
 ﻿using HotelApp.Enums;
+using System.ComponentModel.DataAnnotations;
 using static HotelApp.Enums.RoomEnums;
 
 namespace HotelApp.Models
@@ -6,6 +7,8 @@ namespace HotelApp.Models
     public class Room
     {
         public int RoomId { get; set; }
+
+        [StringLength(25)]
         public required string RoomName { get; set; }
         public required int Area { get; set; }
         public required decimal Price { get; set; }

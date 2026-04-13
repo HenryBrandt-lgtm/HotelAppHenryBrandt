@@ -6,9 +6,9 @@ namespace HotelApp.Enums
     public enum RoomType
     {
         [Description("Enkelrum")]
-        OneBed,
+        Single,
         [Description("Tvåbäddsrum")]
-        TwoBed
+        Double
     }
     public static class RoomEnums
     {        

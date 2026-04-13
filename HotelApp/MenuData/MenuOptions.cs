@@ -22,8 +22,8 @@ namespace HotelApp.MenuData
         {
             return new List<RoomType>
             {
-                RoomType.OneBed,
-                RoomType.TwoBed
+                RoomType.Single,
+                RoomType.Double
             };
         }
         public static List<MenuItem> BookingMenu(BookingController controller, Action exitAction)

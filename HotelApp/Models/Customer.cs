@@ -1,11 +1,15 @@
-﻿namespace HotelApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelApp.Models
 {
     public class Customer
     {
         public int CustomerId { get; set; }
 
+        [StringLength(25)]
         public required string FirstName { get; set; }
 
+        [StringLength(25)]
         public required string LastName { get; set; }
 
         public DateOnly Birthday { get; set; }

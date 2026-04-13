@@ -43,6 +43,7 @@ namespace HotelApp.UI
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     AnsiConsole.Write(Align.Center(new Markup("Får inte vara tomt. Försök igen.")));
+                    Messages.WaitForKey();
                     continue;
                 }
 
@@ -53,6 +54,7 @@ namespace HotelApp.UI
                 else
                 {
                     AnsiConsole.Write(Align.Center(new Markup("Ogiltigt tal. Ange ett heltal över 0, t.ex. 2.")));
+                    Messages.WaitForKey();
                 }
             }
         }

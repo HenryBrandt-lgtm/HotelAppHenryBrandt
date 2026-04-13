@@ -61,9 +61,9 @@ namespace HotelApp.Data
             {
                 dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Buffert",
+                    RoomName = "Buffert OneBed",
                     Area = 15,
-                    RoomType = Enums.RoomType.OneBed,
+                    RoomType = Enums.RoomType.Single,
                     Beds = 1,
                     Price = 140,
                     IsActive= true
@@ -73,9 +73,9 @@ namespace HotelApp.Data
             {
                 dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Luxury",
+                    RoomName = "Luxury OneBed",
                     Area = 28,
-                    RoomType = Enums.RoomType.OneBed,
+                    RoomType = Enums.RoomType.Single,
                     Beds = 1,
                     Price = 200,
                     IsActive = true
@@ -85,9 +85,9 @@ namespace HotelApp.Data
             {
                 dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Regular",
+                    RoomName = "Regular TwoBed",
                     Area = 35,
-                    RoomType = Enums.RoomType.TwoBed,
+                    RoomType = Enums.RoomType.Double,
                     Beds = 2,
                     ExtraBeds = 1,
                     Price = 280,
@@ -98,9 +98,9 @@ namespace HotelApp.Data
             {
                 dbContext.Rooms.Add(new Room
                 {
-                    RoomName = "Luxury",
+                    RoomName = "Luxury TwoBed",
                     Area = 45,
-                    RoomType = Enums.RoomType.TwoBed,
+                    RoomType = Enums.RoomType.Double,
                     Beds = 2,
                     ExtraBeds= 2,
                     Price = 350,
