@@ -34,6 +34,10 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 
 │
 
+├── Models                # Tables (Booking, Customer, Room, Invoice)
+
+│
+
 ├── Services/             # Affärslogik
 
 │
@@ -46,7 +50,7 @@ Applikationen låter användaren hantera kunder, rum, bokningar och betalningar 
 
 ├── App.cs                # Konfiguration och uppstart
 
-└── appsettings.json      # Konfiguration (t.ex. connection string)
+└── appsettings.json      # Konfiguration
 
 -----------------------------------------
 🚀 Installation & Körning
