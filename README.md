@@ -55,7 +55,6 @@ git clone <[repo-url](https://github.com/HenryBrandt-lgtm/HotelAppHenryBrandt.gi
 cd HotelApp
 2. Konfigurera databas
 3. Kör projektet
-dotnet run
 
 -----------------------------------------
 🧪 Vad händer vid start?
@@ -77,11 +76,7 @@ När applikationen startar:
 
 -Input och validering av e-post för att skicka invoice
 
--Hantering av extrasängar
-
 -Möjlighet till in-/utcheckning
-
--Förbättrad struktur för enums och logik
 
 ------------------------------------------
 👨‍💻 Författare
