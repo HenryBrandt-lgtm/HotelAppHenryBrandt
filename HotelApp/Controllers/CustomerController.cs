@@ -11,8 +11,8 @@ namespace HotelApp.Controllers
             Console.Clear();
             AnsiConsole.Write(Align.Center(new Markup("[cyan]Skapa en ny gäst[/]")));
 
-            var firstNameInput = VarValidater.GetRequiredString("Ange förnamn: ");
-            var lastNameInput = VarValidater.GetRequiredString("Ange efternamn: ");
+            var firstNameInput = VarValidater.GetRequiredStringMax25("Ange förnamn: ");
+            var lastNameInput = VarValidater.GetRequiredStringMax25("Ange efternamn: ");
             var birthdayInput = VarValidater.GetValidDateOnly("Ange födelseår (yyyy-MM-dd): ");
 
             if (service.CustomerExists(firstNameInput, lastNameInput))
@@ -100,11 +100,11 @@ namespace HotelApp.Controllers
             switch (choice)
             {
                 case 0:
-                    customer.FirstName = VarValidater.GetRequiredString("Nytt förnamn: ");
+                    customer.FirstName = VarValidater.GetRequiredStringMax25("Nytt förnamn: ");
                     break;
 
                 case 1:
-                    customer.LastName = VarValidater.GetRequiredString("Nytt efternamn: ");
+                    customer.LastName = VarValidater.GetRequiredStringMax25("Nytt efternamn: ");
                     break;
 
                 case 2:

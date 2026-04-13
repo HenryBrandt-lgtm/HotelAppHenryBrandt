@@ -12,10 +12,10 @@ namespace HotelApp.Controllers
         {
             Console.Clear();
             AnsiConsole.Write(HeaderDisplay.GetHeader());
-            int beds;
+            int beds = 1;
             int extraBeds = 0;
 
-            var name = VarValidater.GetRequiredString("Ange rummets namn: ");
+            var name = VarValidater.GetRequiredStringMax25("Ange rummets namn: ");
             var area = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");
             var roomType = ScrollMenu.ShowScrollingEnumMenu(MenuOptions.RoomTypeMenu());
             if (RoomType.Single == roomType)
@@ -26,12 +26,8 @@ namespace HotelApp.Controllers
                 extraBeds = VarValidater.GetRequiredExtraBeds("Ange antal extrasängar (0 om inga)\n" +
                     "dubbelrum över 30kvm kan ha 2 extrasängar och dubbelrum över 20kvm kan ha 1 extrasäng: ", area, beds);
             }
-            else
-                beds = 0;
 
             var price = VarValidater.GetRequiredDecimalOverZero("Ange pris/natt: ");
-
-            //Gör input beroende på rumstypen
 
             var room = roomService.CreateRoom(name, area, roomType, beds, extraBeds, price);
 
@@ -162,29 +158,51 @@ namespace HotelApp.Controllers
             var options = roomToUpdate.Select(r => r.RoomName).ToList();
             int index = ScrollMenu.ShowScrollingMenu(options);
             var room = roomToUpdate[index];
-            var updateOptions = new List<string> { "Rummets namn", "Storlek (kvm)", "Antal sängar", "Pris/natt" };
+            var updateOptions = new List<string> { "Rummets namn", "Storlek (kvm)", "Rumstyp", "ExtraSängar", "Pris/natt", "Exit" };
             int fieldIndex = ScrollMenu.ShowScrollingMenu(updateOptions);
 
             switch (fieldIndex)
             {
                 case 0:
-                    var newName = VarValidater.GetRequiredString("Nytt rumsnamn: ");
-                    roomService.Update(room, name: newName);
+                    room.RoomName = VarValidater.GetRequiredStringMax25("Nytt rumsnamn: ");
                     break;
                 case 1:
-                    var newArea = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
-                    roomService.Update(room, area: newArea);
+                    room.Area = VarValidater.GetRequiredIntOverZero("Ny storlek i kvm: ");
                     break;
                 case 2:
-                    var newBeds = VarValidater.GetRequiredIntOverZero("Nytt antal sängar: ");
-                    roomService.Update(room, beds: newBeds);
+                    AnsiConsole.MarkupLine("[cyan]Välj rumstyp:[/]");
+                    room.RoomType = ScrollMenu.ShowScrollingEnumMenu(MenuOptions.RoomTypeMenu());
+                    if (room.RoomType == RoomType.Double)
+                        room.Beds = 2;
+                    else if (room.RoomType == RoomType.Single)
+                    {
+                        room.Beds = 1;
+                        room.ExtraBeds = 0;
+                    }
                     break;
                 case 3:
-                    var newPrice = VarValidater.GetRequiredDecimalOverZero("Nytt pris/natt: ");
-                    roomService.Update(room, price: newPrice);
+                    if (room.RoomType == RoomType.Double && room.Area > 30)
+                    {
+                        var extrabeds = new List<string> { "0", "1", "2" };
+                        var extraBedIndex = ScrollMenu.ShowScrollingMenu(extrabeds);
+                        room.ExtraBeds = int.Parse(extrabeds[extraBedIndex]);
+                    }
+                    else if (room.RoomType == RoomType.Double && room.Area > 20 && room.Area <= 30)
+                    {
+                        var extrabeds = new List<string> { "0", "1" };
+                        var extraBedIndex = ScrollMenu.ShowScrollingMenu(extrabeds);
+                        room.ExtraBeds = int.Parse(extrabeds[extraBedIndex]);
+                    }
+                    else
+                        AnsiConsole.MarkupLine("[red]Endast Dubblerum kan ha extrasängar[/]");
+                    break;
+                case 4:
+                    room.Price = VarValidater.GetRequiredDecimalOverZero("Nytt pris/natt: ");
+                    break;
+                case 5:
                     break;
             }
-
+            roomService.Update(room);
             AnsiConsole.MarkupLine($"[green]Rummet '{room.RoomName}' har uppdaterats.[/]");
             Messages.WaitForKey();
         }

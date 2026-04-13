@@ -1,6 +1,7 @@
 ﻿using HotelApp.Data;
 using HotelApp.Enums;
 using HotelApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelApp.Services
 {
@@ -8,7 +9,7 @@ namespace HotelApp.Services
     {
         public List<Room> GetActiveRooms()
         {
-            return db.Rooms.Where(r => r.IsActive).ToList();
+            return db.Rooms.Include(r => r.Bookings).Where(r => r.IsActive).ToList();
         }
         public List<Room> GetInactiveRooms()
         {
@@ -47,12 +48,13 @@ namespace HotelApp.Services
             db.SaveChanges();
         }
 
-        public void Update(Room room, string? name = null, int? area = null, int? beds = null, decimal? price = null)
+        public void Update(Room room, string? name = null, int? area = null, int? beds = null, decimal? price = null, RoomType? roomType = null)
         {
             if (name != null) room.RoomName = name;
             if (area != null) room.Area = area.Value;
             if (beds != null) room.Beds = beds.Value;
             if (price != null) room.Price = price.Value;
+            if (roomType != null) room.RoomType = roomType.Value;
 
             db.SaveChanges();
         }

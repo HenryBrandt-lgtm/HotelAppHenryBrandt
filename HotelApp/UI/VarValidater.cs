@@ -83,7 +83,7 @@ namespace HotelApp.UI
                 }
             }
         }
-        public static string GetRequiredString(string message)
+        public static string GetRequiredStringMax25(string message)
         {
             string input;
 
@@ -100,8 +100,12 @@ namespace HotelApp.UI
                     AnsiConsole.Write(Align.Center(new Markup("För kort input.")));
                     continue;
                 }
+                else if (input.Length > 25)
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("[red]För långt input. Max 25 tecken.[/] Försök igen.")));
+                }
 
-            } while (string.IsNullOrWhiteSpace(input));
+            } while (input.Length < 2 || input.Length > 25);
 
             return input;
         }
