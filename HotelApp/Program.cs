@@ -14,6 +14,8 @@
 
             //kolla notpad med saker som finns kvar
 
+            //create extrasängar och update extrasängar är jäkligt olika nu
+
         }
     }
 }
