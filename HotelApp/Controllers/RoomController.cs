@@ -181,20 +181,13 @@ namespace HotelApp.Controllers
                     }
                     break;
                 case 3:
-                    if (room.RoomType == RoomType.Double && room.Area > 30)
+                    if (room.RoomType == RoomType.Double && room.Area > 20)
                     {
-                        var extrabeds = new List<string> { "0", "1", "2" };
-                        var extraBedIndex = ScrollMenu.ShowScrollingMenu(extrabeds);
-                        room.ExtraBeds = int.Parse(extrabeds[extraBedIndex]);
-                    }
-                    else if (room.RoomType == RoomType.Double && room.Area > 20 && room.Area <= 30)
-                    {
-                        var extrabeds = new List<string> { "0", "1" };
-                        var extraBedIndex = ScrollMenu.ShowScrollingMenu(extrabeds);
-                        room.ExtraBeds = int.Parse(extrabeds[extraBedIndex]);
-                    }
+                        room.ExtraBeds = VarValidater.GetRequiredExtraBeds("Ange antal extrasängar (0 om inga)\n" +
+                    "dubbelrum över 30kvm kan ha 2 extrasängar och dubbelrum över 20kvm kan ha 1 extrasäng: ", room.Area, room.Beds);
+                    }                    
                     else
-                        AnsiConsole.MarkupLine("[red]Endast Dubblerum kan ha extrasängar[/]");
+                        AnsiConsole.MarkupLine("[red]Endast Dubblerum över 20kvm kan ha extrasängar[/]");
                     break;
                 case 4:
                     room.Price = VarValidater.GetRequiredDecimalOverZero("Nytt pris/natt: ");

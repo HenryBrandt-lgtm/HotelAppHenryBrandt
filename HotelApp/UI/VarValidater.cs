@@ -1,6 +1,6 @@
-﻿using HotelApp.Enums;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System.Globalization;
+
 
 namespace HotelApp.UI
 {
@@ -109,6 +109,25 @@ namespace HotelApp.UI
 
             return input;
         }
+        public static string GetRequiredEmail(string message)
+        {
+            string input;
+            while (true)
+            {
+                input = AnsiConsole.Ask<string>(message);
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
+                    continue;
+                }
+                if (input.Contains('@') && input.Contains('.'))
+                {
+                    return input;
+                }
+                AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltig emailadress.[/] Försök igen.")));
+
+            }
+        }
         public static DateOnly GetValidDateOnly(string message)
         {
             int maxAge = 100;
@@ -193,7 +212,7 @@ namespace HotelApp.UI
                         AnsiConsole.Write(Align.Center(new Markup("[red]Fler extrasängar än 1 kräver att rummet är minst 30 kvm.[/] Försök igen.")));
                         continue;
                     }
-                    else if (area < 20  && value > 0 && beds < 2)
+                    else if (area < 20 && value > 0 && beds < 2)
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]En extrasäng kräver att rummet är minst 20 kvm och ett dubbelrum.[/] Försök igen.")));
                         continue;
@@ -205,6 +224,6 @@ namespace HotelApp.UI
                     AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltigt tal. Ange ett heltal över 0, t.ex. 2.[/]")));
                 }
             }
-        }        
+        }
     }
 }

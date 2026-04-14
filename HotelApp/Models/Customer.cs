@@ -14,6 +14,9 @@ namespace HotelApp.Models
 
         public DateOnly Birthday { get; set; }
 
+        [StringLength(50)]
+        public required string Email { get; set; }
+
         public bool IsActive { get; set; }
 
         public List<Booking>? Bookings { get; set; }

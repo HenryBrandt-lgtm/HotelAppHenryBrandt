@@ -12,10 +12,7 @@
 
             // Ska man kunna checka in ?
 
-            //kolla notpad med saker som finns kvar
-
-            //create extrasängar och update extrasängar är jäkligt olika nu
-
+            // kolla notpad med saker som finns kvar
         }
     }
 }

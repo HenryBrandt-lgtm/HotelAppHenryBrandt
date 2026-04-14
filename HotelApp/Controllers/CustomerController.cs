@@ -13,11 +13,12 @@ namespace HotelApp.Controllers
 
             var firstNameInput = VarValidater.GetRequiredStringMax25("Ange förnamn: ");
             var lastNameInput = VarValidater.GetRequiredStringMax25("Ange efternamn: ");
+            var emailInput = VarValidater.GetRequiredEmail("Ange email: ");
             var birthdayInput = VarValidater.GetValidDateOnly("Ange födelseår (yyyy-MM-dd): ");
 
-            if (service.CustomerExists(firstNameInput, lastNameInput))
+            if (service.CustomerExists(firstNameInput, lastNameInput, emailInput))
             {
-                AnsiConsole.MarkupLine("[red]Gästen finns redan.[/]");
+                AnsiConsole.MarkupLine("[red]Gästen finns redan. Alternativt E-postadressen används redan.[/]");
                 return;
             }
 
@@ -94,7 +95,7 @@ namespace HotelApp.Controllers
 
             var customer = customers[index];
 
-            var updateOptions = new List<string> { "Förnamn", "Efternamn", "Födelsedatum" };
+            var updateOptions = new List<string> { "Förnamn", "Efternamn", "Födelsedatum", "Email" };
             int choice = ScrollMenu.ShowScrollingMenu(updateOptions);
 
             switch (choice)
@@ -109,6 +110,9 @@ namespace HotelApp.Controllers
 
                 case 2:
                     customer.Birthday = VarValidater.GetValidDateOnly("Nytt datum: ");
+                    break;
+                case 3:
+                    customer.Email = VarValidater.GetRequiredEmail("Ny email: ");
                     break;
             }
 

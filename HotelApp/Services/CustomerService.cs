@@ -5,9 +5,9 @@ namespace HotelApp.Services
 {
     public class CustomerService(ApplicationDbContext db)
     {
-        public bool CustomerExists(string firstName, string lastName)
+        public bool CustomerExists(string firstName, string lastName, string email)
         {
-            return db.Customers.Any(c => c.FirstName == firstName && c.LastName == lastName);
+            return db.Customers.Any(c => (c.FirstName == firstName && c.LastName == lastName) || c.Email == email);
         }
         public List<Customer> GetActiveCustomers() => db.Customers.Where(c => c.IsActive).ToList();
 
