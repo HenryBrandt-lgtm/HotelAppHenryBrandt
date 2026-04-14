@@ -78,7 +78,7 @@ När applikationen startar:
 ------------------------------------------
 ⚠️ Kända förbättringsområden
 
--Input och validering av e-post för att skicka invoice
+-Skicka Invoice via email
 
 -Möjlighet till in-/utcheckning
 
