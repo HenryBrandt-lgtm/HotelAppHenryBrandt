@@ -46,7 +46,7 @@ namespace HotelApp.Controllers
                 return;
             }
 
-            service.CreateCustomer(firstNameInput, lastNameInput, birthdayInput);
+            service.CreateCustomer(firstNameInput, lastNameInput, birthdayInput, emailInput);
 
             AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
         }

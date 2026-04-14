@@ -20,6 +20,7 @@ namespace HotelApp.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Birthday = table.Column<DateOnly>(type: "date", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -35,11 +36,11 @@ namespace HotelApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoomName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Area = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     RoomType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Beds = table.Column<int>(type: "int", nullable: false),
-                    ExtraBeds = table.Column<int>(type: "int", nullable: false)
+                    ExtraBeds = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

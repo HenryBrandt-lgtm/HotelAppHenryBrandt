@@ -21,13 +21,14 @@ namespace HotelApp.Services
         }
 
 
-        public void CreateCustomer(string firstName, string lastName, DateOnly birthday)
+        public void CreateCustomer(string firstName, string lastName, DateOnly birthday, string email)
         {
             var customer = new Customer
             {
                 FirstName = firstName,
                 LastName = lastName,
                 Birthday = birthday,
+                Email = email,
                 IsActive = true
             };
 

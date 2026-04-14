@@ -21,6 +21,7 @@ namespace HotelApp.Data
                     FirstName = "Henry",
                     LastName = "Brandt",
                     Birthday = new DateOnly(1993, 06, 07),
+                    Email = "henry.brandt@example.com",
                     IsActive = true
                 });
             }
@@ -31,6 +32,7 @@ namespace HotelApp.Data
                     FirstName = "Hanna",
                     LastName = "Verlage",
                     Birthday = new DateOnly(1997, 03, 15),
+                    Email = "hanna.verlage@example.com",
                     IsActive = true
                 });
             }
@@ -41,6 +43,7 @@ namespace HotelApp.Data
                     FirstName = "Alex",
                     LastName = "Araujo",
                     Birthday = new DateOnly(1993, 03, 20),
+                    Email = "alex.araujo@example.com",
                     IsActive = true
                 });
             }
@@ -51,6 +54,7 @@ namespace HotelApp.Data
                     FirstName = "Mirza",
                     LastName = "Hujic",
                     Birthday = new DateOnly(1992, 02, 26),
+                    Email = "mirza.hujic@example.com",
                     IsActive = true
                 });
             }

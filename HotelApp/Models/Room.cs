@@ -11,15 +11,13 @@ namespace HotelApp.Models
         [StringLength(25)]
         public required string RoomName { get; set; }
         public required int Area { get; set; }
+        public RoomType RoomType { get; set; }
+        public int Beds { get; set; }
+        public int ExtraBeds { get; set; }
         public required decimal Price { get; set; }
         public bool IsActive { get; set; }
         public List<Booking>? Bookings { get; set; }
 
-        public RoomType RoomType { get; set; }
-
-        public int Beds { get; set; }
-
-        public int ExtraBeds { get; set; }
         public int TotalBeds => Beds + ExtraBeds;
 
         public bool IsBooked => Bookings.Any(b => b.IsBooked());
