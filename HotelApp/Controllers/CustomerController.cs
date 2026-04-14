@@ -175,6 +175,7 @@ namespace HotelApp.Controllers
         }
         public void ReadDeleted()
         {
+            Console.Clear();
             var inactiveGuests = service.GetInactiveCustomers();
             if (!inactiveGuests.Any())
             {

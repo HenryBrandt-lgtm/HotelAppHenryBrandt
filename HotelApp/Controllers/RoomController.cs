@@ -16,7 +16,13 @@ namespace HotelApp.Controllers
             int extraBeds = 0;
 
             var name = VarValidater.GetRequiredStringMax25("Ange rummets namn: ");
-            var area = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm: ");
+            var area = VarValidater.GetRequiredIntOverZero("Ange rummets storlek i kvm, minst 10kvm: ");
+            if(area < 10)
+            {
+                AnsiConsole.MarkupLine("[red]Rummets area satt till 10kvm.[/] Gå till Updatera rum för att ändra");
+                area = 10;
+                Messages.WaitForKey();                
+            }
             var roomType = ScrollMenu.ShowScrollingEnumMenu(MenuOptions.RoomTypeMenu());
             if (RoomType.Single == roomType)
                 beds = 1;
@@ -139,7 +145,7 @@ namespace HotelApp.Controllers
                     $"n [blue]Extra sängar:[/] {room.ExtraBeds}" +
                     $"\n [yellow]Storlek:[/] {room.Area}" +
                     $"\n[blue]Pris:[/] {room.Price}" +
-                    $"\n [yellow]====================");
+                    $"\n [yellow]====================[/]");
 
                 AnsiConsole.Write(Align.Center(content));
             }

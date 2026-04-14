@@ -145,7 +145,7 @@ namespace HotelApp.UI
                     "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthday))
                 {
                     if (birthday >= maxBirthday)
-                        AnsiConsole.Write(Align.Center(new Markup("Personen måste vara äldre än dagens 18år för att kunna boka")));
+                        AnsiConsole.Write(Align.Center(new Markup("Personen måste vara äldre än 18år för att kunna boka")));
 
                     else if (birthday < minBirthday)
                         AnsiConsole.Write(Align.Center(new Markup("Personen kan nog inte vara så gammal")));
