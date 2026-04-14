@@ -120,6 +120,11 @@ namespace HotelApp.UI
                     AnsiConsole.Write(Align.Center(new Markup("[red]Får inte vara tomt.[/] Försök igen.")));
                     continue;
                 }
+                else if(input.Length > 50)
+                {
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Din email kan endast vara max 50 tecken.[/] Försök igen.")));
+                    continue;
+                }
                 if (input.Contains('@') && input.Contains('.'))
                 {
                     return input;
