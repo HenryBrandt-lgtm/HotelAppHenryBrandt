@@ -82,6 +82,8 @@ När applikationen startar:
 
 -Möjlighet till in-/utcheckning
 
+-Möjlighet att alltid backa ur delar av programmet om man ångrar sig
+
 ------------------------------------------
 👨‍💻 Författare
 
