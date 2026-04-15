@@ -97,6 +97,7 @@ namespace HotelApp.Controllers
             if (!activeRooms.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
+                Messages.WaitForKey();
                 return;
             }
             else
@@ -134,6 +135,7 @@ namespace HotelApp.Controllers
             if (!deletedRooms.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga aktiva rum att visa.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -191,9 +193,12 @@ namespace HotelApp.Controllers
                     {
                         room.ExtraBeds = VarValidater.GetRequiredExtraBeds("Ange antal extrasängar (0 om inga)\n" +
                     "dubbelrum över 30kvm kan ha 2 extrasängar och dubbelrum över 20kvm kan ha 1 extrasäng: ", room.Area, room.Beds);
-                    }                    
+                    }
                     else
+                    {
                         AnsiConsole.MarkupLine("[red]Endast Dubblerum över 20kvm kan ha extrasängar[/]");
+                        Messages.WaitForKey();
+                    }
                     break;
                 case 4:
                     room.Price = VarValidater.GetRequiredDecimalOverZero("Nytt pris/natt: ");

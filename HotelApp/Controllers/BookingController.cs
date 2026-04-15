@@ -163,6 +163,7 @@ namespace HotelApp.Controllers
                     return selectedCustomer;
 
                 AnsiConsole.MarkupLine("[red]Ogiltigt val, försök igen.[/]");
+                Messages.WaitForKey();
             }
         }
         public void ReadAvailableRooms()
@@ -199,6 +200,7 @@ namespace HotelApp.Controllers
             if (!bookings.Any())
             {
                 AnsiConsole.Write(Align.Center(new Markup("[red]Inga bokningar att radera.[/]")));
+                Messages.WaitForKey();
                 return;
             }
 
@@ -219,6 +221,7 @@ namespace HotelApp.Controllers
             if (key != ConsoleKey.J)
             {
                 AnsiConsole.Write(Align.Center(new Markup("[green]Borttagning avbruten.[/]")));
+                Messages.WaitForKey();
                 return;
             }
 
@@ -312,6 +315,7 @@ namespace HotelApp.Controllers
             if (!activeBookings.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga bokningar att radera.[/]");
+                Messages.WaitForKey();
                 return;
             }
             var bookingOptions = activeBookings.Select(f => $"ID: {f.BookingId} Namn: {f.Customer.FullName} " +
@@ -331,6 +335,7 @@ namespace HotelApp.Controllers
                     if (!bookingToUpdate.Room.IsAvailable(newStart, bookingToUpdate.EndDate, bookingToUpdate.BookingId))
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Rummet är redan bokat under den perioden![/]")));
+                        Messages.WaitForKey();
                         return;
                     }
                     bookingToUpdate.StartDate = newStart;
@@ -338,6 +343,7 @@ namespace HotelApp.Controllers
                     if (bookingToUpdate.EndDate < bookingToUpdate.StartDate)
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Startdatum kan inte vara efter slutdatum.[/]")));
+                        Messages.WaitForKey();
                         return;
                     }
                     break;
@@ -347,6 +353,7 @@ namespace HotelApp.Controllers
                     if (!bookingToUpdate.Room.IsAvailable(bookingToUpdate.StartDate, newEnd, bookingToUpdate.BookingId))
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Rummet är redan bokat under den perioden![/]")));
+                        Messages.WaitForKey();
                         return;
                     }
                     bookingToUpdate.EndDate = newEnd;
@@ -354,6 +361,7 @@ namespace HotelApp.Controllers
                     if (bookingToUpdate.EndDate < bookingToUpdate.StartDate)
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Slutdatum kan inte vara före startdatum.[/]")));
+                        Messages.WaitForKey();
                         return;
                     }
                     break;
@@ -365,6 +373,7 @@ namespace HotelApp.Controllers
                     if (availableRooms.Count == 0)
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Inga rum lediga under de valda datumen.[/]")));
+                        Messages.WaitForKey();
                         return;
                     }
 
@@ -388,6 +397,7 @@ namespace HotelApp.Controllers
                     if (selectedRoom == null)
                     {
                         AnsiConsole.Write(Align.Center(new Markup("[red]Ogiltigt ID försök igen.[/]")));
+                        Messages.WaitForKey();
                         return;
                     }
                     bookingToUpdate.Room = selectedRoom;

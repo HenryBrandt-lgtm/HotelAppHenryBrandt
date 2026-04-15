@@ -19,6 +19,7 @@ namespace HotelApp.Controllers
             if (service.CustomerExists(firstNameInput, lastNameInput, emailInput))
             {
                 AnsiConsole.MarkupLine("[red]Gästen finns redan. Alternativt E-postadressen används redan.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -43,12 +44,14 @@ namespace HotelApp.Controllers
             if (key != ConsoleKey.J)
             {
                 AnsiConsole.MarkupLine("[red]Avbryter.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
             service.CreateCustomer(firstNameInput, lastNameInput, birthdayInput, emailInput);
 
             AnsiConsole.MarkupLine("[bold green]Kund registrerad framgångsrikt![/]");
+            Messages.WaitForKey();
         }
         public void Delete()
         {
@@ -59,6 +62,7 @@ namespace HotelApp.Controllers
             if (!activeCustomers.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga gäster att radera.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -69,7 +73,8 @@ namespace HotelApp.Controllers
 
             if (service.HasActiveBookings(customerToDelete))
             {
-                AnsiConsole.MarkupLine("[red]Har aktiva bokningar.[/]");
+                AnsiConsole.MarkupLine("[red]Går inte att ta bort gäst med aktiva bokningar.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -87,6 +92,7 @@ namespace HotelApp.Controllers
             if (!customers.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga gäster att uppdatera.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -131,6 +137,7 @@ namespace HotelApp.Controllers
             if (!activeGuests.Any())
             {
                 AnsiConsole.WriteLine("Inga aktiva gäster att visa.");
+                Messages.WaitForKey();
                 return;
             }
             else
@@ -160,6 +167,7 @@ namespace HotelApp.Controllers
             if (!inactiveCustomers.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga att återaktivera.[/]");
+                Messages.WaitForKey();
                 return;
             }
 
@@ -180,6 +188,7 @@ namespace HotelApp.Controllers
             if (!inactiveGuests.Any())
             {
                 AnsiConsole.MarkupLine("[red]Inga inaktiva gäster.[/]");
+                Messages.WaitForKey();
                 return;
             }
             foreach (var guest in inactiveGuests)
