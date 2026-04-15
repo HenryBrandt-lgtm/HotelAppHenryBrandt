@@ -1,5 +1,5 @@
 
---SELECT--visar all info om customers, förutom födelsedag-----
+------visar all info om customers, förutom födelsedag-----
 
 USE HenrysHotel;
 GO
@@ -11,7 +11,7 @@ SELECT
 	IsActive
 FROM Customers
 
---WHERE--visar samma info om kunder men där enast aktiva(icke raderade kunder) visas-----
+-----visar samma info om kunder men där enast aktiva(icke raderade kunder) visas-----
 
 USE HenrysHotel;
 GO
@@ -23,16 +23,16 @@ SELECT
 FROM Customers
 WHERE IsActive = 1;
 
---ORDER BY--visar all info om alla rum med dyrste rummet först-----------
+----visar all info om alla rum med dyrste rummet först-----------
 
 USE HenrysHotel
 GO
 
 SELECT * 
 FROM Rooms
-ORDER BY Price DESC
+ORDER BY Price DESC;
 
---JOIN--visar bokningar med namn på kund som bokat samt vilket rum som är bokat med pris----
+-----visar bokningar med namn på kund som bokat samt vilket rum som är bokat med pris----
 
 USE HenrysHotel
 GO
@@ -44,17 +44,15 @@ SELECT
     Bookings.StartDate,
     Bookings.EndDate,
     Rooms.RoomName,
-    Invoices.Amount
+    Rooms.Price
 FROM Bookings
 JOIN Customers
     ON Bookings.CustomerId = Customers.CustomerId
 JOIN Rooms
-    ON Bookings.RoomId = Rooms.RoomId
-JOIN Invoices
-    ON Bookings.BookingId = Invoices.BookingId
+    ON Bookings.RoomId = Rooms.RoomId;
 
 
---GROUP BY--Visar hur mycket varje kund spenderat totalt på hotellet------
+-----Visar hur mycket varje kund bokat rum och betalat för totalt------
 
 USE HenrysHotel
 GO
@@ -63,7 +61,8 @@ SELECT
     C.CustomerId,
     C.FirstName,
     C.LastName,
-    SUM(I.Amount) AS TotalAmountSpent
+    SUM(I.Amount) AS TotalAmount,
+    I.IsPaid
 FROM Customers C
 JOIN Bookings B
     ON C.CustomerId = B.CustomerId
@@ -73,10 +72,11 @@ WHERE I.IsPaid = 1
 GROUP BY 
     C.CustomerId,
     C.FirstName,
-    C.LastName
+    C.LastName,
+    I.IsPaid;
     
 
---SUBQUERY--visar kunder som betalt boknignar för totalt över 1000kr----
+-----visar kunder som betalt boknignar för totalt över 1000kr----
 USE HenrysHotel
 GO
 
@@ -88,7 +88,8 @@ WHERE CustomerId IN (
     SELECT 
     b.CustomerId
     FROM Bookings b
-    JOIN Invoices i ON b.BookingId = i.BookingId
+    JOIN Invoices i 
+        ON b.BookingId = i.BookingId
     WHERE i.IsPaid = 1
     GROUP BY b.CustomerId
-    HAVING SUM(i.Amount) > 1000)
+    HAVING SUM(i.Amount) > 1000);

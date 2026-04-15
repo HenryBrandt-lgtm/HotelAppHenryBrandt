@@ -13,6 +13,12 @@
             // Ska man kunna checka in ?
 
             // kolla notpad med saker som finns kvar
+
+            // Näst sista query fungerar inte
+
+            // avbrutna bokningar i SQL
+
+            // välj extrasängar vid bokning
         }
     }
 }

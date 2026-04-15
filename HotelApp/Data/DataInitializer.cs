@@ -11,6 +11,8 @@ namespace HotelApp.Data
             SeedCustomers(dbContext);
             SeedRooms(dbContext);
             dbContext.SaveChanges();
+            SeedBookings(dbContext);
+            dbContext.SaveChanges();
         }
         private void SeedCustomers(ApplicationDbContext dbContext)
         {
@@ -110,6 +112,69 @@ namespace HotelApp.Data
                     Price = 350,
                     IsActive = true
                 });
+            }
+        }
+        private void SeedBookings(ApplicationDbContext dbContext)
+        {
+            if (!dbContext.Bookings.Any())
+            {
+                var customer1 = dbContext.Customers.First(c => c.FirstName == "Henry");
+                var customer2 = dbContext.Customers.First(c => c.FirstName == "Hanna");
+                var room1 = dbContext.Rooms.First(r => r.RoomName == "Buffert OneBed");
+                var room2 = dbContext.Rooms.First(r => r.RoomName == "Luxury OneBed");
+
+                var booking = new Booking
+                {
+                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(5)),
+                    EndDate = DateOnly.FromDateTime(DateTime.Today.AddDays(10)),
+                    Customer = customer1,
+                    Room = room1
+                };
+
+                booking.Invoice = new Invoice
+                {
+                    Amount = booking.TotalCost,
+                    InvoiceStartDate = DateTime.Now,
+                    IsPaid = true,
+                    BookingId = booking.BookingId,
+                    Booking = booking
+                };
+
+                var booking2 = new Booking
+                {
+                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(7)),
+                    EndDate = DateOnly.FromDateTime(DateTime.Today.AddDays(12)),
+                    Customer = customer2,
+                    Room = room2
+                };
+                booking2.Invoice = new Invoice
+                {
+                    Amount = booking2.TotalCost,
+                    InvoiceStartDate = DateTime.Now,
+                    IsPaid = true,
+                    BookingId = booking2.BookingId,
+                    Booking = booking2
+                };
+
+                var booking3 = new Booking
+                {
+                    StartDate = DateOnly.FromDateTime(DateTime.Today.AddDays(10)),
+                    EndDate = DateOnly.FromDateTime(DateTime.Today.AddDays(15)),
+                    Customer = customer2,
+                    Room = room1
+                };
+                booking3.Invoice = new Invoice
+                {
+                    Amount = booking3.TotalCost,
+                    InvoiceStartDate = DateTime.Now,
+                    IsPaid = true,
+                    BookingId = booking3.BookingId,
+                    Booking = booking3
+                };
+
+                dbContext.Bookings.Add(booking);
+                dbContext.Bookings.Add(booking2);
+                dbContext.Bookings.Add(booking3);
             }
         }
     }
