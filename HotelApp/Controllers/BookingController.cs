@@ -69,12 +69,12 @@ namespace HotelApp.Controllers
         public Room SelectRoom(List<Room> availableRooms, DateOnly startDate, DateOnly endDate)
         {
             ReadAvailableRooms(availableRooms, startDate, endDate);
-            Room selectedRoom = null;
+            
             while (true)
             {
                 int selectedRoomId = VarValidater.GetRequiredIntOverZero("Ange rummets ID i listan: ");
 
-                selectedRoom = availableRooms.FirstOrDefault(r => r.RoomId == selectedRoomId);
+                var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomId == selectedRoomId);
 
                 if (selectedRoom != null)
                 {
