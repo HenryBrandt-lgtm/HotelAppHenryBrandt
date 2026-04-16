@@ -132,7 +132,7 @@ namespace HotelApp.Controllers
                 var activeCustomers = customerService.GetActiveCustomers();
 
                 var customerPanels = activeCustomers.Select((c, idx) =>
-                    new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}")
+                    new Panel($"[yellow]Namn:[/] {c.FullName}  [blue]Ålder:[/] {c.Age()}  [yellow]E-post:[/] {c.Email}")
                         .Border(BoxBorder.Rounded)
                         .Padding(1, 1)
                         .Header($"{idx}: {c.LastName}")

@@ -15,8 +15,6 @@ namespace HotelApp.Controllers.MenuControllers
             {
                 var menuItems = MenuOptions.BookingMenu(controller, () =>
                      {
-                         AnsiConsole.MarkupLine("[red]Går tillbaka till huvudmenyn...[/]");
-                         Thread.Sleep(1000);
                          exitMenu = true;
                      });
                 var items = menuItems.Select(m => m.Title).ToList();

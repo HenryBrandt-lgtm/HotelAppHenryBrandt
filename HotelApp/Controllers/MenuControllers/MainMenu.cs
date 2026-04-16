@@ -41,7 +41,7 @@ namespace HotelApp.Controllers.MenuControllers
                         roomMenu.ShowMenu();
                         break;
                     case 6:
-                        var terminating = new Text("Terminating...", new Style(Color.Red))
+                        var terminating = new Text("Terminating... Hejdå!", new Style(Color.Red))
                         {
                             Justification = Justify.Center
                         };
