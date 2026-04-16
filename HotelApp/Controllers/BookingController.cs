@@ -36,9 +36,9 @@ namespace HotelApp.Controllers
                 }
                 Console.Clear();
                 var numberOfGuests = VarValidater.GetRequiredIntOverZero("Ange antal personer som ska dela rummet: ");
-                if (numberOfGuests <= 0)
+                if (numberOfGuests <= 0 || numberOfGuests > 4)
                 {
-                    AnsiConsole.Write(Align.Center(new Markup("[red]Antal gäster måste vara minst 1.[/]")));
+                    AnsiConsole.Write(Align.Center(new Markup("[red]Antal gäster måste vara mellan 1 och 4.[/]")));
                     Messages.WaitForKey();
                     continue;
                 }
