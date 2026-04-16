@@ -69,7 +69,7 @@ namespace HotelApp.Controllers
         public Room SelectRoom(List<Room> availableRooms, DateOnly startDate, DateOnly endDate)
         {
             ReadAvailableRooms(availableRooms, startDate, endDate);
-            
+
             while (true)
             {
                 int selectedRoomId = VarValidater.GetRequiredIntOverZero("Ange rummets ID i listan: ");
